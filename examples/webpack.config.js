@@ -1,8 +1,12 @@
 module.exports = {
-  entry: "./example.jsx",
+  entry: {
+    example: "./example.jsx",
+    example2: "./example2.jsx",
+    example3: "./example3.jsx"
+  },
   output: {
     path: "static",
-    filename: "bundle.js"
+    filename: "[name].bundle.js"
   },
   module: {
     loaders: [
