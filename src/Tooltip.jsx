@@ -1,5 +1,4 @@
 import React from "react"
-import ReactDOM from "react-dom"
 
 class Tooltip extends React.Component {
   constructor(props) {
@@ -37,6 +36,7 @@ class Tooltip extends React.Component {
         backgroundColor: this.props.backgroundColor,
         border: "2px solid",
         borderColor: this.props.borderColor,
+        boxShadow: "2px 2px 3px rgba(0, 0, 0, 0.25)",
         color: this.props.fontColor,
       },
       svgWrapper: {
@@ -127,9 +127,9 @@ class Tooltip extends React.Component {
 Tooltip.defaultProps = {
   width: 200,
   padding: 10,
-  backgroundColor: "#272f38",
+  backgroundColor: "#181818",
   fontColor: "#ffffff",
-  borderColor: "#63737f",
+  borderColor: "#808080",
   active: true,
   align: "top"
 }
