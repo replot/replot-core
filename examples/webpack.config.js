@@ -1,22 +1,24 @@
-module.exports = {
-  entry: {
-    example: "./example.jsx",
-    example2: "./example2.jsx",
-    example3: "./example3.jsx"
-  },
-  output: {
-    path: "static",
-    filename: "[name].bundle.js"
-  },
-  module: {
-    loaders: [
-      {
-        test: /\.jsx$/,
-        loader: "babel-loader",
-        query: {
-          "presets": ["es2015", "react"]
+module.exports = function () {
+  return {
+    entry: {
+      example: "./example.jsx",
+      example2: "./example2.jsx",
+      example3: "./example3.jsx"
+    },
+    output: {
+      path: __dirname + "/static",
+      filename: "[name].bundle.js"
+    },
+    module: {
+      loaders: [
+        {
+          test: /\.jsx$/,
+          loader: "babel-loader",
+          query: {
+            "presets": ["es2015", "react"]
+          }
         }
-      }
-    ]
+      ]
+    }
   }
 };
