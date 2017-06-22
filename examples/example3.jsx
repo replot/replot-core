@@ -80,7 +80,7 @@ class ExampleApp extends React.Component {
     }
   }
 
-  activateTooltip(refName,event) {
+  activateTooltip(refName) {
     this.setState(
       {
         mouseOver: true,
