@@ -22,6 +22,27 @@ class Tooltip extends React.Component {
     let width = 200
     let leftMax = window.innerWidth - width
 
+
+    const coloring = {}
+    switch(this.props.colorScheme){
+      case "light":
+        coloring.backgroundColor = "#ffffff"
+        coloring.borderColor = "#DCDCDC"
+        coloring.fontColor = "#000000"
+        break
+      case "dark":
+        coloring.backgroundColor = "#181818"
+        coloring.borderColor = "#585858"
+        coloring.fontColor = "#ffffff"
+        break
+      default:
+        coloring.backgroundColor = this.props.backgroundColor
+        coloring.borderColor = this.props.borderColor
+        coloring.fontColor = this.props.fontColor
+        break
+    }
+
+
     const style = {
       outer: {
         zIndex: "1",
@@ -33,22 +54,23 @@ class Tooltip extends React.Component {
         width: width,
         textAlign: "center",
         padding: this.props.padding,
-        backgroundColor: this.props.backgroundColor,
-        border: "2px solid",
-        borderColor: this.props.borderColor,
-        boxShadow: "2px 2px 3px rgba(0, 0, 0, 0.25)",
-        color: this.props.fontColor,
+        backgroundColor: coloring.backgroundColor,
+        border: "1px solid",
+        borderColor: coloring.borderColor,
+        boxShadow: "0 0 5px rgba(0, 0, 0, 0.25)",
+        color: coloring.fontColor,
       },
       svgWrapper: {
         display: "inline-block",
         position: "absolute",
       },
       triangle: {
-        fill: this.props.borderColor,
-        stroke: this.props.borderColor,
+        fill: coloring.borderColor,
+        stroke: coloring.borderColor,
         strokeWidth: "1"
-      }
+      },
     }
+
 
     let svgHeight
     let svgWidth
@@ -129,7 +151,7 @@ Tooltip.defaultProps = {
   padding: 10,
   backgroundColor: "#181818",
   fontColor: "#ffffff",
-  borderColor: "#808080",
+  borderColor: "#585858",
   active: true,
   align: "top"
 }
