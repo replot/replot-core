@@ -12,16 +12,16 @@ class Resize extends React.Component {
     }
   }
 
-  isDynamic(desiredWidth){
-    if (typeof(desiredWidth) == "number" || desiredWidth.includes("px")){
+  parseWidth(width){
+    if (typeof(width) == "number" || width.includes("px")){
       return {dynamic: false, scale: 1}
-    } else if (desiredWidth.includes("%")) {
-      return {dynamic: true, scale: parseInt(desiredWidth) / 100}
+    } else if (width.includes("%")) {
+      return {dynamic: true, scale: parseInt(width) / 100}
     }
   }
 
   componentDidMount() {
-    if (this.isDynamic(this.props.children.props.width).dynamic) {
+    if (this.parseWidth(this.props.children.props.width).dynamic) {
       this.updateDimensions(this.elem.parentNode)
       window.addEventListener("resize", this.resize.bind(this, this.elem.parentNode))
     }
@@ -39,7 +39,7 @@ class Resize extends React.Component {
   updateDimensions(comp) {
     this.setState({
       resizing: false,
-      width: comp.clientWidth * this.isDynamic(this.props.children.props.width).scale
+      width: comp.clientWidth * this.parseWidth(this.props.children.props.width).scale
     })
   }
 
@@ -52,11 +52,11 @@ class Resize extends React.Component {
       )
     }
 
-    let newChild = React.cloneElement(this.props.children, {width: this.state.width})
+    let child = React.cloneElement(this.props.children, {width: this.state.width})
 
     return (
       <div ref={(comp) => {this.elem = comp}} style={{width: `${this.state.width}px`}}>
-        {newChild}
+        {child}
       </div>
     )
   }
