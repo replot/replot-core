@@ -46,7 +46,6 @@ class Resize extends React.Component {
     if (this.state.resizing) {
       return (
         <div>
-          <img src="../static/load.gif" style={{verticalAlign: "middle", width: "50px", display: "inline-block"}}></img>
           <p style={{fontSize: "50px", verticalAlign: "middle", display: "inline-block"}}>Resizing</p>
         </div>
       )
