@@ -1,4 +1,5 @@
 import React from "react"
+import LoadingIcon from "./LoadingIcon.jsx"
 
 
 class Resize extends React.Component {
@@ -6,21 +7,21 @@ class Resize extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      dynamic: false,
-      resizing: false,
-      width: 400,
-      scale: 1
+      width: parseInt(this.props.children.props.width),
+      resizing: false
     }
-    if (typeof(this.props.children.props.width) == "number" || this.props.children.props.width.includes("px")){
-      this.state.width = parseInt(this.props.children.props.width)
-    } else if (this.props.children.props.width.includes("%")) {
-      this.state.dynamic = true
-      this.state.scale = parseInt(this.props.children.props.width) / 100
+  }
+
+  isDynamic(desiredWidth){
+    if (typeof(desiredWidth) == "number" || desiredWidth.includes("px")){
+      return {dynamic: false, scale: 1}
+    } else if (desiredWidth.includes("%")) {
+      return {dynamic: true, scale: parseInt(desiredWidth) / 100}
     }
   }
 
   componentDidMount() {
-    if (this.state.dynamic) {
+    if (this.isDynamic(this.props.children.props.width).dynamic) {
       this.updateDimensions(this.elem.parentNode)
       window.addEventListener("resize", this.resize.bind(this, this.elem.parentNode))
     }
@@ -38,7 +39,7 @@ class Resize extends React.Component {
   updateDimensions(comp) {
     this.setState({
       resizing: false,
-      width: comp.clientWidth * this.state.scale
+      width: comp.clientWidth * this.isDynamic(this.props.children.props.width).scale
     })
   }
 
@@ -46,7 +47,7 @@ class Resize extends React.Component {
     if (this.state.resizing) {
       return (
         <div>
-          <p style={{fontSize: "50px", verticalAlign: "middle", display: "inline-block"}}>Resizing</p>
+          <LoadingIcon />
         </div>
       )
     }
