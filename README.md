@@ -21,9 +21,6 @@ of mouse movement.
 />
 ```
 
-
-
-
 ### Tooltip coloring
 There are a few different ways to specify Tooltip coloring. The tooltip comes with
 2 default color schemes, light and dark, and either can be chosen by specifying
@@ -32,3 +29,29 @@ customize the Tooltip by passing in hex colors for the `backgroundColor`,
 `borderColor`, and `fontColor`.
 
 The Tooltip defaults to the dark color scheme.
+
+## Resize
+The Resize component is a wrapper component that will intelligently handle component sizing.
+
+### Basic Usage
+To implement the Resize component, you should import and wrap your entire replot
+component in the Resize component. To maintain the props passed in by the user,
+it is also recommended to create a clone of the original component and pass in
+`this.props`. Refer to this example in the treemap component for usage. Here,
+`<TreeMaps />` was the original component class, and it is now delivered as a
+`<TreeMapManager/>`
+
+```javascript
+class TreeMapManager extends React.Component {
+
+  render() {
+    let child = React.cloneElement(<TreeMaps />, this.props)
+
+    return (
+      <Resize>
+        {child}
+      </Resize>
+    )
+  }
+}
+```
