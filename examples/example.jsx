@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import Tooltip from "../src/index.jsx"
+import {Tooltip} from "../src/index.jsx"
 
 class XPosInput extends React.Component {
 

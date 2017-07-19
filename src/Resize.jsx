@@ -47,7 +47,7 @@ class Resize extends React.Component {
     if (this.state.resizing) {
       return (
         <div>
-          <LoadingIcon />
+          <LoadingIcon width={this.state.width}/>
         </div>
       )
     }
