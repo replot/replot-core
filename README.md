@@ -1,5 +1,14 @@
 # replot-core: Common features across replot (WIP)
 Standard implementations of visualization components, such as axes, tooltips, etc.
+The core library currently contains a Tooltip, a Resize, and a LoadingIcon
+component. To use any of these in your project, simply npm install `replot-core`
+and then import the desired utilities in object-literal form.
+
+Example:
+```javascript
+import {Tooltip, Resize} from "replot-core"
+```
+will allow you to use the Tooltip and Resize components.
 
 # API
 Instructions for utilizing the different components of replot-core
@@ -55,3 +64,14 @@ class TreeMapManager extends React.Component {
   }
 }
 ```
+
+## LoadingIcon
+The LoadingIcon is a basic component that displays an aesthetic placeholder
+visual.
+
+### Basic Usage
+To use the LoadingIcon, simply import the `{LoadingIcon}` component, and insert
+a `<LoadingIcon/>` into your JSX. By default, the LoadingIcon is 100 pixels wide,
+and colored black. To change these, the user can pass in a `width` prop to
+specify width, and/or a `color` prop with a string-value color to specify the
+fill of the dots.
