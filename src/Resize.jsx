@@ -13,16 +13,20 @@ class Resize extends React.Component {
   }
 
   parseWidth(width){
-    if (typeof(width) == "number" || width.includes("px")){
+    if (typeof(width) === "number") {
       return {dynamic: false, scale: 1}
-    } else if (width.includes("%")) {
+    }
+    else if (width.includes("%")){
       return {dynamic: true, scale: parseInt(width) / 100}
+    }
+    else {
+      return {dynamic: false, scale: 1}
     }
   }
 
   componentDidMount() {
     if (this.parseWidth(this.props.children.props.width).dynamic) {
-      this.updateDimensions(this.elem.parentNode)
+      this.updateDimensions(this.props.children.props.width, this.elem.parentNode)
       window.addEventListener("resize", this.resize.bind(this, this.elem.parentNode))
     }
   }
@@ -33,13 +37,13 @@ class Resize extends React.Component {
     })
     var updateFunction
     clearTimeout(updateFunction)
-    updateFunction = setTimeout(this.updateDimensions.bind(this, comp), 1200)
+    updateFunction = setTimeout(this.updateDimensions.bind(this, this.props.children.props.width, comp), 1200)
   }
 
-  updateDimensions(comp) {
+  updateDimensions(width, comp) {
     this.setState({
       resizing: false,
-      width: comp.clientWidth * this.parseWidth(this.props.children.props.width).scale
+      width: (this.parseWidth(width).dynamic ? comp.clientWidth * this.parseWidth(width).scale : parseInt(width))
     })
   }
 
@@ -59,6 +63,16 @@ class Resize extends React.Component {
         {child}
       </div>
     )
+  }
+
+  componentWillReceiveProps(nextProps){
+    if (this.parseWidth(nextProps.children.props.width).dynamic){
+      this.updateDimensions(nextProps.children.props.width, this.elem.parentNode)
+      window.addEventListener("resize", this.resize.bind(this, this.elem.parentNode))
+    } else {
+      window.removeEventListener("resize", this.resize.bind(this, this.elem.parentNode)) //This appears to do nothing
+      this.setState({width: parseInt(nextProps.children.props.width)})
+    }
   }
 }
 
