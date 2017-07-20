@@ -942,7 +942,6 @@ var Resize = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Resize.__proto__ || Object.getPrototypeOf(Resize)).call(this, props));
 
     _this.state = {
-      width: parseInt(_this.props.children.props.width),
       resizing: false
     };
     return _this;
@@ -951,36 +950,34 @@ var Resize = function (_React$Component) {
   _createClass(Resize, [{
     key: "parseWidth",
     value: function parseWidth(width) {
-      if (typeof width == "number" || width.includes("px")) {
+      if (typeof width === "number" || !width.includes("%")) {
         return { dynamic: false, scale: 1 };
-      } else if (width.includes("%")) {
+      } else {
         return { dynamic: true, scale: parseInt(width) / 100 };
       }
     }
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      if (this.parseWidth(this.props.children.props.width).dynamic) {
-        this.updateDimensions(this.elem.parentNode);
-        window.addEventListener("resize", this.resize.bind(this, this.elem.parentNode));
-      }
+      window.addEventListener("resize", this.resize.bind(this));
     }
   }, {
     key: "resize",
-    value: function resize(comp) {
-      this.setState({
-        resizing: true
-      });
-      var updateFunction;
-      clearTimeout(updateFunction);
-      updateFunction = setTimeout(this.updateDimensions.bind(this, comp), 1200);
+    value: function resize() {
+      if (this.parseWidth(this.props.width).dynamic) {
+        this.setState({
+          resizing: true
+        });
+        var updateFunction;
+        clearTimeout(updateFunction);
+        updateFunction = setTimeout(this.updateDimensions.bind(this), 1200);
+      }
     }
   }, {
     key: "updateDimensions",
-    value: function updateDimensions(comp) {
+    value: function updateDimensions() {
       this.setState({
-        resizing: false,
-        width: comp.clientWidth * this.parseWidth(this.props.children.props.width).scale
+        resizing: false
       });
     }
   }, {
@@ -988,21 +985,30 @@ var Resize = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
+      var width = void 0;
+      if (!this.parseWidth(this.props.width).dynamic) {
+        width = parseInt(this.props.width);
+      } else {
+        width = this.elem.parentNode.clientWidth * this.parseWidth(this.props.width).scale;
+      }
+
       if (this.state.resizing) {
         return _react2.default.createElement(
           "div",
-          null,
-          _react2.default.createElement(_LoadingIcon2.default, { width: this.state.width })
+          { ref: function ref(comp) {
+              _this2.elem = comp;
+            } },
+          _react2.default.createElement(_LoadingIcon2.default, { width: width })
         );
       }
 
-      var child = _react2.default.cloneElement(this.props.children, { width: this.state.width });
+      var child = _react2.default.cloneElement(this.props.children, { width: width });
 
       return _react2.default.createElement(
         "div",
         { ref: function ref(comp) {
             _this2.elem = comp;
-          }, style: { width: this.state.width + "px" } },
+          }, style: { width: width + "px" } },
         child
       );
     }
