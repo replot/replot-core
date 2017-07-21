@@ -21,6 +21,7 @@ class Resize extends React.Component {
   }
 
   componentDidMount() {
+    this.forceUpdate()
     window.addEventListener("resize", this.resize.bind(this))
   }
 
@@ -46,7 +47,11 @@ class Resize extends React.Component {
     if (!this.parseWidth(this.props.width).dynamic) {
       width = parseInt(this.props.width)
     } else {
-      width = this.elem.parentNode.clientWidth * this.parseWidth(this.props.width).scale
+      if (!this.elem){
+        width = parseInt(this.props.width)
+      } else {
+        width = this.elem.parentNode.clientWidth * this.parseWidth(this.props.width).scale
+      }
     }
 
     if (this.state.resizing) {
