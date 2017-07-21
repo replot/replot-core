@@ -26,7 +26,7 @@ class LoadingIcon extends React.Component {
           <div>
             <svg width={this.props.width} height={this.props.width / (15 / 3.6)}>
               {interpolatingStyles.map((newStyle,i) =>
-                <circle key={i} cx={style["x" + (i + 1)]} cy={style.y} r={newStyle.r} fill={style.color}/>)
+                <circle key={i} cx={style["x" + (i + 1)]} cy={style.y} r={newStyle.r > 0 ? newStyle.r : 0} fill={style.color}/>)
               }
             </svg>
           </div>
