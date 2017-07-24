@@ -44,21 +44,21 @@ The Resize component is a wrapper component that will intelligently handle compo
 
 ### Basic Usage
 To implement the Resize component, you should import and wrap your entire replot
-component in the Resize component. To maintain the props passed in by the user,
-it is also recommended to create a clone of the original component and pass in
-`this.props`. Refer to this example in the treemap component for usage. Here,
-`<TreeMaps />` was the original component class, and it is now delivered as a
-`<TreeMapManager/>`
+component in the Resize component. The Resize component should receive a
+`width` prop which was the user intended width of the original component class.
+Then, to maintain the props passed in by the user, also pass `...this.props` directly
+to the original component. Refer to this example in the treemap component for usage. Here,
+`<TreeMapManager />` was the original component class, and it is now delivered as a
+`<TreeMapManagerResponsive/>`
 
 ```javascript
-class TreeMapManager extends React.Component {
+class TreeMapManagerResponsive extends React.Component {
 
   render() {
-    let child = React.cloneElement(<TreeMaps />, this.props)
 
     return (
-      <Resize>
-        {child}
+      <Resize width={this.props.width}>
+        <TreeMapManager {...props} />
       </Resize>
     )
   }
