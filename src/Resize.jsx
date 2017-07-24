@@ -7,6 +7,7 @@ class Resize extends React.Component {
   constructor(props){
     super(props)
     this.state = {
+      width: parseInt(this.props.width),
       resizing: false
     }
   }
@@ -20,15 +21,11 @@ class Resize extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this.forceUpdate()
-    window.addEventListener("resize", this.resize.bind(this))
-  }
-
   resize() {
     if (this.parseWidth(this.props.width).dynamic){
       this.setState({
-        resizing: true
+        resizing: true,
+        width: this.elem.parentNode.clientWidth * parseInt(this.props.width) / 100
       })
       var updateFunction
       clearTimeout(updateFunction)
@@ -38,37 +35,46 @@ class Resize extends React.Component {
 
   updateDimensions() {
     this.setState({
-      resizing: false
+      resizing: false,
+      width: this.elem.parentNode.clientWidth * parseInt(this.props.width) / 100
     })
   }
 
   render() {
-    let width
-    if (!this.parseWidth(this.props.width).dynamic) {
-      width = parseInt(this.props.width)
-    } else {
-      if (!this.elem){
-        width = parseInt(this.props.width)
-      } else {
-        width = this.elem.parentNode.clientWidth * this.parseWidth(this.props.width).scale
-      }
-    }
-
     if (this.state.resizing) {
       return (
         <div ref={(comp) => {this.elem = comp}}>
-          <LoadingIcon width={width}/>
+          <LoadingIcon width={this.state.width}/>
         </div>
       )
     }
 
-    let child = React.cloneElement(this.props.children, {width: width})
+    let child = React.cloneElement(this.props.children, {width: this.state.width})
 
     return (
-      <div ref={(comp) => {this.elem = comp}} style={{width: `${width}px`}}>
+      <div ref={(comp) => {this.elem = comp}} style={{width: `${this.state.width}px`}}>
         {child}
       </div>
     )
+  }
+
+  componentDidMount() {
+    if (this.parseWidth(this.props.width).dynamic) {
+      this.setState ({width: this.elem.parentNode.clientWidth * parseInt(this.props.width) / 100})
+    }
+    window.addEventListener("resize", this.resize.bind(this))
+  }
+
+  componentWillReceiveProps(nextProps){
+    if (this.props != nextProps){
+      if (this.parseWidth(nextProps.width).dynamic) {
+        this.setState ({width: ((this.elem.parentNode.clientWidth * parseInt(nextProps.width) / 100) > 0
+          ? this.elem.parentNode.clientWidth * parseInt(nextProps.width) / 100
+          : 1)})
+      } else {
+        this.setState({width: parseInt(nextProps.width)})
+      }
+    }
   }
 
 }
