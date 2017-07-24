@@ -954,7 +954,10 @@ var Resize = function (_React$Component) {
       if (typeof width === "number" || !width.includes("%")) {
         return { dynamic: false, scale: 1 };
       } else {
-        return { dynamic: true, scale: parseInt(width) / 100 };
+        return {
+          dynamic: true,
+          scale: parseInt(width) / 100
+        };
       }
     }
   }, {
@@ -1007,20 +1010,30 @@ var Resize = function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       if (this.parseWidth(this.props.width).dynamic) {
-        this.setState({ width: this.elem.parentNode.clientWidth * parseInt(this.props.width) / 100 });
+        this.setState({
+          width: this.elem.parentNode.clientWidth * parseInt(this.props.width) / 100
+        });
       }
-      window.addEventListener("resize", this.resize.bind(this));
+      this.listener = this.resize.bind(this);
+      window.addEventListener("resize", this.listener);
     }
   }, {
     key: "componentWillReceiveProps",
     value: function componentWillReceiveProps(nextProps) {
       if (this.props != nextProps) {
         if (this.parseWidth(nextProps.width).dynamic) {
-          this.setState({ width: this.elem.parentNode.clientWidth * parseInt(nextProps.width) / 100 > 0 ? this.elem.parentNode.clientWidth * parseInt(nextProps.width) / 100 : 1 });
+          this.setState({
+            width: this.elem.parentNode.clientWidth * parseInt(nextProps.width) / 100 > 0 ? this.elem.parentNode.clientWidth * parseInt(nextProps.width) / 100 : 1
+          });
         } else {
           this.setState({ width: parseInt(nextProps.width) });
         }
       }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      window.removeEventListener("resize", this.listener);
     }
   }]);
 
