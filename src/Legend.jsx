@@ -40,7 +40,7 @@ class Legend extends React.Component {
           <g>
             <rect x={0} y={0} width={this.props.width}
               height={numRows*size*1.5} fill={this.props.backgroundColor}
-              stroke={this.props.border ==="on" ? this.props.borderColor : "none"}
+              stroke={this.props.border === "on" ? this.props.borderColor : "none"}
               strokeWidth={2} />
             {items}
           </g>

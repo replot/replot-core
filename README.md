@@ -75,3 +75,33 @@ a `<LoadingIcon/>` into your JSX. By default, the LoadingIcon is 100 pixels wide
 and colored black. To change these, the user can pass in a `width` prop to
 specify width, and/or a `color` prop with a string-value color to specify the
 fill of the dots.
+
+## Legend
+
+### Basic Usage
+To use the LoadingIcon, import the `{Legend}` component, and insert a
+`<Legend />` into your JSX. **Note:** The Legend must be used within an `<svg>`
+parent component, since the Legend itself is comprised of SVG elements.
+
+The only required prop is `values`, which should be an object where each key will
+be a title in the legend, and each value will be the color associated with the
+title.
+
+By default, the Legend lays out titles flat, with a max width of 500 pixels. In
+this default flat mode, the user can specify a `width` prop if they wish the Legend
+to be thinner or wider.
+
+Alternatively, if the user passes in a `mode` prop with a value of `"stack"`, the
+Legend will place titles one on top of the other, using the minimum height and
+width necessary to contain all the titles. In `"stack"` mode, the user can
+specify a `height` prop, which will keep one title per line, but space out the
+titles up to the specified height.
+
+#### Further Customization
+
+The user can pass in additional props to further customize the Legend:
+* `border` defaults to `"off"`, but will draw a border around the Legend if a
+value of `"on"` is passed
+* `borderColor` defaults to `"#000000"`, and will change the color of the border.
+* `backgroundColor` defaults to `none`, and will change the background color
+or the Legend.
