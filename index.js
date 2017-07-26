@@ -945,7 +945,7 @@ var Legend = function (_React$Component) {
   _createClass(Legend, [{
     key: "render",
     value: function render() {
-      if (!this.props.values || this.props.display === "off") {
+      if (Object.keys(this.props.values).length === 0 || this.props.display === "off") {
         return null;
       } else {
         var titles = Object.keys(this.props.values).sort();
@@ -954,15 +954,16 @@ var Legend = function (_React$Component) {
         })[0];
         var items = [];
         var size = 16;
+        var buffer = { x: 5, y: 4 };
         if (this.props.mode === "flat") {
-          var numColumns = Math.min(titles.length, Math.floor(this.props.width / (longest.length * (size / 1.6))));
+          var numColumns = Math.min(titles.length, Math.floor((this.props.width - buffer.x) / (size * 2 + longest.length * size / 2)));
           var numRows = Math.ceil(titles.length / numColumns);
 
           for (var i = 0; i < titles.length; i++) {
             var title = titles[i];
             if (title) {
-              var x = 5 + this.props.width / numColumns * (i % numColumns);
-              var y = 4 + Math.floor(i / numColumns) * 1.5 * size;
+              var x = buffer.x + i % numColumns * ((this.props.width - buffer.x - (size * 2 + longest.length * size / 2)) / (numColumns - 1));
+              var y = buffer.y + Math.floor(i / numColumns) * 1.5 * size;
               items.push(_react2.default.createElement(
                 "g",
                 { key: title },
@@ -980,8 +981,8 @@ var Legend = function (_React$Component) {
           }
 
           return _react2.default.createElement(
-            "svg",
-            { width: this.props.width, height: numRows * size * 1.5 },
+            "g",
+            null,
             _react2.default.createElement("rect", { x: 0, y: 0, width: this.props.width,
               height: numRows * size * 1.5, fill: this.props.backgroundColor,
               stroke: this.props.border === "on" ? this.props.borderColor : "none",
@@ -993,12 +994,12 @@ var Legend = function (_React$Component) {
           for (var _i = 0; _i < titles.length; _i++) {
             var _title = titles[_i];
             if (_title) {
-              var _x = 5;
+              var _x = buffer.x;
               var _y = void 0;
               if (this.props.height) {
-                _y = 4 + _i * this.props.height / titles.length;
+                _y = buffer.y + _i * ((this.props.height - size * 1.5) / (titles.length - 1));
               } else {
-                _y = 4 + _i * size * 1.5;
+                _y = buffer.y + _i * size * 1.5;
               }
               items.push(_react2.default.createElement(
                 "g",
@@ -1016,10 +1017,9 @@ var Legend = function (_React$Component) {
             }
           }
           return _react2.default.createElement(
-            "svg",
-            { width: 5 + longest.length * size,
-              height: this.props.height ? this.props.height : titles.length * size * 1.5 },
-            _react2.default.createElement("rect", { x: 0, y: 0, width: longest.length * size,
+            "g",
+            null,
+            _react2.default.createElement("rect", { x: 0, y: 0, width: size * 2 + longest.length * size / 2,
               height: this.props.height ? this.props.height : titles.length * size * 1.5,
               fill: this.props.backgroundColor, strokeWidth: 2,
               stroke: this.props.border === "on" ? this.props.borderColor : "none" }),
