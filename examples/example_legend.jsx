@@ -14,14 +14,17 @@ class ExampleApp extends React.Component {
         India: "#8e44ad",
         China: "#9dbd5f",
         Russia: "#005c7a",
-        Antarctica: "#fc6000"}
+        Antarctica: "#fc6000"
+      }
     }
   }
 
   render(){
     return(
       <div>
-        <Legend values={this.state.values} width={700}/>
+        <svg width={1000} height={1000}>
+          <Legend values={this.state.values} mode="stack" border="on" />
+        </svg>
       </div>
     )
   }

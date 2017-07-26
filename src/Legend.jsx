@@ -5,22 +5,23 @@ import PropTypes from "prop-types"
 class Legend extends React.Component {
 
   render() {
-    if (!this.props.values || this.props.display === "off") {
+    if (Object.keys(this.props.values).length === 0 || this.props.display === "off") {
       return null
     } else {
       let titles = Object.keys(this.props.values).sort()
       let longest = Object.keys(this.props.values).sort(function(a, b) { return b.length - a.length })[0]
       let items = []
       let size = 16
+      let buffer = {x: 5, y: 4}
       if (this.props.mode === "flat") {
-        let numColumns = Math.min(titles.length, Math.floor(this.props.width / (longest.length * (size/1.6))))
+        let numColumns = Math.min(titles.length, Math.floor((this.props.width-buffer.x)/((size*2) + (longest.length*size/2))))
         let numRows = Math.ceil(titles.length/numColumns)
 
         for (let i = 0; i < titles.length; i++) {
           let title = titles[i]
           if (title) {
-            let x = 5 + (this.props.width/numColumns * (i%numColumns))
-            let y = 4 + ((Math.floor(i/numColumns) * 1.5) * size)
+            let x = buffer.x + (i%numColumns)*((this.props.width-buffer.x-(size*2+longest.length*size/2))/(numColumns-1))
+            let y = buffer.y + ((Math.floor(i/numColumns))*1.5*size)
             items.push(
               <g key={title}>
                  <rect x={x} y={y} width={size} height={size}
@@ -36,13 +37,13 @@ class Legend extends React.Component {
         }
 
         return(
-          <svg width={this.props.width} height={numRows*size*1.5}>
+          <g>
             <rect x={0} y={0} width={this.props.width}
               height={numRows*size*1.5} fill={this.props.backgroundColor}
               stroke={this.props.border ==="on" ? this.props.borderColor : "none"}
               strokeWidth={2} />
             {items}
-          </svg>
+          </g>
         )
 
       } else if (this.props.mode === "stack") {
@@ -50,12 +51,12 @@ class Legend extends React.Component {
         for (let i = 0; i < titles.length; i++) {
           let title = titles[i]
           if (title) {
-            let x = 5
+            let x = buffer.x
             let y
             if (this.props.height) {
-              y = 4 + (i * this.props.height / titles.length)
+              y = buffer.y + (i * ((this.props.height-size*1.5) / (titles.length-1)))
             } else {
-              y = 4 + (i * size * 1.5)
+              y = buffer.y + (i*size*1.5)
             }
             items.push(
               <g key={title}>
@@ -71,14 +72,13 @@ class Legend extends React.Component {
           }
         }
         return(
-          <svg width={5+longest.length*size}
-            height={this.props.height ? this.props.height : titles.length*size*1.5}>
-            <rect x={0} y={0} width={longest.length*size}
+          <g>
+            <rect x={0} y={0} width={(size*2) + (longest.length*size/2)}
               height={this.props.height ? this.props.height : titles.length*size*1.5}
               fill={this.props.backgroundColor} strokeWidth={2}
               stroke={this.props.border === "on" ? this.props.borderColor : "none"}/>
             {items}
-          </svg>
+          </g>
         )
       }
     }
