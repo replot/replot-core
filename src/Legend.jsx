@@ -37,11 +37,10 @@ class Legend extends React.Component {
 
         return(
           <svg width={this.props.width} height={numRows*size*1.5}>
-            {this.props.border == "on" &&
-              <rect x={0} y={0} width={this.props.width}
-                height={numRows*size*1.5} fill={this.props.backgroundColor}
-                stroke={this.props.borderColor} strokeWidth={2} />
-            }
+            <rect x={0} y={0} width={this.props.width}
+              height={numRows*size*1.5} fill={this.props.backgroundColor}
+              stroke={this.props.border ==="on" ? this.props.borderColor : "none"}
+              strokeWidth={2} />
             {items}
           </svg>
         )
@@ -74,12 +73,10 @@ class Legend extends React.Component {
         return(
           <svg width={5+longest.length*size}
             height={this.props.height ? this.props.height : titles.length*size*1.5}>
-            {this.props.border == "on" &&
-              <rect x={0} y={0} width={longest.length*size}
-                height={this.props.height ? this.props.height : titles.length*size*1.5}
-                fill={this.props.backgroundColor} stroke={this.props.borderColor}
-                strokeWidth={2} />
-            }
+            <rect x={0} y={0} width={longest.length*size}
+              height={this.props.height ? this.props.height : titles.length*size*1.5}
+              fill={this.props.backgroundColor} strokeWidth={2}
+              stroke={this.props.border === "on" ? this.props.borderColor : "none"}/>
             {items}
           </svg>
         )
