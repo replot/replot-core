@@ -105,3 +105,75 @@ value of `"on"` is passed
 * `borderColor` defaults to `"#000000"`, and will change the color of the border.
 * `backgroundColor` defaults to `none`, and will change the background color
 or the Legend.
+
+## Axis
+Users can import an entire set of axes, or import just the YAxis or XAxis. The
+full options include:
+- {Axis}
+- {YAxis}
+- {XAxisDiscrete} :intended for situations where the x axis requires labels
+- {XAxisContinuous} :intended for situations where the x axis is a range of numbers
+
+The entirety of customization options/props for the Axis follows:
+* `x` and `y`
+  * Determines where the upper left corner of the axis will lie
+  * Defaults to `0` and `0`
+  * Accepts any number
+* `width` and `height`
+  * Determines the width and height of the axes created, the axes will never
+  exceed the given properties, so titles and labels will be drawn within and contents
+  may need to be pushed in to compensate
+  * Defaults to `400` and `400`
+  * Accepts any number
+* `xAxisMode`
+  * To be used when implementing a full `Axis` component, determines whether the
+  x axis will utilize word labels or number ticks
+  * Defaults to `"discrete"`
+  * Accepts `"discrete"` and `"continuous"`
+* `xScale` and `yScale`
+  * Determines how the numbers on axes will be distributed
+  * Defaults to `"lin"`
+  * Accepts `"lin"` and `"log"`
+  * **Note:** `xScale` will only function with a `"continuous"` `xAxisMode`
+* `minY`, `maxY`, `minX`, `maxX`
+  * Used to calculate the spread for axes
+  * Any `min` defaults to 0 and any `max` defaults to 100
+  * Accepts any number
+* `showXAxisLine`, `showXLabels`, `showYAxisLine`, `showYLabels`, and `showGrid`
+  * Determines whether or not to show the corresponding element
+  * Each default to `true`
+  * Accepts `true` or `false`
+* `axisStyle`
+  * An object that is used to style the axes. Possible key-value pairs include:
+    * axisColor
+      * modifies the color of the axis line
+      * defaults to `#000000`
+      * accepts any color string
+    * labelColor
+      * modifies the color of both axis labels
+      * defaults to `#000000`
+      * accepts any color string
+    * titleColor
+      * modifies the color of all graph titles
+      * defaults to `#000000`
+      * accepts any color string
+    * labelColor
+      * modifies the color of axis gridlines
+      * defaults to `#DDDDDD`
+      * accepts any color string
+    * lineWidth
+      * modifies the thickness of axis lines
+      * defaults to `2`
+      * accepts any number
+    * lineOpacity
+      * modifies the opacity of axis lines
+      * defaults to `1`
+      * accepts any number
+  * Example `axisStyle` prop: `{
+      axisColor: "#f17e33",
+      labelColor: "blue",
+      titleColor: "#000000",
+      gridColor: "#DDDDDD",
+      lineWidth: 5,
+      lineOpacity: .5
+    }`
