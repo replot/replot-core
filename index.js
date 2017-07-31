@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 19);
+/******/ 	return __webpack_require__(__webpack_require__.s = 20);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -276,6 +276,43 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+if (process.env.NODE_ENV !== 'production') {
+  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
+    Symbol.for &&
+    Symbol.for('react.element')) ||
+    0xeac7;
+
+  var isValidElement = function(object) {
+    return typeof object === 'object' &&
+      object !== null &&
+      object.$$typeof === REACT_ELEMENT_TYPE;
+  };
+
+  // By explicitly using `prop-types` you are opting into new development behavior.
+  // http://fb.me/prop-types-in-prod
+  var throwOnDirectAccess = true;
+  module.exports = __webpack_require__(27)(isValidElement, throwOnDirectAccess);
+} else {
+  // By explicitly using `prop-types` you are opting into new production behavior.
+  // http://fb.me/prop-types-in-prod
+  module.exports = __webpack_require__(26)();
+}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -335,43 +372,6 @@ module.exports = invariant;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
-
-if (process.env.NODE_ENV !== 'production') {
-  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
-    Symbol.for &&
-    Symbol.for('react.element')) ||
-    0xeac7;
-
-  var isValidElement = function(object) {
-    return typeof object === 'object' &&
-      object !== null &&
-      object.$$typeof === REACT_ELEMENT_TYPE;
-  };
-
-  // By explicitly using `prop-types` you are opting into new development behavior.
-  // http://fb.me/prop-types-in-prod
-  var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(25)(isValidElement, throwOnDirectAccess);
-} else {
-  // By explicitly using `prop-types` you are opting into new production behavior.
-  // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(24)();
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -416,7 +416,7 @@ module.exports = exports['default'];
 
 
 var React = __webpack_require__(1);
-var factory = __webpack_require__(20);
+var factory = __webpack_require__(21);
 
 if (typeof React === 'undefined') {
   throw Error(
@@ -616,7 +616,7 @@ module.exports = ReactPropTypesSecret;
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {var now = __webpack_require__(26)
+/* WEBPACK VAR INJECTION */(function(global) {var now = __webpack_require__(28)
   , root = typeof window === 'undefined' ? global : window
   , vendors = ['moz', 'webkit']
   , suffix = 'AnimationFrame'
@@ -689,7 +689,7 @@ module.exports.polyfill = function() {
   root.cancelAnimationFrame = caf
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(36)))
 
 /***/ }),
 /* 11 */
@@ -819,7 +819,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactMotion = __webpack_require__(31);
+var _reactMotion = __webpack_require__(33);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -914,6 +914,7 @@ module.exports = exports["default"];
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.XAxisContinuous = exports.XAxisDiscrete = exports.YAxis = exports.Axis = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -921,7 +922,652 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(3);
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _humanizePlus = __webpack_require__(23);
+
+var _humanizePlus2 = _interopRequireDefault(_humanizePlus);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Line = function (_React$Component) {
+  _inherits(Line, _React$Component);
+
+  function Line() {
+    _classCallCheck(this, Line);
+
+    return _possibleConstructorReturn(this, (Line.__proto__ || Object.getPrototypeOf(Line)).apply(this, arguments));
+  }
+
+  _createClass(Line, [{
+    key: "render",
+    value: function render() {
+      return _react2.default.createElement(
+        "g",
+        null,
+        _react2.default.createElement("line", {
+          x1: this.props.x1,
+          y1: this.props.y1,
+          x2: this.props.x2,
+          y2: this.props.y2,
+          stroke: this.props.stroke,
+          strokeWidth: this.props.strokeWidth,
+          opacity: this.props.opacity })
+      );
+    }
+  }]);
+
+  return Line;
+}(_react2.default.Component);
+
+Line.defaultProps = {
+  x1: 0,
+  y1: 0,
+  x2: 0,
+  y2: 0,
+  stroke: "rgb(0,0,0)",
+  strokeWidth: 2,
+  opacity: 1
+};
+
+var YTickLabel = function (_React$Component2) {
+  _inherits(YTickLabel, _React$Component2);
+
+  function YTickLabel() {
+    _classCallCheck(this, YTickLabel);
+
+    return _possibleConstructorReturn(this, (YTickLabel.__proto__ || Object.getPrototypeOf(YTickLabel)).apply(this, arguments));
+  }
+
+  _createClass(YTickLabel, [{
+    key: "render",
+    value: function render() {
+      var printVal = void 0;
+      if (this.props.value < 1 && this.props.value > -1) {
+        printVal = +this.props.value.toFixed(3);
+      } else if (this.props.value < 1000 && this.props.value > -1000) {
+        printVal = +this.props.value.toFixed(1);
+      } else {
+        printVal = _humanizePlus2.default.compactInteger(this.props.value, 1);
+      }
+
+      return _react2.default.createElement(
+        "g",
+        null,
+        _react2.default.createElement(
+          "text",
+          { x: this.props.x, y: this.props.y + 7.5,
+            fontSize: 15, fill: this.props.color, textAnchor: "end" },
+          printVal
+        )
+      );
+    }
+  }]);
+
+  return YTickLabel;
+}(_react2.default.Component);
+
+var YStep = function (_React$Component3) {
+  _inherits(YStep, _React$Component3);
+
+  function YStep() {
+    _classCallCheck(this, YStep);
+
+    return _possibleConstructorReturn(this, (YStep.__proto__ || Object.getPrototypeOf(YStep)).apply(this, arguments));
+  }
+
+  _createClass(YStep, [{
+    key: "render",
+    value: function render() {
+      var step = [];
+
+      step.push(_react2.default.createElement(Line, { key: "tick" + this.props.y,
+        x1: this.props.x, y1: this.props.y,
+        x2: this.props.x - this.props.length, y2: this.props.y,
+        stroke: this.props.color }));
+      step.push(_react2.default.createElement(YTickLabel, { key: "label" + this.props.y, x: this.props.x - 10, y: this.props.y,
+        value: this.props.value, color: this.props.color }));
+
+      return _react2.default.createElement(
+        "g",
+        null,
+        step
+      );
+    }
+  }]);
+
+  return YStep;
+}(_react2.default.Component);
+
+var YAxis = function (_React$Component4) {
+  _inherits(YAxis, _React$Component4);
+
+  function YAxis() {
+    _classCallCheck(this, YAxis);
+
+    return _possibleConstructorReturn(this, (YAxis.__proto__ || Object.getPrototypeOf(YAxis)).apply(this, arguments));
+  }
+
+  _createClass(YAxis, [{
+    key: "render",
+    value: function render() {
+      var yAxis = [];
+
+      if (this.props.showYAxisLine) {
+        yAxis.push(_react2.default.createElement(Line, { key: "yAxisLine", x1: this.props.x, y1: this.props.y,
+          x2: this.props.x, y2: this.props.y + this.props.height,
+          stroke: this.props.style.axisColor, strokeWidth: this.props.style.lineWidth,
+          opacity: this.props.style.lineOpacity }));
+      }
+
+      if (this.props.yTitle) {
+        var rotation = "rotate(-90,10," + String(this.props.y + this.props.height / 2) + ")";
+        yAxis.push(_react2.default.createElement(
+          "text",
+          { key: "yTitle", x: 0, y: this.props.y + this.props.height / 2 + 10,
+            fontSize: 18, transform: rotation, fill: this.props.style.titleColor },
+          this.props.yTitle
+        ));
+      }
+
+      var ySpace = this.props.height / (this.props.ySteps - 1);
+
+      for (var i = 0; i < this.props.ySteps; i++) {
+        var tickPos = this.props.height + this.props.y - i * ySpace;
+
+        var yVal = 0;
+        if (this.props.yScale == "log") {
+          var valueRatio = (Math.log10(this.props.maxY) - Math.log10(this.props.minY)) / (this.props.ySteps - 1);
+          var pow10 = Math.log10(this.props.minY) + i * valueRatio;
+          yVal = Math.pow(10, pow10);
+        } else {
+          yVal = this.props.minY + i * (this.props.maxY - this.props.minY) / (this.props.ySteps - 1);
+        }
+        if (this.props.showYLabels) {
+          yAxis.push(_react2.default.createElement(YStep, { key: "yStep" + i, x: this.props.x, y: tickPos,
+            value: yVal, length: 10, color: this.props.style.labelColor,
+            showYLabels: this.props.showYLabels }));
+        }
+
+        if (this.props.showGrid) {
+          if (i != 0) {
+            yAxis.push(_react2.default.createElement(Line, { key: "grid" + i, x1: this.props.x, y1: tickPos,
+              x2: this.props.x + this.props.width, y2: tickPos,
+              stroke: this.props.style.gridColor, strokeWidth: 1, opacity: 0.5 }));
+          }
+        }
+      }
+
+      return _react2.default.createElement(
+        "g",
+        null,
+        yAxis
+      );
+    }
+  }]);
+
+  return YAxis;
+}(_react2.default.Component);
+
+YAxis.defaultProps = {
+  x: 0,
+  y: 0,
+  width: 100,
+  height: 100,
+  yScale: "lin",
+  ySteps: 5,
+  showYAxisLine: true,
+  showYLabels: true,
+  showGrid: true,
+  minY: 0,
+  maxY: 100,
+  style: {
+    axisColor: "#000000",
+    labelColor: "#000000",
+    titleColor: "#000000",
+    gridColor: "#DDDDDD",
+    lineWidth: 2,
+    lineOpacity: 1
+  }
+};
+
+YAxis.propTypes = {
+  x: _propTypes2.default.number,
+  y: _propTypes2.default.number,
+  width: _propTypes2.default.number,
+  height: _propTypes2.default.number,
+  yScale: _propTypes2.default.string,
+  ySteps: _propTypes2.default.number,
+  yTitle: _propTypes2.default.string,
+  showYAxisLine: _propTypes2.default.bool,
+  showYLabels: _propTypes2.default.bool,
+  showGrid: _propTypes2.default.bool,
+  minY: _propTypes2.default.number,
+  maxY: _propTypes2.default.number,
+  style: _propTypes2.default.object
+};
+
+var XTickLabel = function (_React$Component5) {
+  _inherits(XTickLabel, _React$Component5);
+
+  function XTickLabel() {
+    _classCallCheck(this, XTickLabel);
+
+    return _possibleConstructorReturn(this, (XTickLabel.__proto__ || Object.getPrototypeOf(XTickLabel)).apply(this, arguments));
+  }
+
+  _createClass(XTickLabel, [{
+    key: "render",
+    value: function render() {
+      var printVal = void 0;
+      if (this.props.value < 1 && this.props.value > -1) {
+        printVal = +this.props.value.toFixed(3);
+      } else if (this.props.value < 1000 && this.props.value > -1000) {
+        printVal = +this.props.value.toFixed(1);
+      } else {
+        printVal = _humanizePlus2.default.compactInteger(this.props.value, 1);
+      }
+
+      return _react2.default.createElement(
+        "g",
+        null,
+        _react2.default.createElement(
+          "text",
+          { x: this.props.x, y: this.props.y + 22,
+            fontSize: 15, fill: this.props.color, textAnchor: "middle" },
+          printVal
+        )
+      );
+    }
+  }]);
+
+  return XTickLabel;
+}(_react2.default.Component);
+
+var XStep = function (_React$Component6) {
+  _inherits(XStep, _React$Component6);
+
+  function XStep() {
+    _classCallCheck(this, XStep);
+
+    return _possibleConstructorReturn(this, (XStep.__proto__ || Object.getPrototypeOf(XStep)).apply(this, arguments));
+  }
+
+  _createClass(XStep, [{
+    key: "render",
+    value: function render() {
+      var step = [];
+
+      step.push(_react2.default.createElement(Line, { key: "tick" + this.props.x,
+        x1: this.props.x, y1: this.props.y,
+        x2: this.props.x, y2: this.props.y + this.props.length,
+        stroke: this.props.color }));
+      step.push(_react2.default.createElement(XTickLabel, { key: "label" + this.props.x, x: this.props.x, y: this.props.y,
+        value: this.props.value, color: this.props.color }));
+
+      return _react2.default.createElement(
+        "g",
+        null,
+        step
+      );
+    }
+  }]);
+
+  return XStep;
+}(_react2.default.Component);
+
+var XAxisContinuous = function (_React$Component7) {
+  _inherits(XAxisContinuous, _React$Component7);
+
+  function XAxisContinuous() {
+    _classCallCheck(this, XAxisContinuous);
+
+    return _possibleConstructorReturn(this, (XAxisContinuous.__proto__ || Object.getPrototypeOf(XAxisContinuous)).apply(this, arguments));
+  }
+
+  _createClass(XAxisContinuous, [{
+    key: "render",
+    value: function render() {
+      var xAxis = [];
+
+      if (this.props.showXAxisLine) {
+        xAxis.push(_react2.default.createElement(Line, { key: "xAxisLine", x1: this.props.x, y1: this.props.y,
+          x2: this.props.x + this.props.width, y2: this.props.y,
+          stroke: this.props.style.axisColor, strokeWidth: this.props.style.lineWidth,
+          opacity: this.props.style.lineOpacity }));
+      }
+
+      if (this.props.xTitle) {
+        xAxis.push(_react2.default.createElement(
+          "text",
+          { key: "xTitle", textAnchor: "middle",
+            x: this.props.x + this.props.width / 2, y: this.props.y + 45,
+            fill: this.props.style.titleColor, fontSize: 18 },
+          this.props.xTitle
+        ));
+      }
+
+      if (this.props.showXLabels) {
+        var xSpace = this.props.width / (this.props.xSteps - 1);
+
+        for (var i = 0; i < this.props.xSteps; i++) {
+          var tickPos = this.props.x + i * xSpace;
+
+          var xVal = 0;
+          if (this.props.xScale == "log") {
+            var valueRatio = (Math.log10(this.props.maxX) - Math.log10(this.props.minX)) / (this.props.xSteps - 1);
+            var pow10 = Math.log10(this.props.minX) + i * valueRatio;
+            xVal = Math.pow(10, pow10);
+          } else {
+            xVal = this.props.minX + i * (this.props.maxX - this.props.minX) / (this.props.xSteps - 1);
+          }
+          xAxis.push(_react2.default.createElement(XStep, { key: "xStep" + i, x: tickPos, y: this.props.y,
+            value: xVal, length: 10, color: this.props.style.labelColor,
+            showXLabels: this.props.showXLabels }));
+        }
+      }
+
+      return _react2.default.createElement(
+        "g",
+        null,
+        xAxis
+      );
+    }
+  }]);
+
+  return XAxisContinuous;
+}(_react2.default.Component);
+
+XAxisContinuous.defaultProps = {
+  x: 0,
+  y: 0,
+  width: 100,
+  xScale: "lin",
+  xSteps: 5,
+  showXAxisLine: true,
+  showXLabels: true,
+  minX: 0,
+  maxX: 100,
+  style: {
+    axisColor: "#000000",
+    labelColor: "#000000",
+    titleColor: "#000000",
+    gridColor: "#DDDDDD",
+    lineWidth: 2,
+    lineOpacity: 1
+  }
+};
+
+XAxisContinuous.propTypes = {
+  x: _propTypes2.default.number,
+  y: _propTypes2.default.number,
+  width: _propTypes2.default.number,
+  xScale: _propTypes2.default.string,
+  xSteps: _propTypes2.default.number,
+  xTitle: _propTypes2.default.string,
+  showXAxisLine: _propTypes2.default.bool,
+  showXLabels: _propTypes2.default.bool,
+  minX: _propTypes2.default.number,
+  maxX: _propTypes2.default.number,
+  style: _propTypes2.default.object
+};
+
+var XAxisDiscrete = function (_React$Component8) {
+  _inherits(XAxisDiscrete, _React$Component8);
+
+  function XAxisDiscrete() {
+    _classCallCheck(this, XAxisDiscrete);
+
+    return _possibleConstructorReturn(this, (XAxisDiscrete.__proto__ || Object.getPrototypeOf(XAxisDiscrete)).apply(this, arguments));
+  }
+
+  _createClass(XAxisDiscrete, [{
+    key: "render",
+    value: function render() {
+      var xAxis = [];
+
+      if (this.props.showXAxisLine) {
+        xAxis.push(_react2.default.createElement(Line, { key: "xAxisLine", x1: this.props.x, y1: this.props.y,
+          x2: this.props.x + this.props.width, y2: this.props.y,
+          stroke: this.props.style.axisColor, strokeWidth: this.props.style.lineWidth,
+          opacity: this.props.style.lineOpacity }));
+      }
+
+      var size = 16;
+
+      if (this.props.showXLabels && this.props.labels) {
+        var labelWidth = this.props.width / this.props.labels.length;
+        var tilt = 0;
+        for (var i = 0; i < this.props.labels.length; i++) {
+          if (this.props.labels[i].length * 9 > labelWidth) {
+            tilt = -30;
+            size = 12;
+          }
+        }
+        var rotation = void 0,
+            anchor = void 0;
+        if (tilt != 0) {
+          anchor = "end";
+        } else {
+          anchor = "middle";
+        }
+
+        var offset = this.props.x + this.props.width / this.props.labels.length / 2;
+        for (var _i = 0; _i < this.props.labels.length; _i++) {
+          rotation = "rotate(" + tilt + "," + (offset + _i * (this.props.width / this.props.labels.length) - 10) + "," + (this.props.y - 20) + ")";
+          xAxis.push(_react2.default.createElement(
+            "text",
+            { key: this.props.labels[_i], fill: this.props.style.labelColor,
+              x: offset + _i * (this.props.width / this.props.labels.length),
+              y: this.props.y + 20, textAnchor: anchor, transform: rotation, fontSize: size },
+            this.props.labels[_i]
+          ));
+        }
+      }
+
+      if (this.props.xTitle) {
+        xAxis.push(_react2.default.createElement(
+          "text",
+          { key: "xTitle", textAnchor: "middle",
+            x: this.props.x + this.props.width / 2, y: this.props.y + 45,
+            fill: this.props.style.titleColor, fontSize: size + 2 },
+          this.props.xTitle
+        ));
+      }
+
+      return _react2.default.createElement(
+        "g",
+        null,
+        xAxis
+      );
+    }
+  }]);
+
+  return XAxisDiscrete;
+}(_react2.default.Component);
+
+XAxisDiscrete.defaultProps = {
+  x: 0,
+  y: 0,
+  width: 100,
+  showXAxisLine: true,
+  showXLabels: true,
+  style: {
+    axisColor: "#000000",
+    labelColor: "#000000",
+    titleColor: "#000000",
+    lineWidth: 2,
+    lineOpacity: 1
+  }
+};
+
+XAxisDiscrete.propTypes = {
+  x: _propTypes2.default.number,
+  y: _propTypes2.default.number,
+  width: _propTypes2.default.number,
+  showXAxisLine: _propTypes2.default.bool,
+  showXLabels: _propTypes2.default.bool,
+  labels: _propTypes2.default.array,
+  style: _propTypes2.default.object
+};
+
+var Axis = function (_React$Component9) {
+  _inherits(Axis, _React$Component9);
+
+  function Axis() {
+    _classCallCheck(this, Axis);
+
+    return _possibleConstructorReturn(this, (Axis.__proto__ || Object.getPrototypeOf(Axis)).apply(this, arguments));
+  }
+
+  _createClass(Axis, [{
+    key: "render",
+    value: function render() {
+      this.axes = [];
+      this.buffer = { top: 5, left: 50, bot: 25, right: 0 };
+      if (this.props.graphTitle) {
+        this.buffer.top += 25;
+      }
+      if (this.props.yTitle) {
+        this.buffer.left += 25;
+      }
+      if (this.props.xTitle) {
+        this.buffer.bot += 25;
+      }
+      if (this.props.xAxisMode === "continuous") {
+        this.buffer.right += 25;
+      }
+
+      var xSteps = void 0,
+          ySteps = void 0;
+      if (this.props.ySteps) {
+        ySteps = this.props.ySteps;
+      } else {
+        ySteps = Math.ceil(this.props.height / 100) + 1;
+      }
+      if (this.props.xSteps) {
+        xSteps = this.props.xSteps;
+      } else {
+        xSteps = Math.ceil(this.props.width / 100) + 1;
+      }
+
+      this.axes.push(_react2.default.createElement(YAxis, { key: "YAxis", x: this.buffer.left, y: this.buffer.top, width: this.props.width - 3 * this.buffer.right,
+        height: this.props.height - this.buffer.bot - this.buffer.top,
+        minY: this.props.minY, maxY: this.props.maxY, yScale: this.props.yScale,
+        ySteps: ySteps, yTitle: this.props.yTitle,
+        showYAxisLine: this.props.showYAxisLine, showYLabels: this.props.showYLabels,
+        showGrid: this.props.showGrid, style: this.props.axisStyle }));
+      if (this.props.xAxisMode == "discrete") {
+        this.axes.push(_react2.default.createElement(XAxisDiscrete, { key: "XAxis", x: this.buffer.left, y: this.props.height - this.buffer.bot,
+          width: this.props.width - this.buffer.left,
+          xTitle: this.props.xTitle, showXAxisLine: this.props.showXAxisLine,
+          showXLabels: this.props.showXLabels, labels: this.props.labels,
+          style: this.props.axisStyle }));
+      } else if (this.props.xAxisMode == "continuous") {
+        this.axes.push(_react2.default.createElement(XAxisContinuous, { key: "XAxis", x: this.buffer.left, y: this.props.height - this.buffer.bot,
+          width: this.props.width - this.buffer.left - this.buffer.right,
+          xTitle: this.props.xTitle, showXAxisLine: this.props.showXAxisLine,
+          showXLabels: this.props.showXLabels,
+          xScale: this.props.xScale, xSteps: xSteps,
+          minX: this.props.minX, maxX: this.props.maxX,
+          style: this.props.axisStyle }));
+      }
+      if (this.props.graphTitle) {
+        this.axes.push(_react2.default.createElement(
+          "text",
+          { key: "graphTitle", textAnchor: "middle", fontSize: 18,
+            x: this.buffer.left + (this.props.width - this.buffer.left) / 2, y: 20 },
+          this.props.graphTitle
+        ));
+      }
+
+      return _react2.default.createElement(
+        "g",
+        null,
+        this.axes
+      );
+    }
+  }]);
+
+  return Axis;
+}(_react2.default.Component);
+
+Axis.defaultProps = {
+  x: 0,
+  y: 0,
+  width: 400,
+  height: 400,
+  xAxisMode: "strings",
+  yScale: "lin",
+  minY: 0,
+  maxY: 100,
+  showXAxisLine: true,
+  showXLabels: true,
+  showYAxisLine: true,
+  showYLabels: true,
+  showGrid: true,
+  axisStyle: {
+    axisColor: "#000000",
+    labelColor: "#000000",
+    titleColor: "#000000",
+    gridColor: "#DDDDDD",
+    lineWidth: 2,
+    lineOpacity: 1
+  }
+};
+
+Axis.propTypes = {
+  x: _propTypes2.default.number,
+  y: _propTypes2.default.number,
+  width: _propTypes2.default.number,
+  height: _propTypes2.default.number,
+  graphHeight: _propTypes2.default.string,
+  xTitle: _propTypes2.default.string,
+  yTitle: _propTypes2.default.string,
+  yScale: _propTypes2.default.string,
+  ySteps: _propTypes2.default.number,
+  minY: _propTypes2.default.number,
+  maxY: _propTypes2.default.number,
+  showXAxisLine: _propTypes2.default.bool,
+  showXLabels: _propTypes2.default.bool,
+  labels: _propTypes2.default.array,
+  showYAxisLine: _propTypes2.default.bool,
+  showYLabels: _propTypes2.default.bool,
+  showGrid: _propTypes2.default.bool,
+  axisStyle: _propTypes2.default.object
+};
+
+exports.Axis = Axis;
+exports.YAxis = YAxis;
+exports.XAxisDiscrete = XAxisDiscrete;
+exports.XAxisContinuous = XAxisContinuous;
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -1057,7 +1703,7 @@ Legend.propTypes = {
 exports.default = Legend;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1195,7 +1841,7 @@ var Resize = function (_React$Component) {
 exports.default = Resize;
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1398,7 +2044,7 @@ Tooltip.defaultProps = {
 exports.default = Tooltip;
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1407,13 +2053,13 @@ exports.default = Tooltip;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Legend = exports.LoadingIcon = exports.Resize = exports.Tooltip = undefined;
+exports.XAxisContinuous = exports.XAxisDiscrete = exports.YAxis = exports.Axis = exports.Legend = exports.LoadingIcon = exports.Resize = exports.Tooltip = undefined;
 
-var _Tooltip = __webpack_require__(18);
+var _Tooltip = __webpack_require__(19);
 
 var _Tooltip2 = _interopRequireDefault(_Tooltip);
 
-var _Resize = __webpack_require__(17);
+var _Resize = __webpack_require__(18);
 
 var _Resize2 = _interopRequireDefault(_Resize);
 
@@ -1421,9 +2067,11 @@ var _LoadingIcon = __webpack_require__(14);
 
 var _LoadingIcon2 = _interopRequireDefault(_LoadingIcon);
 
-var _Legend = __webpack_require__(16);
+var _Legend = __webpack_require__(17);
 
 var _Legend2 = _interopRequireDefault(_Legend);
+
+var _Axis = __webpack_require__(16);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1431,9 +2079,13 @@ exports.Tooltip = _Tooltip2.default;
 exports.Resize = _Resize2.default;
 exports.LoadingIcon = _LoadingIcon2.default;
 exports.Legend = _Legend2.default;
+exports.Axis = _Axis.Axis;
+exports.YAxis = _Axis.YAxis;
+exports.XAxisDiscrete = _Axis.XAxisDiscrete;
+exports.XAxisContinuous = _Axis.XAxisContinuous;
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1449,10 +2101,10 @@ exports.Legend = _Legend2.default;
 
 
 
-var _assign = __webpack_require__(22);
+var _assign = __webpack_require__(24);
 
-var emptyObject = __webpack_require__(21);
-var _invariant = __webpack_require__(2);
+var emptyObject = __webpack_require__(22);
+var _invariant = __webpack_require__(3);
 
 if (process.env.NODE_ENV !== 'production') {
   var warning = __webpack_require__(7);
@@ -2313,7 +2965,7 @@ module.exports = factory;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2339,7 +2991,547 @@ module.exports = emptyObject;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 22 */
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* humanize.js - v1.8.2 */
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+/**
+ * Copyright 2013-2016 HubSpotDev
+ * MIT Licensed
+ *
+ * @module humanize.js
+ */
+
+(function (root, factory) {
+  if (( false ? 'undefined' : _typeof(exports)) === 'object') {
+    module.exports = factory();
+  } else if (true) {
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+      return root.Humanize = factory();
+    }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  } else {
+    root.Humanize = factory();
+  }
+})(this, function () {
+  //------------------------------------------------------------------------------
+  // Constants
+  //------------------------------------------------------------------------------
+
+  var TIME_FORMATS = [{
+    name: 'second',
+    value: 1e3
+  }, {
+    name: 'minute',
+    value: 6e4
+  }, {
+    name: 'hour',
+    value: 36e5
+  }, {
+    name: 'day',
+    value: 864e5
+  }, {
+    name: 'week',
+    value: 6048e5
+  }];
+
+  var LABELS_FOR_POWERS_OF_KILO = {
+    P: Math.pow(2, 50),
+    T: Math.pow(2, 40),
+    G: Math.pow(2, 30),
+    M: Math.pow(2, 20)
+  };
+
+  //------------------------------------------------------------------------------
+  // Helpers
+  //------------------------------------------------------------------------------
+
+  var exists = function exists(maybe) {
+    return typeof maybe !== 'undefined' && maybe !== null;
+  };
+
+  var isNaN = function isNaN(value) {
+    return value !== value;
+  }; // eslint-disable-line
+
+  var isFiniteNumber = function isFiniteNumber(value) {
+    return isFinite(value) && !isNaN(parseFloat(value));
+  };
+
+  var isArray = function isArray(value) {
+    var type = Object.prototype.toString.call(value);
+    return type === '[object Array]';
+  };
+
+  //------------------------------------------------------------------------------
+  // Humanize
+  //------------------------------------------------------------------------------
+
+  var Humanize = {
+
+    // Converts a large integer to a friendly text representation.
+
+    intword: function intword(number, charWidth) {
+      var decimals = arguments.length <= 2 || arguments[2] === undefined ? 2 : arguments[2];
+
+      /*
+      * This method is deprecated. Please use compactInteger instead.
+      * intword will be going away in the next major version.
+      */
+      return Humanize.compactInteger(number, decimals);
+    },
+
+
+    // Converts an integer into its most compact representation
+    compactInteger: function compactInteger(input) {
+      var decimals = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
+
+      decimals = Math.max(decimals, 0);
+      var number = parseInt(input, 10);
+      var signString = number < 0 ? '-' : '';
+      var unsignedNumber = Math.abs(number);
+      var unsignedNumberString = String(unsignedNumber);
+      var numberLength = unsignedNumberString.length;
+      var numberLengths = [13, 10, 7, 4];
+      var bigNumPrefixes = ['T', 'B', 'M', 'k'];
+
+      // small numbers
+      if (unsignedNumber < 1000) {
+        return '' + signString + unsignedNumberString;
+      }
+
+      // really big numbers
+      if (numberLength > numberLengths[0] + 3) {
+        return number.toExponential(decimals).replace('e+', 'x10^');
+      }
+
+      // 999 < unsignedNumber < 999,999,999,999,999
+      var length = void 0;
+      for (var i = 0; i < numberLengths.length; i++) {
+        var _length = numberLengths[i];
+        if (numberLength >= _length) {
+          length = _length;
+          break;
+        }
+      }
+
+      var decimalIndex = numberLength - length + 1;
+      var unsignedNumberCharacterArray = unsignedNumberString.split('');
+
+      var wholePartArray = unsignedNumberCharacterArray.slice(0, decimalIndex);
+      var decimalPartArray = unsignedNumberCharacterArray.slice(decimalIndex, decimalIndex + decimals + 1);
+
+      var wholePart = wholePartArray.join('');
+
+      // pad decimalPart if necessary
+      var decimalPart = decimalPartArray.join('');
+      if (decimalPart.length < decimals) {
+        decimalPart += '' + Array(decimals - decimalPart.length + 1).join('0');
+      }
+
+      var output = void 0;
+      if (decimals === 0) {
+        output = '' + signString + wholePart + bigNumPrefixes[numberLengths.indexOf(length)];
+      } else {
+        var outputNumber = Number(wholePart + '.' + decimalPart).toFixed(decimals);
+        output = '' + signString + outputNumber + bigNumPrefixes[numberLengths.indexOf(length)];
+      }
+
+      return output;
+    },
+
+
+    // Converts an integer to a string containing commas every three digits.
+    intComma: function intComma(number) {
+      var decimals = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
+
+      return Humanize.formatNumber(number, decimals);
+    },
+    intcomma: function intcomma() {
+      return Humanize.intComma.apply(Humanize, arguments);
+    },
+
+
+    // Formats the value like a 'human-readable' file size (i.e. '13 KB', '4.1 MB', '102 bytes', etc).
+    fileSize: function fileSize(filesize) {
+      var precision = arguments.length <= 1 || arguments[1] === undefined ? 2 : arguments[1];
+
+      for (var label in LABELS_FOR_POWERS_OF_KILO) {
+        if (LABELS_FOR_POWERS_OF_KILO.hasOwnProperty(label)) {
+          var minnum = LABELS_FOR_POWERS_OF_KILO[label];
+          if (filesize >= minnum) {
+            return Humanize.formatNumber(filesize / minnum, precision, '') + ' ' + label + 'B';
+          }
+        }
+      }
+      if (filesize >= 1024) {
+        return Humanize.formatNumber(filesize / 1024, 0) + ' KB';
+      }
+
+      return Humanize.formatNumber(filesize, 0) + Humanize.pluralize(filesize, ' byte');
+    },
+    filesize: function filesize() {
+      return Humanize.fileSize.apply(Humanize, arguments);
+    },
+
+
+    // Formats a number to a human-readable string.
+    // Localize by overriding the precision, thousand and decimal arguments.
+    formatNumber: function formatNumber(number) {
+      var precision = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
+      var thousand = arguments.length <= 2 || arguments[2] === undefined ? ',' : arguments[2];
+      var decimal = arguments.length <= 3 || arguments[3] === undefined ? '.' : arguments[3];
+
+      // Create some private utility functions to make the computational
+      // code that follows much easier to read.
+      var firstComma = function firstComma(_number, _thousand, _position) {
+        return _position ? _number.substr(0, _position) + _thousand : '';
+      };
+
+      var commas = function commas(_number, _thousand, _position) {
+        return _number.substr(_position).replace(/(\d{3})(?=\d)/g, '$1' + _thousand);
+      };
+
+      var decimals = function decimals(_number, _decimal, usePrecision) {
+        return usePrecision ? _decimal + Humanize.toFixed(Math.abs(_number), usePrecision).split('.')[1] : '';
+      };
+
+      var usePrecision = Humanize.normalizePrecision(precision);
+
+      // Do some calc
+      var negative = number < 0 && '-' || '';
+      var base = String(parseInt(Humanize.toFixed(Math.abs(number || 0), usePrecision), 10));
+      var mod = base.length > 3 ? base.length % 3 : 0;
+
+      // Format the number
+      return negative + firstComma(base, thousand, mod) + commas(base, thousand, mod) + decimals(number, decimal, usePrecision);
+    },
+
+
+    // Fixes binary rounding issues (eg. (0.615).toFixed(2) === '0.61')
+    toFixed: function toFixed(value, precision) {
+      precision = exists(precision) ? precision : Humanize.normalizePrecision(precision, 0);
+      var power = Math.pow(10, precision);
+
+      // Multiply up by precision, round accurately, then divide and use native toFixed()
+      return (Math.round(value * power) / power).toFixed(precision);
+    },
+
+
+    // Ensures precision value is a positive integer
+    normalizePrecision: function normalizePrecision(value, base) {
+      value = Math.round(Math.abs(value));
+      return isNaN(value) ? base : value;
+    },
+
+
+    // Converts an integer to its ordinal as a string.
+    ordinal: function ordinal(value) {
+      var number = parseInt(value, 10);
+
+      if (number === 0) {
+        return value;
+      }
+
+      var specialCase = number % 100;
+      if ([11, 12, 13].indexOf(specialCase) >= 0) {
+        return number + 'th';
+      }
+
+      var leastSignificant = number % 10;
+
+      var end = void 0;
+      switch (leastSignificant) {
+        case 1:
+          end = 'st';
+          break;
+        case 2:
+          end = 'nd';
+          break;
+        case 3:
+          end = 'rd';
+          break;
+        default:
+          end = 'th';
+      }
+
+      return '' + number + end;
+    },
+
+
+    // Interprets numbers as occurences. Also accepts an optional array/map of overrides.
+    times: function times(value) {
+      var overrides = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+      if (isFiniteNumber(value) && value >= 0) {
+        var number = parseFloat(value);
+        var smallTimes = ['never', 'once', 'twice'];
+        if (exists(overrides[number])) {
+          return String(overrides[number]);
+        }
+
+        var numberString = exists(smallTimes[number]) && smallTimes[number].toString();
+        return numberString || number.toString() + ' times';
+      }
+      return null;
+    },
+
+
+    // Returns the plural version of a given word if the value is not 1. The default suffix is 's'.
+    pluralize: function pluralize(number, singular, plural) {
+      if (!(exists(number) && exists(singular))) {
+        return null;
+      }
+
+      plural = exists(plural) ? plural : singular + 's';
+
+      return parseInt(number, 10) === 1 ? singular : plural;
+    },
+
+
+    // Truncates a string if it is longer than the specified number of characters (inclusive).
+    // Truncated strings will end with a translatable ellipsis sequence ("…").
+    truncate: function truncate(str) {
+      var length = arguments.length <= 1 || arguments[1] === undefined ? 100 : arguments[1];
+      var ending = arguments.length <= 2 || arguments[2] === undefined ? '...' : arguments[2];
+
+      if (str.length > length) {
+        return str.substring(0, length - ending.length) + ending;
+      }
+      return str;
+    },
+
+
+    // Truncates a string after a certain number of words.
+    truncateWords: function truncateWords(string, length) {
+      var array = string.split(' ');
+      var result = '';
+      var i = 0;
+
+      while (i < length) {
+        if (exists(array[i])) {
+          result += array[i] + ' ';
+        }
+        i++;
+      }
+
+      if (array.length > length) {
+        return result + '...';
+      }
+
+      return null;
+    },
+    truncatewords: function truncatewords() {
+      return Humanize.truncateWords.apply(Humanize, arguments);
+    },
+
+
+    // Truncates a number to an upper bound.
+    boundedNumber: function boundedNumber(num) {
+      var bound = arguments.length <= 1 || arguments[1] === undefined ? 100 : arguments[1];
+      var ending = arguments.length <= 2 || arguments[2] === undefined ? '+' : arguments[2];
+
+      var result = void 0;
+
+      if (isFiniteNumber(num) && isFiniteNumber(bound)) {
+        if (num > bound) {
+          result = bound + ending;
+        }
+      }
+
+      return (result || num).toString();
+    },
+    truncatenumber: function truncatenumber() {
+      return Humanize.boundedNumber.apply(Humanize, arguments);
+    },
+
+
+    // Converts a list of items to a human readable string with an optional limit.
+    oxford: function oxford(items, limit, limitStr) {
+      var numItems = items.length;
+
+      var limitIndex = void 0;
+      if (numItems < 2) {
+        return String(items);
+      } else if (numItems === 2) {
+        return items.join(' and ');
+      } else if (exists(limit) && numItems > limit) {
+        var extra = numItems - limit;
+        limitIndex = limit;
+        limitStr = exists(limitStr) ? limitStr : ', and ' + extra + ' ' + Humanize.pluralize(extra, 'other');
+      } else {
+        limitIndex = -1;
+        limitStr = ', and ' + items[numItems - 1];
+      }
+
+      return items.slice(0, limitIndex).join(', ') + limitStr;
+    },
+
+
+    // Converts an object to a definition-like string
+    dictionary: function dictionary(object) {
+      var joiner = arguments.length <= 1 || arguments[1] === undefined ? ' is ' : arguments[1];
+      var separator = arguments.length <= 2 || arguments[2] === undefined ? ', ' : arguments[2];
+
+      var result = '';
+
+      if (exists(object) && (typeof object === 'undefined' ? 'undefined' : _typeof(object)) === 'object' && !isArray(object)) {
+        var defs = [];
+        for (var key in object) {
+          if (object.hasOwnProperty(key)) {
+            var val = object[key];
+            defs.push('' + key + joiner + val);
+          }
+        }
+
+        return defs.join(separator);
+      }
+
+      return result;
+    },
+
+
+    // Describes how many times an item appears in a list
+    frequency: function frequency(list, verb) {
+      if (!isArray(list)) {
+        return null;
+      }
+
+      var len = list.length;
+      var times = Humanize.times(len);
+
+      if (len === 0) {
+        return times + ' ' + verb;
+      }
+
+      return verb + ' ' + times;
+    },
+    pace: function pace(value, intervalMs) {
+      var unit = arguments.length <= 2 || arguments[2] === undefined ? 'time' : arguments[2];
+
+      if (value === 0 || intervalMs === 0) {
+        // Needs a better string than this...
+        return 'No ' + Humanize.pluralize(0, unit);
+      }
+
+      // Expose these as overridables?
+      var prefix = 'Approximately';
+      var timeUnit = void 0;
+      var relativePace = void 0;
+
+      var rate = value / intervalMs;
+      for (var i = 0; i < TIME_FORMATS.length; ++i) {
+        // assumes sorted list
+        var f = TIME_FORMATS[i];
+        relativePace = rate * f.value;
+        if (relativePace > 1) {
+          timeUnit = f.name;
+          break;
+        }
+      }
+
+      // Use the last time unit if there is nothing smaller
+      if (!timeUnit) {
+        prefix = 'Less than';
+        relativePace = 1;
+        timeUnit = TIME_FORMATS[TIME_FORMATS.length - 1].name;
+      }
+
+      var roundedPace = Math.round(relativePace);
+      unit = Humanize.pluralize(roundedPace, unit);
+
+      return prefix + ' ' + roundedPace + ' ' + unit + ' per ' + timeUnit;
+    },
+
+
+    // Converts newlines to <br/> tags
+    nl2br: function nl2br(string) {
+      var replacement = arguments.length <= 1 || arguments[1] === undefined ? '<br/>' : arguments[1];
+
+      return string.replace(/\n/g, replacement);
+    },
+
+
+    // Converts <br/> tags to newlines
+    br2nl: function br2nl(string) {
+      var replacement = arguments.length <= 1 || arguments[1] === undefined ? '\r\n' : arguments[1];
+
+      return string.replace(/\<br\s*\/?\>/g, replacement);
+    },
+
+
+    // Capitalizes first letter in a string
+    capitalize: function capitalize(string) {
+      var downCaseTail = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+
+      return '' + string.charAt(0).toUpperCase() + (downCaseTail ? string.slice(1).toLowerCase() : string.slice(1));
+    },
+
+
+    // Capitalizes the first letter of each word in a string
+    capitalizeAll: function capitalizeAll(string) {
+      return string.replace(/(?:^|\s)\S/g, function (a) {
+        return a.toUpperCase();
+      });
+    },
+
+
+    // Titlecase words in a string.
+    titleCase: function titleCase(string) {
+      var smallWords = /\b(a|an|and|at|but|by|de|en|for|if|in|of|on|or|the|to|via|vs?\.?)\b/i;
+      var internalCaps = /\S+[A-Z]+\S*/;
+      var splitOnWhiteSpaceRegex = /\s+/;
+      var splitOnHyphensRegex = /-/;
+
+      var _doTitleCase = void 0;
+      _doTitleCase = function doTitleCase(_string) {
+        var hyphenated = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+        var firstOrLast = arguments.length <= 2 || arguments[2] === undefined ? true : arguments[2];
+
+        var titleCasedArray = [];
+        var stringArray = _string.split(hyphenated ? splitOnHyphensRegex : splitOnWhiteSpaceRegex);
+
+        for (var index = 0; index < stringArray.length; ++index) {
+          var word = stringArray[index];
+          if (word.indexOf('-') !== -1) {
+            titleCasedArray.push(_doTitleCase(word, true, index === 0 || index === stringArray.length - 1));
+            continue;
+          }
+
+          if (firstOrLast && (index === 0 || index === stringArray.length - 1)) {
+            titleCasedArray.push(internalCaps.test(word) ? word : Humanize.capitalize(word));
+            continue;
+          }
+
+          if (internalCaps.test(word)) {
+            titleCasedArray.push(word);
+          } else if (smallWords.test(word)) {
+            titleCasedArray.push(word.toLowerCase());
+          } else {
+            titleCasedArray.push(Humanize.capitalize(word));
+          }
+        }
+
+        return titleCasedArray.join(hyphenated ? '-' : ' ');
+      };
+
+      return _doTitleCase(string);
+    },
+    titlecase: function titlecase() {
+      return Humanize.titleCase.apply(Humanize, arguments);
+    }
+  };
+
+  return Humanize;
+});
+
+/***/ }),
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2436,7 +3628,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2452,7 +3644,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 if (process.env.NODE_ENV !== 'production') {
-  var invariant = __webpack_require__(2);
+  var invariant = __webpack_require__(3);
   var warning = __webpack_require__(7);
   var ReactPropTypesSecret = __webpack_require__(9);
   var loggedTypeFailures = {};
@@ -2505,7 +3697,7 @@ module.exports = checkPropTypes;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2521,7 +3713,7 @@ module.exports = checkPropTypes;
 
 
 var emptyFunction = __webpack_require__(6);
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 var ReactPropTypesSecret = __webpack_require__(9);
 
 module.exports = function() {
@@ -2571,7 +3763,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 25 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2587,11 +3779,11 @@ module.exports = function() {
 
 
 var emptyFunction = __webpack_require__(6);
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 var warning = __webpack_require__(7);
 
 var ReactPropTypesSecret = __webpack_require__(9);
-var checkPropTypes = __webpack_require__(23);
+var checkPropTypes = __webpack_require__(25);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -3091,7 +4283,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 26 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {// Generated by CoffeeScript 1.12.2
@@ -3134,7 +4326,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 27 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3174,7 +4366,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(3);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -3387,7 +4579,7 @@ exports['default'] = Motion;
 module.exports = exports['default'];
 
 /***/ }),
-/* 28 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3427,7 +4619,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(3);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -3661,7 +4853,7 @@ exports['default'] = StaggeredMotion;
 module.exports = exports['default'];
 
 /***/ }),
-/* 29 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3685,7 +4877,7 @@ var _stepper3 = __webpack_require__(13);
 
 var _stepper4 = _interopRequireDefault(_stepper3);
 
-var _mergeDiff = __webpack_require__(30);
+var _mergeDiff = __webpack_require__(32);
 
 var _mergeDiff2 = _interopRequireDefault(_mergeDiff);
 
@@ -3705,7 +4897,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(3);
+var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -4169,7 +5361,7 @@ module.exports = exports['default'];
 // that you've unmounted but that's still animating. This is where it lives
 
 /***/ }),
-/* 30 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4283,7 +5475,7 @@ module.exports = exports['default'];
 // to loop through and find a key's index each time), but I no longer care
 
 /***/ }),
-/* 31 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4293,19 +5485,19 @@ exports.__esModule = true;
 
 function _interopRequire(obj) { return obj && obj.__esModule ? obj['default'] : obj; }
 
-var _Motion = __webpack_require__(27);
+var _Motion = __webpack_require__(29);
 
 exports.Motion = _interopRequire(_Motion);
 
-var _StaggeredMotion = __webpack_require__(28);
+var _StaggeredMotion = __webpack_require__(30);
 
 exports.StaggeredMotion = _interopRequire(_StaggeredMotion);
 
-var _TransitionMotion = __webpack_require__(29);
+var _TransitionMotion = __webpack_require__(31);
 
 exports.TransitionMotion = _interopRequire(_TransitionMotion);
 
-var _spring = __webpack_require__(33);
+var _spring = __webpack_require__(35);
 
 exports.spring = _interopRequire(_spring);
 
@@ -4319,12 +5511,12 @@ exports.stripStyle = _interopRequire(_stripStyle);
 
 // deprecated, dummy warning function
 
-var _reorderKeys = __webpack_require__(32);
+var _reorderKeys = __webpack_require__(34);
 
 exports.reorderKeys = _interopRequire(_reorderKeys);
 
 /***/ }),
-/* 32 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4348,7 +5540,7 @@ module.exports = exports['default'];
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 33 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4377,7 +5569,7 @@ function spring(val, config) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 34 */
+/* 36 */
 /***/ (function(module, exports) {
 
 var g;
