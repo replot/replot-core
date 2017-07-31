@@ -41,7 +41,7 @@ class YTickLabel extends React.Component {
     } else if (this.props.value < 1000 && this.props.value > -1000){
       printVal = +this.props.value.toFixed(1)
     } else {
-      printVal = Humanize.compactInteger(this.props.value)
+      printVal = Humanize.compactInteger(this.props.value, 1)
     }
 
     return (
@@ -61,18 +61,16 @@ class YStep extends React.Component {
   render() {
     let step = []
 
-    if (this.props.showYLabels) {
-      step.push(
-        <Line key={"tick"+this.props.y}
-          x1={this.props.x} y1={this.props.y}
-          x2={this.props.x-this.props.length} y2={this.props.y}
-          stroke={this.props.color} />
-      )
-      step.push(
-        <YTickLabel key={"label"+this.props.y} x={this.props.x-10} y={this.props.y}
-          value={this.props.value} color={this.props.color} />
-      )
-    }
+    step.push(
+      <Line key={"tick"+this.props.y}
+        x1={this.props.x} y1={this.props.y}
+        x2={this.props.x-this.props.length} y2={this.props.y}
+        stroke={this.props.color} />
+    )
+    step.push(
+      <YTickLabel key={"label"+this.props.y} x={this.props.x-10} y={this.props.y}
+        value={this.props.value} color={this.props.color} />
+    )
 
     return(
       <g>{step}</g>
@@ -118,11 +116,13 @@ class YAxis extends React.Component {
       } else {
         yVal = this.props.minY + i*(this.props.maxY-this.props.minY)/(this.props.ySteps-1)
       }
-      yAxis.push(
-        <YStep key={"yStep"+i} x={this.props.x} y={tickPos}
-          value={yVal} length={10} color={this.props.style.labelColor}
-          showYLabels={this.props.showYLabels}/>
-      )
+      if (this.props.showYLabels){
+        yAxis.push(
+          <YStep key={"yStep"+i} x={this.props.x} y={tickPos}
+            value={yVal} length={10} color={this.props.style.labelColor}
+            showYLabels={this.props.showYLabels}/>
+        )
+      }
 
       if (this.props.showGrid) {
         if (i != 0) {
@@ -159,6 +159,7 @@ YAxis.defaultProps = {
     axisColor: "#000000",
     labelColor: "#000000",
     titleColor: "#000000",
+    gridColor: "#DDDDDD",
     lineWidth: 2,
     lineOpacity: 1
   }
@@ -177,6 +178,140 @@ YAxis.propTypes = {
   showGrid: PropTypes.bool,
   minY: PropTypes.number,
   maxY: PropTypes.number,
+  style: PropTypes.object
+}
+
+class XTickLabel extends React.Component {
+
+  render() {
+    let printVal
+    if (this.props.value < 1 && this.props.value > -1){
+      printVal = +this.props.value.toFixed(3)
+    } else if (this.props.value < 1000 && this.props.value > -1000){
+      printVal = +this.props.value.toFixed(1)
+    } else {
+      printVal = Humanize.compactInteger(this.props.value,1)
+    }
+
+    return (
+      <g>
+        <text x={this.props.x} y={this.props.y+22}
+          fontSize={15} fill={this.props.color} textAnchor="middle">
+          {printVal}
+        </text>
+      </g>
+    )
+  }
+
+}
+
+class XStep extends React.Component {
+
+  render() {
+    let step = []
+
+    step.push(
+      <Line key={"tick"+this.props.x}
+        x1={this.props.x} y1={this.props.y}
+        x2={this.props.x} y2={this.props.y+this.props.length}
+        stroke={this.props.color} />
+    )
+    step.push(
+      <XTickLabel key={"label"+this.props.x} x={this.props.x} y={this.props.y}
+        value={this.props.value} color={this.props.color} />
+    )
+
+    return(
+      <g>{step}</g>
+    )
+  }
+
+}
+
+class XAxisContinuous extends React.Component {
+
+  render() {
+    let xAxis = []
+
+    if (this.props.showXAxisLine) {
+      xAxis.push(
+        <Line key="xAxisLine" x1={this.props.x} y1={this.props.y}
+          x2={this.props.x+this.props.width} y2={this.props.y}
+          stroke={this.props.style.axisColor} strokeWidth={this.props.style.lineWidth}
+          opacity={this.props.style.lineOpacity}/>
+      )
+    }
+
+    if (this.props.xTitle) {
+      xAxis.push(
+        <text key="xTitle" textAnchor="middle"
+          x={this.props.x + this.props.width/2} y={this.props.y+45}
+          fill={this.props.style.titleColor} fontSize={18} >
+          {this.props.xTitle}
+        </text>
+      )
+    }
+
+    if (this.props.showXLabels){
+      let xSpace = this.props.width / (this.props.xSteps - 1)
+
+      for (let i=0; i < this.props.xSteps; i++) {
+        let tickPos = this.props.x + i*xSpace
+
+        let xVal = 0
+        if (this.props.xScale == "log") {
+          let valueRatio = (Math.log10(this.props.maxX) - Math.log10(this.props.minX)) / (this.props.xSteps - 1)
+          let pow10 = Math.log10(this.props.minX) + i * valueRatio
+          xVal = Math.pow(10, pow10)
+        } else {
+          xVal = this.props.minX + i*(this.props.maxX-this.props.minX)/(this.props.xSteps-1)
+        }
+        xAxis.push(
+          <XStep key={"xStep"+i} x={tickPos} y={this.props.y}
+            value={xVal} length={10} color={this.props.style.labelColor}
+            showXLabels={this.props.showXLabels}/>
+        )
+      }
+    }
+
+    return(
+      <g>{xAxis}</g>
+    )
+  }
+
+}
+
+XAxisContinuous.defaultProps = {
+  x: 0,
+  y: 0,
+  width: 100,
+  xScale: "lin",
+  xSteps: 5,
+  showXAxisLine: true,
+  showXLabels: true,
+  minX: 0,
+  maxX: 100,
+  style: {
+    axisColor: "#000000",
+    labelColor: "#000000",
+    titleColor: "#000000",
+    gridColor: "#DDDDDD",
+    lineWidth: 2,
+    lineOpacity: 1
+  }
+}
+
+XAxisContinuous.propTypes = {
+  x: PropTypes.number,
+  y: PropTypes.number,
+  width: PropTypes.number,
+  xScale: PropTypes.string,
+  xSteps: PropTypes.number,
+  xTitle: PropTypes.string,
+  showXAxisLine: PropTypes.bool,
+  showXLabels: PropTypes.bool,
+  minX: PropTypes.number,
+  maxX: PropTypes.number,
   style: PropTypes.object
 }
 
@@ -270,7 +405,7 @@ class Axis extends React.Component {
 
   render(){
     this.axes = []
-    this.buffer = {top: 5, left: 50, bot: 25}
+    this.buffer = {top: 5, left: 50, bot: 25, right: 0}
     if (this.props.graphTitle){
       this.buffer.top += 25
     }
@@ -280,19 +415,27 @@ class Axis extends React.Component {
     if (this.props.xTitle){
       this.buffer.bot += 25
     }
+    if (this.props.xAxisMode === "continuous"){
+      this.buffer.right += 25
+    }
 
-    let steps
+    let xSteps, ySteps
     if (this.props.ySteps){
-      steps = this.props.ySteps
+      ySteps = this.props.ySteps
     } else {
-      steps = Math.ceil(this.props.height/100) + 1
+      ySteps = Math.ceil(this.props.height/100) + 1
+    }
+    if (this.props.xSteps){
+      xSteps = this.props.xSteps
+    } else {
+      xSteps = Math.ceil(this.props.width/100) + 1
     }
 
     this.axes.push(
-      <YAxis key="YAxis" x={this.buffer.left} y={this.buffer.top} width={this.props.width}
+      <YAxis key="YAxis" x={this.buffer.left} y={this.buffer.top} width={this.props.width-3*this.buffer.right}
         height={this.props.height-this.buffer.bot-this.buffer.top}
         minY={this.props.minY} maxY={this.props.maxY} yScale={this.props.yScale}
-        ySteps={steps} yTitle={this.props.yTitle}
+        ySteps={ySteps} yTitle={this.props.yTitle}
         showYAxisLine={this.props.showYAxisLine} showYLabels={this.props.showYLabels}
         showGrid={this.props.showGrid} style={this.props.axisStyle} />
     )
@@ -302,6 +445,16 @@ class Axis extends React.Component {
           width={this.props.width-this.buffer.left}
           xTitle={this.props.xTitle} showXAxisLine={this.props.showXAxisLine}
           showXLabels={this.props.showXLabels} labels={this.props.labels}
+          style={this.props.axisStyle}/>
+      )
+    } else if (this.props.xAxisMode == "continuous"){
+      this.axes.push(
+        <XAxisContinuous key="XAxis" x={this.buffer.left} y={this.props.height-this.buffer.bot}
+          width={this.props.width-this.buffer.left-this.buffer.right}
+          xTitle={this.props.xTitle} showXAxisLine={this.props.showXAxisLine}
+          showXLabels={this.props.showXLabels}
+          xScale={this.props.xScale} xSteps={xSteps}
+          minX={this.props.minX} maxX={this.props.maxX}
           style={this.props.axisStyle}/>
       )
     }
