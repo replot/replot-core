@@ -521,4 +521,4 @@ Axis.propTypes = {
 }
 
 
-export {Axis, YAxis, XAxisDiscrete}
+export {Axis, YAxis, XAxisDiscrete, XAxisContinuous}
