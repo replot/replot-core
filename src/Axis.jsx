@@ -181,7 +181,7 @@ YAxis.propTypes = {
 }
 
 
-class XAxisStrings extends React.Component {
+class XAxisDiscrete extends React.Component {
 
   render(){
     let xAxis = []
@@ -241,7 +241,7 @@ class XAxisStrings extends React.Component {
 
 }
 
-XAxisStrings.defaultProps = {
+XAxisDiscrete.defaultProps = {
   x: 0,
   y: 0,
   width: 100,
@@ -256,7 +256,7 @@ XAxisStrings.defaultProps = {
   }
 }
 
-XAxisStrings.propTypes = {
+XAxisDiscrete.propTypes = {
   x: PropTypes.number,
   y: PropTypes.number,
   width: PropTypes.number,
@@ -296,9 +296,9 @@ class Axis extends React.Component {
         showYAxisLine={this.props.showYAxisLine} showYLabels={this.props.showYLabels}
         showGrid={this.props.showGrid} style={this.props.axisStyle} />
     )
-    if (this.props.xAxisMode == "strings"){
+    if (this.props.xAxisMode == "discrete"){
       this.axes.push(
-        <XAxisStrings key="XAxis" x={this.buffer.left} y={this.props.height-this.buffer.bot}
+        <XAxisDiscrete key="XAxis" x={this.buffer.left} y={this.props.height-this.buffer.bot}
           width={this.props.width-this.buffer.left}
           xTitle={this.props.xTitle} showXAxisLine={this.props.showXAxisLine}
           showXLabels={this.props.showXLabels} labels={this.props.labels}
@@ -368,4 +368,4 @@ Axis.propTypes = {
 }
 
 
-export {Axis, YAxis, XAxisStrings}
+export {Axis, YAxis, XAxisDiscrete}
