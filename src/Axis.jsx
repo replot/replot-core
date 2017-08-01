@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import Humanize from "humanize-plus"
+import Legend from "./Legend.jsx"
 
 
 class Line extends React.Component {
@@ -418,6 +419,13 @@ class Axis extends React.Component {
     if (this.props.xAxisMode === "continuous"){
       this.buffer.right += 25
     }
+    if (this.props.legendValues){
+      if (this.props.legendMode == "flat"){
+        this.buffer.bot += 60
+      } else if (this.props.legendMode == "stack-outside") {
+        this.buffer.right += 125
+      }
+    }
 
     let xSteps, ySteps
     if (this.props.ySteps){
@@ -432,7 +440,7 @@ class Axis extends React.Component {
     }
 
     this.axes.push(
-      <YAxis key="YAxis" x={this.buffer.left} y={this.buffer.top} width={this.props.width-3*this.buffer.right}
+      <YAxis key="YAxis" x={this.buffer.left} y={this.buffer.top} width={this.props.width-(this.buffer.left+this.buffer.right)}
         height={this.props.height-this.buffer.bot-this.buffer.top}
         minY={this.props.minY} maxY={this.props.maxY} yScale={this.props.yScale}
         ySteps={ySteps} yTitle={this.props.yTitle}
@@ -442,7 +450,7 @@ class Axis extends React.Component {
     if (this.props.xAxisMode == "discrete"){
       this.axes.push(
         <XAxisDiscrete key="XAxis" x={this.buffer.left} y={this.props.height-this.buffer.bot}
-          width={this.props.width-this.buffer.left}
+          width={this.props.width-this.buffer.left-this.buffer.right}
           xTitle={this.props.xTitle} showXAxisLine={this.props.showXAxisLine}
           showXLabels={this.props.showXLabels} labels={this.props.labels}
           style={this.props.axisStyle}/>
@@ -461,10 +469,47 @@ class Axis extends React.Component {
     if (this.props.graphTitle){
       this.axes.push(
         <text key="graphTitle" textAnchor="middle" fontSize={18}
-          x={this.buffer.left + (this.props.width-this.buffer.left) / 2} y={20}>
+          x={this.buffer.left + (this.props.width-this.buffer.left-this.buffer.right) / 2} y={20}>
           {this.props.graphTitle}
         </text>
       )
+    }
+    if (this.props.legendValues){
+      if (this.props.legendMode === "flat"){
+        this.axes.push(
+          <g key="Legend" transform={`translate(${this.buffer.left} ${this.props.height-50})`}>
+            <Legend values={this.props.legendValues}
+              width={this.props.width-this.buffer.left}
+              showLegend={this.props.showLegend}
+              fontColor={this.props.legendStyle.fontColor}
+              backgroundColor={this.props.legendStyle.backgroundColor}
+              showBorder={this.props.legendStyle.showBorder}
+              borderColor={this.props.legendStyle.borderColor}/>
+          </g>
+        )
+      } else if (this.props.legendMode === "stack-inside"){
+        this.axes.push(
+          <g key="Legend" transform={`translate(${this.props.width-120} ${this.props.graphTitle ? 30 : 5})`}>
+            <Legend values={this.props.legendValues} mode="stack"
+              showLegend={this.props.showLegend}
+              fontColor={this.props.legendStyle.fontColor}
+              backgroundColor={this.props.legendStyle.backgroundColor}
+              showBorder={this.props.legendStyle.showBorder}
+              borderColor={this.props.legendStyle.borderColor}/>
+          </g>
+        )
+      } else if (this.props.legendMode === "stack-outside"){
+        this.axes.push(
+          <g key="Legend" transform={`translate(${this.props.width-120} ${this.props.graphTitle ? 30 : 5})`}>
+            <Legend values={this.props.legendValues} mode="stack"
+              showLegend={this.props.showLegend}
+              fontColor={this.props.legendStyle.fontColor}
+              backgroundColor={this.props.legendStyle.backgroundColor}
+              showBorder={this.props.legendStyle.showBorder}
+              borderColor={this.props.legendStyle.borderColor}/>
+          </g>
+        )
+      }
     }
 
     return(
@@ -499,6 +544,14 @@ Axis.defaultProps = {
     gridColor: "#DDDDDD",
     lineWidth: 2,
     lineOpacity: 1
+  },
+  showLegend: true,
+  legendMode: "flat",
+  legendStyle: {
+    fontColor: "#000000",
+    backgroundColor: "none",
+    showBorder: true,
+    borderColor: "#000000"
   }
 }
 
@@ -525,7 +578,10 @@ Axis.propTypes = {
   showYAxisLine: PropTypes.bool,
   showYLabels: PropTypes.bool,
   showGrid: PropTypes.bool,
-  axisStyle: PropTypes.object
+  axisStyle: PropTypes.object,
+  showLegend: PropTypes.bool,
+  legendMode: PropTypes.string,
+  legendStyle: PropTypes.object
 }
 
 
