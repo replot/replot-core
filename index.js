@@ -819,6 +819,158 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Legend = function (_React$Component) {
+  _inherits(Legend, _React$Component);
+
+  function Legend() {
+    _classCallCheck(this, Legend);
+
+    return _possibleConstructorReturn(this, (Legend.__proto__ || Object.getPrototypeOf(Legend)).apply(this, arguments));
+  }
+
+  _createClass(Legend, [{
+    key: "render",
+    value: function render() {
+      if (Object.keys(this.props.values).length === 0 || !this.props.showLegend) {
+        return null;
+      } else {
+        var titles = Object.keys(this.props.values).sort();
+        var longest = Object.keys(this.props.values).sort(function (a, b) {
+          return b.length - a.length;
+        })[0];
+        var items = [];
+        var size = 16;
+        var buffer = { x: 5, y: 4 };
+        if (this.props.mode === "flat") {
+          var numColumns = Math.min(titles.length, Math.floor((this.props.width - buffer.x) / (size * 2 + longest.length * size / 2)));
+          var numRows = Math.ceil(titles.length / numColumns);
+
+          for (var i = 0; i < titles.length; i++) {
+            var title = titles[i];
+            if (title) {
+              var x = buffer.x + i % numColumns * ((this.props.width - buffer.x - (size * 2 + longest.length * size / 2)) / (numColumns - 1));
+              var y = buffer.y + Math.floor(i / numColumns) * 1.5 * size;
+              items.push(_react2.default.createElement(
+                "g",
+                { key: title },
+                _react2.default.createElement("rect", { x: x, y: y, width: size, height: size,
+                  fill: this.props.values[title] }),
+                _react2.default.createElement(
+                  "text",
+                  { x: x + 1.5 * size, y: y + size / 1.7,
+                    alignmentBaseline: "middle", fontSize: size,
+                    fill: this.props.fontColor, fontFamily: this.props.fontFamily },
+                  title
+                )
+              ));
+            }
+          }
+
+          return _react2.default.createElement(
+            "g",
+            null,
+            _react2.default.createElement("rect", { x: 0, y: 0, width: this.props.width,
+              height: numRows * size * 1.5, fill: this.props.backgroundColor,
+              stroke: this.props.showBorder ? this.props.borderColor : "none",
+              strokeWidth: 2 }),
+            items
+          );
+        } else if (this.props.mode === "stack") {
+
+          for (var _i = 0; _i < titles.length; _i++) {
+            var _title = titles[_i];
+            if (_title) {
+              var _x = buffer.x;
+              var _y = void 0;
+              if (this.props.height) {
+                _y = buffer.y + _i * ((this.props.height - size * 1.5) / (titles.length - 1));
+              } else {
+                _y = buffer.y + _i * size * 1.5;
+              }
+              items.push(_react2.default.createElement(
+                "g",
+                { key: _title },
+                _react2.default.createElement("rect", { x: _x, y: _y, width: size, height: size,
+                  fill: this.props.values[_title] }),
+                _react2.default.createElement(
+                  "text",
+                  { x: _x + 1.5 * size, y: _y + size / 1.7,
+                    alignmentBaseline: "middle", fontSize: size,
+                    fill: this.props.fontColor, fontFamily: this.props.fontFamily },
+                  _title
+                )
+              ));
+            }
+          }
+          return _react2.default.createElement(
+            "g",
+            null,
+            _react2.default.createElement("rect", { x: 0, y: 0, width: size * 2 + longest.length * size / 2,
+              height: this.props.height ? this.props.height : titles.length * size * 1.5,
+              fill: this.props.backgroundColor, strokeWidth: 2,
+              stroke: this.props.showBorder ? this.props.borderColor : "none" }),
+            items
+          );
+        }
+      }
+    }
+  }]);
+
+  return Legend;
+}(_react2.default.Component);
+
+Legend.defaultProps = {
+  width: 500,
+  mode: "flat",
+  showLegend: true,
+  fontColor: "#000000",
+  backgroundColor: "none",
+  showBorder: true,
+  borderColor: "#000000"
+};
+
+Legend.propTypes = {
+  values: _propTypes2.default.object.isRequired,
+  width: _propTypes2.default.number,
+  mode: _propTypes2.default.string,
+  showLegend: _propTypes2.default.bool,
+  fontColor: _propTypes2.default.string,
+  backgroundColor: _propTypes2.default.string,
+  showBorder: _propTypes2.default.bool,
+  borderColor: _propTypes2.default.string
+};
+
+exports.default = Legend;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
 var _reactMotion = __webpack_require__(33);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -889,7 +1041,7 @@ LoadingIcon.defaultProps = {
 exports.default = LoadingIcon;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -905,7 +1057,7 @@ exports["default"] = {
 module.exports = exports["default"];
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -929,6 +1081,10 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 var _humanizePlus = __webpack_require__(23);
 
 var _humanizePlus2 = _interopRequireDefault(_humanizePlus);
+
+var _Legend = __webpack_require__(14);
+
+var _Legend2 = _interopRequireDefault(_Legend);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1445,6 +1601,13 @@ var Axis = function (_React$Component9) {
       if (this.props.xAxisMode === "continuous") {
         this.buffer.right += 25;
       }
+      if (this.props.legendValues) {
+        if (this.props.legendMode == "flat") {
+          this.buffer.bot += 60;
+        } else if (this.props.legendMode == "stack-outside") {
+          this.buffer.right += 125;
+        }
+      }
 
       var xSteps = void 0,
           ySteps = void 0;
@@ -1459,7 +1622,7 @@ var Axis = function (_React$Component9) {
         xSteps = Math.ceil(this.props.width / 100) + 1;
       }
 
-      this.axes.push(_react2.default.createElement(YAxis, { key: "YAxis", x: this.buffer.left, y: this.buffer.top, width: this.props.width - 3 * this.buffer.right,
+      this.axes.push(_react2.default.createElement(YAxis, { key: "YAxis", x: this.buffer.left, y: this.buffer.top, width: this.props.width - (this.buffer.left + this.buffer.right),
         height: this.props.height - this.buffer.bot - this.buffer.top,
         minY: this.props.minY, maxY: this.props.maxY, yScale: this.props.yScale,
         ySteps: ySteps, yTitle: this.props.yTitle,
@@ -1467,7 +1630,7 @@ var Axis = function (_React$Component9) {
         showGrid: this.props.showGrid, style: this.props.axisStyle }));
       if (this.props.xAxisMode == "discrete") {
         this.axes.push(_react2.default.createElement(XAxisDiscrete, { key: "XAxis", x: this.buffer.left, y: this.props.height - this.buffer.bot,
-          width: this.props.width - this.buffer.left,
+          width: this.props.width - this.buffer.left - this.buffer.right,
           xTitle: this.props.xTitle, showXAxisLine: this.props.showXAxisLine,
           showXLabels: this.props.showXLabels, labels: this.props.labels,
           style: this.props.axisStyle }));
@@ -1484,9 +1647,46 @@ var Axis = function (_React$Component9) {
         this.axes.push(_react2.default.createElement(
           "text",
           { key: "graphTitle", textAnchor: "middle", fontSize: 18,
-            x: this.buffer.left + (this.props.width - this.buffer.left) / 2, y: 20 },
+            x: this.buffer.left + (this.props.width - this.buffer.left - this.buffer.right) / 2, y: 20 },
           this.props.graphTitle
         ));
+      }
+      if (this.props.legendValues) {
+        if (this.props.legendMode === "flat") {
+          this.axes.push(_react2.default.createElement(
+            "g",
+            { key: "Legend", transform: "translate(" + this.buffer.left + " " + (this.props.height - 50) + ")" },
+            _react2.default.createElement(_Legend2.default, { values: this.props.legendValues,
+              width: this.props.width - this.buffer.left,
+              showLegend: this.props.showLegend,
+              fontColor: this.props.legendStyle.fontColor,
+              backgroundColor: this.props.legendStyle.backgroundColor,
+              showBorder: this.props.legendStyle.showBorder,
+              borderColor: this.props.legendStyle.borderColor })
+          ));
+        } else if (this.props.legendMode === "stack-inside") {
+          this.axes.push(_react2.default.createElement(
+            "g",
+            { key: "Legend", transform: "translate(" + (this.props.width - 120) + " " + (this.props.graphTitle ? 30 : 5) + ")" },
+            _react2.default.createElement(_Legend2.default, { values: this.props.legendValues, mode: "stack",
+              showLegend: this.props.showLegend,
+              fontColor: this.props.legendStyle.fontColor,
+              backgroundColor: this.props.legendStyle.backgroundColor,
+              showBorder: this.props.legendStyle.showBorder,
+              borderColor: this.props.legendStyle.borderColor })
+          ));
+        } else if (this.props.legendMode === "stack-outside") {
+          this.axes.push(_react2.default.createElement(
+            "g",
+            { key: "Legend", transform: "translate(" + (this.props.width - 120) + " " + (this.props.graphTitle ? 30 : 5) + ")" },
+            _react2.default.createElement(_Legend2.default, { values: this.props.legendValues, mode: "stack",
+              showLegend: this.props.showLegend,
+              fontColor: this.props.legendStyle.fontColor,
+              backgroundColor: this.props.legendStyle.backgroundColor,
+              showBorder: this.props.legendStyle.showBorder,
+              borderColor: this.props.legendStyle.borderColor })
+          ));
+        }
       }
 
       return _react2.default.createElement(
@@ -1524,6 +1724,14 @@ Axis.defaultProps = {
     gridColor: "#DDDDDD",
     lineWidth: 2,
     lineOpacity: 1
+  },
+  showLegend: true,
+  legendMode: "flat",
+  legendStyle: {
+    fontColor: "#000000",
+    backgroundColor: "none",
+    showBorder: true,
+    borderColor: "#000000"
   }
 };
 
@@ -1550,165 +1758,16 @@ Axis.propTypes = {
   showYAxisLine: _propTypes2.default.bool,
   showYLabels: _propTypes2.default.bool,
   showGrid: _propTypes2.default.bool,
-  axisStyle: _propTypes2.default.object
+  axisStyle: _propTypes2.default.object,
+  showLegend: _propTypes2.default.bool,
+  legendMode: _propTypes2.default.string,
+  legendStyle: _propTypes2.default.object
 };
 
 exports.Axis = Axis;
 exports.YAxis = YAxis;
 exports.XAxisDiscrete = XAxisDiscrete;
 exports.XAxisContinuous = XAxisContinuous;
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(2);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Legend = function (_React$Component) {
-  _inherits(Legend, _React$Component);
-
-  function Legend() {
-    _classCallCheck(this, Legend);
-
-    return _possibleConstructorReturn(this, (Legend.__proto__ || Object.getPrototypeOf(Legend)).apply(this, arguments));
-  }
-
-  _createClass(Legend, [{
-    key: "render",
-    value: function render() {
-      if (Object.keys(this.props.values).length === 0 || this.props.display === "off") {
-        return null;
-      } else {
-        var titles = Object.keys(this.props.values).sort();
-        var longest = Object.keys(this.props.values).sort(function (a, b) {
-          return b.length - a.length;
-        })[0];
-        var items = [];
-        var size = 16;
-        var buffer = { x: 5, y: 4 };
-        if (this.props.mode === "flat") {
-          var numColumns = Math.min(titles.length, Math.floor((this.props.width - buffer.x) / (size * 2 + longest.length * size / 2)));
-          var numRows = Math.ceil(titles.length / numColumns);
-
-          for (var i = 0; i < titles.length; i++) {
-            var title = titles[i];
-            if (title) {
-              var x = buffer.x + i % numColumns * ((this.props.width - buffer.x - (size * 2 + longest.length * size / 2)) / (numColumns - 1));
-              var y = buffer.y + Math.floor(i / numColumns) * 1.5 * size;
-              items.push(_react2.default.createElement(
-                "g",
-                { key: title },
-                _react2.default.createElement("rect", { x: x, y: y, width: size, height: size,
-                  fill: this.props.values[title] }),
-                _react2.default.createElement(
-                  "text",
-                  { x: x + 1.5 * size, y: y + size / 1.7,
-                    alignmentBaseline: "middle", fontSize: size,
-                    fill: this.props.fontColor, fontFamily: this.props.fontFamily },
-                  title
-                )
-              ));
-            }
-          }
-
-          return _react2.default.createElement(
-            "g",
-            null,
-            _react2.default.createElement("rect", { x: 0, y: 0, width: this.props.width,
-              height: numRows * size * 1.5, fill: this.props.backgroundColor,
-              stroke: this.props.border === "on" ? this.props.borderColor : "none",
-              strokeWidth: 2 }),
-            items
-          );
-        } else if (this.props.mode === "stack") {
-
-          for (var _i = 0; _i < titles.length; _i++) {
-            var _title = titles[_i];
-            if (_title) {
-              var _x = buffer.x;
-              var _y = void 0;
-              if (this.props.height) {
-                _y = buffer.y + _i * ((this.props.height - size * 1.5) / (titles.length - 1));
-              } else {
-                _y = buffer.y + _i * size * 1.5;
-              }
-              items.push(_react2.default.createElement(
-                "g",
-                { key: _title },
-                _react2.default.createElement("rect", { x: _x, y: _y, width: size, height: size,
-                  fill: this.props.values[_title] }),
-                _react2.default.createElement(
-                  "text",
-                  { x: _x + 1.5 * size, y: _y + size / 1.7,
-                    alignmentBaseline: "middle", fontSize: size,
-                    fill: this.props.fontColor, fontFamily: this.props.fontFamily },
-                  _title
-                )
-              ));
-            }
-          }
-          return _react2.default.createElement(
-            "g",
-            null,
-            _react2.default.createElement("rect", { x: 0, y: 0, width: size * 2 + longest.length * size / 2,
-              height: this.props.height ? this.props.height : titles.length * size * 1.5,
-              fill: this.props.backgroundColor, strokeWidth: 2,
-              stroke: this.props.border === "on" ? this.props.borderColor : "none" }),
-            items
-          );
-        }
-      }
-    }
-  }]);
-
-  return Legend;
-}(_react2.default.Component);
-
-Legend.defaultProps = {
-  width: 500,
-  mode: "flat",
-  display: "on",
-  fontColor: "#000000",
-  backgroundColor: "none",
-  border: "off",
-  borderColor: "#000000"
-};
-
-Legend.propTypes = {
-  values: _propTypes2.default.object.isRequired,
-  width: _propTypes2.default.number,
-  mode: _propTypes2.default.string,
-  display: _propTypes2.default.string,
-  fontColor: _propTypes2.default.string,
-  backgroundColor: _propTypes2.default.string,
-  border: _propTypes2.default.string,
-  borderColor: _propTypes2.default.string
-};
-
-exports.default = Legend;
 
 /***/ }),
 /* 18 */
@@ -1727,7 +1786,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _LoadingIcon = __webpack_require__(14);
+var _LoadingIcon = __webpack_require__(15);
 
 var _LoadingIcon2 = _interopRequireDefault(_LoadingIcon);
 
@@ -2071,15 +2130,15 @@ var _Resize = __webpack_require__(18);
 
 var _Resize2 = _interopRequireDefault(_Resize);
 
-var _LoadingIcon = __webpack_require__(14);
+var _LoadingIcon = __webpack_require__(15);
 
 var _LoadingIcon2 = _interopRequireDefault(_LoadingIcon);
 
-var _Legend = __webpack_require__(17);
+var _Legend = __webpack_require__(14);
 
 var _Legend2 = _interopRequireDefault(_Legend);
 
-var _Axis = __webpack_require__(16);
+var _Axis = __webpack_require__(17);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5509,7 +5568,7 @@ var _spring = __webpack_require__(35);
 
 exports.spring = _interopRequire(_spring);
 
-var _presets = __webpack_require__(15);
+var _presets = __webpack_require__(16);
 
 exports.presets = _interopRequire(_presets);
 
@@ -5562,7 +5621,7 @@ exports['default'] = spring;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _presets = __webpack_require__(15);
+var _presets = __webpack_require__(16);
 
 var _presets2 = _interopRequireDefault(_presets);
 
