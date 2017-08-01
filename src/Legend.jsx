@@ -5,7 +5,7 @@ import PropTypes from "prop-types"
 class Legend extends React.Component {
 
   render() {
-    if (Object.keys(this.props.values).length === 0 || this.props.display === "off") {
+    if (Object.keys(this.props.values).length === 0 || !this.props.showLegend) {
       return null
     } else {
       let titles = Object.keys(this.props.values).sort()
@@ -40,7 +40,7 @@ class Legend extends React.Component {
           <g>
             <rect x={0} y={0} width={this.props.width}
               height={numRows*size*1.5} fill={this.props.backgroundColor}
-              stroke={this.props.border === "on" ? this.props.borderColor : "none"}
+              stroke={this.props.showBorder ? this.props.borderColor : "none"}
               strokeWidth={2} />
             {items}
           </g>
@@ -76,7 +76,7 @@ class Legend extends React.Component {
             <rect x={0} y={0} width={(size*2) + (longest.length*size/2)}
               height={this.props.height ? this.props.height : titles.length*size*1.5}
               fill={this.props.backgroundColor} strokeWidth={2}
-              stroke={this.props.border === "on" ? this.props.borderColor : "none"}/>
+              stroke={this.props.showBorder ? this.props.borderColor : "none"}/>
             {items}
           </g>
         )
@@ -88,10 +88,10 @@ class Legend extends React.Component {
 Legend.defaultProps = {
   width: 500,
   mode: "flat",
-  display: "on",
+  showLegend: true,
   fontColor: "#000000",
   backgroundColor: "none",
-  border: "off",
+  showBorder: true,
   borderColor: "#000000"
 }
 
@@ -99,10 +99,10 @@ Legend.propTypes = {
   values: PropTypes.object.isRequired,
   width: PropTypes.number,
   mode: PropTypes.string,
-  display: PropTypes.string,
+  showLegend: PropTypes.bool,
   fontColor: PropTypes.string,
   backgroundColor: PropTypes.string,
-  border: PropTypes.string,
+  showBorder: PropTypes.bool,
   borderColor: PropTypes.string
 }
 

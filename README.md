@@ -79,7 +79,7 @@ fill of the dots.
 ## Legend
 
 ### Basic Usage
-To use the LoadingIcon, import the `{Legend}` component, and insert a
+To use the Legend, import the `{Legend}` component, and insert a
 `<Legend />` into your JSX. **Note:** The Legend must be used within an `<svg>`
 parent component, since the Legend itself is comprised of SVG elements.
 
@@ -100,8 +100,8 @@ titles up to the specified height.
 #### Further Customization
 
 The user can pass in additional props to further customize the Legend:
-* `border` defaults to `"off"`, but will draw a border around the Legend if a
-value of `"on"` is passed
+* `showBorder` defaults to `true`, but will not draw a border around the Legend if a
+value of `false` is passed
 * `borderColor` defaults to `"#000000"`, and will change the color of the border.
 * `backgroundColor` defaults to `none`, and will change the background color
 or the Legend.
@@ -177,3 +177,68 @@ The entirety of customization options/props for the Axis follows:
       lineWidth: 5,
       lineOpacity: .5
     }`
+
+### Axis Legends
+The Axis component also supports the display of a legend, in multiple modes.
+When used with the Axis, the legend will activate if the Axis component is passed
+a `legendValues` prop. The `legendValues` prop should be an object where each key will
+be a title in the legend, and each value will be the color associated with the
+title.
+
+By default, the legend functions in `"flat"` mode, where it lies at the bottom of
+the graph underneath all of the labels and titles. The user can pass in a
+`legendMode` prop to the Axis component with values of `"stack-inside"` or `"stack-outside"`.
+In these modes, the values in the legend lie one on top of the other, and are
+positioned in the top-right corner of the graph. If `"stack-inside"` is specified,
+the legend will lie within the contents of the graph. If `"stack-outside"` is
+specified, the legend will lie outside and push the graph contents to the left.
+
+The Legend can be disabled entirely if a `showLegend` prop is passed in to the
+Axis component with a value of `false`.
+
+The Legend can be customized with a single `legendStyle` object prop passed to the Axis
+component, with any of the following keys:
+* `backgroundColor`
+  * Determines the background color of the legend
+  * Defaults to `"none"`
+  * Accepts any color string
+* `fontColor`
+  * Determines the color of the text within the legend
+  * Defaults to `"#000000"`
+  * Accetps any color string
+* `showBorder`
+  * Determines if a border will be displayed around the legend
+  * Defaults to `true`
+  * Accepts a boolean value
+* `borderColor`
+  * Determines the color of the border
+  * Defaults to `"#000000"`
+  * Accepts any color string
+
+### Buffers to keep in mind when using the axes
+If you choose to implement the Axis component, you must keep in mind that the
+core elements of your component (such as the bars of a bargraph or the lines
+of a linechart) will not begin at (0,0) on a coordinate system, since the axes
+themselves take up some space. To compensate, one can make the core elements a
+child SVG placed at a certain (x,y). To determine that position, refer to the
+information below:
+
+From the top:
+* The graph always has a buffer of 5 pixels to allow for the uppermost y-value to
+display
+* If a graph title is included, the buffer will increase by 25 pixels
+
+From the left:
+* The graph always has a buffer of 50 pixels to allow for y-values to display
+* If a yTitle is included, the buffer will increases by 25 pixels
+
+From the bottom:
+* The graph always has a buffer of 25 pixels to allow for x-values to display
+* If an xTitle is included, the buffer will increases by 25 pixels.
+* If a flat legend is included, the buffer will further increase by 60 pixels
+
+From the right:
+* There is 0 buffer from the right by default
+* If the xAxis is continuous, the buffer increases by 25 pixels to allow the
+upper most x-value to display
+* If a stack-outside legend is included, the buffer increases by 125 pixels.
