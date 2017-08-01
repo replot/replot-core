@@ -1646,7 +1646,8 @@ var Axis = function (_React$Component9) {
       if (this.props.graphTitle) {
         this.axes.push(_react2.default.createElement(
           "text",
-          { key: "graphTitle", textAnchor: "middle", fontSize: 18,
+          { key: "graphTitle", textAnchor: "middle",
+            fontSize: 18, fill: this.props.axisStyle.titleColor,
             x: this.buffer.left + (this.props.width - this.buffer.left - this.buffer.right) / 2, y: 20 },
           this.props.graphTitle
         ));
