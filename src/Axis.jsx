@@ -166,22 +166,6 @@ YAxis.defaultProps = {
   }
 }
 
-YAxis.propTypes = {
-  x: PropTypes.number,
-  y: PropTypes.number,
-  width: PropTypes.number,
-  height: PropTypes.number,
-  yScale: PropTypes.string,
-  ySteps: PropTypes.number,
-  yTitle: PropTypes.string,
-  showYAxisLine: PropTypes.bool,
-  showYLabels: PropTypes.bool,
-  showGrid: PropTypes.bool,
-  minY: PropTypes.number,
-  maxY: PropTypes.number,
-  style: PropTypes.object
-}
-
 class XTickLabel extends React.Component {
 
   render() {
@@ -302,21 +286,6 @@ XAxisContinuous.defaultProps = {
   }
 }
 
-XAxisContinuous.propTypes = {
-  x: PropTypes.number,
-  y: PropTypes.number,
-  width: PropTypes.number,
-  xScale: PropTypes.string,
-  xSteps: PropTypes.number,
-  xTitle: PropTypes.string,
-  showXAxisLine: PropTypes.bool,
-  showXLabels: PropTypes.bool,
-  minX: PropTypes.number,
-  maxX: PropTypes.number,
-  style: PropTypes.object
-}
-
-
 class XAxisDiscrete extends React.Component {
 
   render(){
@@ -392,29 +361,26 @@ XAxisDiscrete.defaultProps = {
   }
 }
 
-XAxisDiscrete.propTypes = {
-  x: PropTypes.number,
-  y: PropTypes.number,
-  width: PropTypes.number,
-  showXAxisLine: PropTypes.bool,
-  showXLabels: PropTypes.bool,
-  labels: PropTypes.array,
-  style: PropTypes.object
-}
-
 class Axis extends React.Component {
 
   render(){
     this.axes = []
-    this.buffer = {top: 5, left: 50, bot: 25, right: 0}
+    this.buffer = {top: 0, left: 0, bot: 0, right: 0}
+    if (this.props.showYAxis){
+      this.buffer.top += 5
+      this.buffer.left += 50
+      if (this.props.yTitle){
+        this.buffer.left += 25
+      }
+    }
+    if (this.props.showXAxis){
+      this.buffer.bot += 25
+      if (this.props.xTitle){
+        this.buffer.bot += 25
+      }
+    }
     if (this.props.graphTitle){
       this.buffer.top += 25
-    }
-    if (this.props.yTitle){
-      this.buffer.left += 25
-    }
-    if (this.props.xTitle){
-      this.buffer.bot += 25
     }
     if (this.props.xAxisMode === "continuous"){
       this.buffer.right += 25
@@ -438,33 +404,37 @@ class Axis extends React.Component {
     } else {
       xSteps = Math.ceil(this.props.width/100) + 1
     }
-
-    this.axes.push(
-      <YAxis key="YAxis" x={this.buffer.left} y={this.buffer.top} width={this.props.width-(this.buffer.left+this.buffer.right)}
-        height={this.props.height-this.buffer.bot-this.buffer.top}
-        minY={this.props.minY} maxY={this.props.maxY} yScale={this.props.yScale}
-        ySteps={ySteps} yTitle={this.props.yTitle}
-        showYAxisLine={this.props.showYAxisLine} showYLabels={this.props.showYLabels}
-        showGrid={this.props.showGrid} style={this.props.axisStyle} />
-    )
-    if (this.props.xAxisMode == "discrete"){
+    
+    if (this.props.showYAxis) {
       this.axes.push(
-        <XAxisDiscrete key="XAxis" x={this.buffer.left} y={this.props.height-this.buffer.bot}
-          width={this.props.width-this.buffer.left-this.buffer.right}
-          xTitle={this.props.xTitle} showXAxisLine={this.props.showXAxisLine}
-          showXLabels={this.props.showXLabels} labels={this.props.labels}
-          style={this.props.axisStyle}/>
+        <YAxis key="YAxis" x={this.buffer.left} y={this.buffer.top} width={this.props.width-(this.buffer.left+this.buffer.right)}
+          height={this.props.height-this.buffer.bot-this.buffer.top}
+          minY={this.props.minY} maxY={this.props.maxY} yScale={this.props.yScale}
+          ySteps={ySteps} yTitle={this.props.yTitle}
+          showYAxisLine={this.props.showYAxisLine} showYLabels={this.props.showYLabels}
+          showGrid={this.props.showGrid} style={this.props.axisStyle} />
       )
-    } else if (this.props.xAxisMode == "continuous"){
-      this.axes.push(
-        <XAxisContinuous key="XAxis" x={this.buffer.left} y={this.props.height-this.buffer.bot}
-          width={this.props.width-this.buffer.left-this.buffer.right}
-          xTitle={this.props.xTitle} showXAxisLine={this.props.showXAxisLine}
-          showXLabels={this.props.showXLabels}
-          xScale={this.props.xScale} xSteps={xSteps}
-          minX={this.props.minX} maxX={this.props.maxX}
-          style={this.props.axisStyle}/>
-      )
+    }
+    if (this.props.showXAxis) {
+      if (this.props.xAxisMode == "discrete"){
+        this.axes.push(
+          <XAxisDiscrete key="XAxis" x={this.buffer.left} y={this.props.height-this.buffer.bot}
+            width={this.props.width-this.buffer.left-this.buffer.right}
+            xTitle={this.props.xTitle} showXAxisLine={this.props.showXAxisLine}
+            showXLabels={this.props.showXLabels} labels={this.props.labels}
+            style={this.props.axisStyle}/>
+        )
+      } else if (this.props.xAxisMode == "continuous"){
+        this.axes.push(
+          <XAxisContinuous key="XAxis" x={this.buffer.left} y={this.props.height-this.buffer.bot}
+            width={this.props.width-this.buffer.left-this.buffer.right}
+            xTitle={this.props.xTitle} showXAxisLine={this.props.showXAxisLine}
+            showXLabels={this.props.showXLabels}
+            xScale={this.props.xScale} xSteps={xSteps}
+            minX={this.props.minX} maxX={this.props.maxX}
+            style={this.props.axisStyle}/>
+        )
+      }
     }
     if (this.props.graphTitle){
       this.axes.push(
@@ -490,7 +460,7 @@ class Axis extends React.Component {
         )
       } else if (this.props.legendMode === "stack-inside"){
         this.axes.push(
-          <g key="Legend" transform={`translate(${this.props.width-120} ${this.props.graphTitle ? 30 : 5})`}>
+          <g key="Legend" transform={`translate(${this.props.width-120} ${this.buffer.top})`}>
             <Legend values={this.props.legendValues} mode="stack"
               showLegend={this.props.showLegend}
               fontColor={this.props.legendStyle.fontColor}
@@ -501,7 +471,7 @@ class Axis extends React.Component {
         )
       } else if (this.props.legendMode === "stack-outside"){
         this.axes.push(
-          <g key="Legend" transform={`translate(${this.props.width-120} ${this.props.graphTitle ? 30 : 5})`}>
+          <g key="Legend" transform={`translate(${this.props.width-120} ${this.buffer.top})`}>
             <Legend values={this.props.legendValues} mode="stack"
               showLegend={this.props.showLegend}
               fontColor={this.props.legendStyle.fontColor}
@@ -513,9 +483,16 @@ class Axis extends React.Component {
       }
     }
 
+    let child = React.cloneElement(this.props.children,
+      {width: this.props.width-this.buffer.left-this.buffer.right,
+        height:this.props.height-this.buffer.top-this.buffer.bot})
+
     return(
       <g>
         {this.axes}
+        <g transform={`translate(${this.buffer.left} ${this.buffer.top})`}>
+          {child}
+        </g>
       </g>
     )
   }
@@ -533,6 +510,8 @@ Axis.defaultProps = {
   maxY: 100,
   minX: 0,
   maxX: 100,
+  showXAxis: true,
+  showYAxis: true,
   showXAxisLine: true,
   showXLabels: true,
   showYAxisLine: true,
@@ -586,4 +565,4 @@ Axis.propTypes = {
 }
 
 
-export {Axis, YAxis, XAxisDiscrete, XAxisContinuous}
+export default Axis
