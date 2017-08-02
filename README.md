@@ -107,12 +107,49 @@ value of `false` is passed
 or the Legend.
 
 ## Axis
-Users can import an entire set of axes, or import just the YAxis or XAxis. The
-full options include:
-- {Axis}
-- {YAxis}
-- {XAxisDiscrete} :intended for situations where the x axis requires labels
-- {XAxisContinuous} :intended for situations where the x axis is a range of numbers
+Users can import an axis parent component, for any visualization that may require
+a set of axes.
+
+```javascript
+import {Axis} from "replot-core"
+```
+The Axis component is used by wrapping around any actual graph elements. The Axis
+will draw out an x-axis (which can use labels or number ticks) and a y-axis.
+It will translate the inner contents to the appropriate upper-left corner of the
+axes. And finally it will pass in new width and height props to the child to reflect
+the true space able to be utilized.
+
+For an example of how the Axis is used with an actual replot component, see below:
+
+```javascript
+
+let graph = (
+  <Axis key="axis" width={this.props.width} height={this.props.height}
+    graphTitle={this.props.graphTitle} minY={min-padding} maxY={max+padding}
+    ySteps={this.props.ySteps} yTitle={this.props.yTitle}
+    showYAxisLine={this.props.showYAxisLine}
+    showYLabels={this.props.showYLabels} showGrid={this.props.showGrid}
+    xTitle={this.props.xTitle} showXAxisLine={this.props.showXAxisLine}
+    showXLabels={this.props.showXLabels} labels={labels}
+    axisStyle={this.props.axisStyle} xAxisMode="discrete" >
+    <PlotContainer distributions={distributions} max={max} min={min}
+      padding={padding} style={this.props.graphStyle}
+      initialAnimation={this.props.initialAnimation} />
+  </Axis>
+)
+
+render() {
+  return (
+    <svg width={this.props.width} height={this.props.height}>
+      {graph}
+    </svg>
+  )
+}
+
+```
+The PlotContainer in the above example does not require width and height props,
+because the Axis will pass it an appropriate width and height after accounting
+for the space titles, labels, and legends take up.
 
 The entirety of customization options/props for the Axis follows:
 * `x` and `y`
@@ -125,9 +162,13 @@ The entirety of customization options/props for the Axis follows:
   may need to be pushed in to compensate
   * Defaults to `400` and `400`
   * Accepts any number
+* `showXAxis` and `showYAxis`
+  * Used if only an x-axis or y-axis is necessary. Setting either to false will entirely
+  disable the corresponding axis.
+  * Both default to `"true"`
+  * Accepts `true` and `false`
 * `xAxisMode`
-  * To be used when implementing a full `Axis` component, determines whether the
-  x axis will utilize word labels or number ticks
+  * Determines whether the x-axis will utilize word labels or number ticks
   * Defaults to `"discrete"`
   * Accepts `"discrete"` and `"continuous"`
 * `xScale` and `yScale`
@@ -214,31 +255,3 @@ component, with any of the following keys:
   * Determines the color of the border
   * Defaults to `"#000000"`
   * Accepts any color string
-
-### Buffers to keep in mind when using the axes
-If you choose to implement the Axis component, you must keep in mind that the
-core elements of your component (such as the bars of a bargraph or the lines
-of a linechart) will not begin at (0,0) on a coordinate system, since the axes
-themselves take up some space. To compensate, one can make the core elements a
-child SVG placed at a certain (x,y). To determine that position, refer to the
-information below:
-
-From the top:
-* The graph always has a buffer of 5 pixels to allow for the uppermost y-value to
-display
-* If a graph title is included, the buffer will increase by 25 pixels
-
-From the left:
-* The graph always has a buffer of 50 pixels to allow for y-values to display
-* If a yTitle is included, the buffer will increases by 25 pixels
-
-From the bottom:
-* The graph always has a buffer of 25 pixels to allow for x-values to display
-* If an xTitle is included, the buffer will increases by 25 pixels.
-* If a flat legend is included, the buffer will further increase by 60 pixels
-
-From the right:
-* There is 0 buffer from the right by default
-* If the xAxis is continuous, the buffer increases by 25 pixels to allow the
-upper most x-value to display
-* If a stack-outside legend is included, the buffer increases by 125 pixels.
