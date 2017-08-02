@@ -1066,7 +1066,6 @@ module.exports = exports["default"];
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.XAxisContinuous = exports.XAxisDiscrete = exports.YAxis = exports.Axis = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -1295,22 +1294,6 @@ YAxis.defaultProps = {
   }
 };
 
-YAxis.propTypes = {
-  x: _propTypes2.default.number,
-  y: _propTypes2.default.number,
-  width: _propTypes2.default.number,
-  height: _propTypes2.default.number,
-  yScale: _propTypes2.default.string,
-  ySteps: _propTypes2.default.number,
-  yTitle: _propTypes2.default.string,
-  showYAxisLine: _propTypes2.default.bool,
-  showYLabels: _propTypes2.default.bool,
-  showGrid: _propTypes2.default.bool,
-  minY: _propTypes2.default.number,
-  maxY: _propTypes2.default.number,
-  style: _propTypes2.default.object
-};
-
 var XTickLabel = function (_React$Component5) {
   _inherits(XTickLabel, _React$Component5);
 
@@ -1462,20 +1445,6 @@ XAxisContinuous.defaultProps = {
   }
 };
 
-XAxisContinuous.propTypes = {
-  x: _propTypes2.default.number,
-  y: _propTypes2.default.number,
-  width: _propTypes2.default.number,
-  xScale: _propTypes2.default.string,
-  xSteps: _propTypes2.default.number,
-  xTitle: _propTypes2.default.string,
-  showXAxisLine: _propTypes2.default.bool,
-  showXLabels: _propTypes2.default.bool,
-  minX: _propTypes2.default.number,
-  maxX: _propTypes2.default.number,
-  style: _propTypes2.default.object
-};
-
 var XAxisDiscrete = function (_React$Component8) {
   _inherits(XAxisDiscrete, _React$Component8);
 
@@ -1565,16 +1534,6 @@ XAxisDiscrete.defaultProps = {
   }
 };
 
-XAxisDiscrete.propTypes = {
-  x: _propTypes2.default.number,
-  y: _propTypes2.default.number,
-  width: _propTypes2.default.number,
-  showXAxisLine: _propTypes2.default.bool,
-  showXLabels: _propTypes2.default.bool,
-  labels: _propTypes2.default.array,
-  style: _propTypes2.default.object
-};
-
 var Axis = function (_React$Component9) {
   _inherits(Axis, _React$Component9);
 
@@ -1588,15 +1547,22 @@ var Axis = function (_React$Component9) {
     key: "render",
     value: function render() {
       this.axes = [];
-      this.buffer = { top: 5, left: 50, bot: 25, right: 0 };
+      this.buffer = { top: 0, left: 0, bot: 0, right: 0 };
+      if (this.props.showYAxis) {
+        this.buffer.top += 5;
+        this.buffer.left += 50;
+        if (this.props.yTitle) {
+          this.buffer.left += 25;
+        }
+      }
+      if (this.props.showXAxis) {
+        this.buffer.bot += 25;
+        if (this.props.xTitle) {
+          this.buffer.bot += 25;
+        }
+      }
       if (this.props.graphTitle) {
         this.buffer.top += 25;
-      }
-      if (this.props.yTitle) {
-        this.buffer.left += 25;
-      }
-      if (this.props.xTitle) {
-        this.buffer.bot += 25;
       }
       if (this.props.xAxisMode === "continuous") {
         this.buffer.right += 25;
@@ -1622,26 +1588,30 @@ var Axis = function (_React$Component9) {
         xSteps = Math.ceil(this.props.width / 100) + 1;
       }
 
-      this.axes.push(_react2.default.createElement(YAxis, { key: "YAxis", x: this.buffer.left, y: this.buffer.top, width: this.props.width - (this.buffer.left + this.buffer.right),
-        height: this.props.height - this.buffer.bot - this.buffer.top,
-        minY: this.props.minY, maxY: this.props.maxY, yScale: this.props.yScale,
-        ySteps: ySteps, yTitle: this.props.yTitle,
-        showYAxisLine: this.props.showYAxisLine, showYLabels: this.props.showYLabels,
-        showGrid: this.props.showGrid, style: this.props.axisStyle }));
-      if (this.props.xAxisMode == "discrete") {
-        this.axes.push(_react2.default.createElement(XAxisDiscrete, { key: "XAxis", x: this.buffer.left, y: this.props.height - this.buffer.bot,
-          width: this.props.width - this.buffer.left - this.buffer.right,
-          xTitle: this.props.xTitle, showXAxisLine: this.props.showXAxisLine,
-          showXLabels: this.props.showXLabels, labels: this.props.labels,
-          style: this.props.axisStyle }));
-      } else if (this.props.xAxisMode == "continuous") {
-        this.axes.push(_react2.default.createElement(XAxisContinuous, { key: "XAxis", x: this.buffer.left, y: this.props.height - this.buffer.bot,
-          width: this.props.width - this.buffer.left - this.buffer.right,
-          xTitle: this.props.xTitle, showXAxisLine: this.props.showXAxisLine,
-          showXLabels: this.props.showXLabels,
-          xScale: this.props.xScale, xSteps: xSteps,
-          minX: this.props.minX, maxX: this.props.maxX,
-          style: this.props.axisStyle }));
+      if (this.props.showYAxis) {
+        this.axes.push(_react2.default.createElement(YAxis, { key: "YAxis", x: this.buffer.left, y: this.buffer.top, width: this.props.width - (this.buffer.left + this.buffer.right),
+          height: this.props.height - this.buffer.bot - this.buffer.top,
+          minY: this.props.minY, maxY: this.props.maxY, yScale: this.props.yScale,
+          ySteps: ySteps, yTitle: this.props.yTitle,
+          showYAxisLine: this.props.showYAxisLine, showYLabels: this.props.showYLabels,
+          showGrid: this.props.showGrid, style: this.props.axisStyle }));
+      }
+      if (this.props.showXAxis) {
+        if (this.props.xAxisMode == "discrete") {
+          this.axes.push(_react2.default.createElement(XAxisDiscrete, { key: "XAxis", x: this.buffer.left, y: this.props.height - this.buffer.bot,
+            width: this.props.width - this.buffer.left - this.buffer.right,
+            xTitle: this.props.xTitle, showXAxisLine: this.props.showXAxisLine,
+            showXLabels: this.props.showXLabels, labels: this.props.labels,
+            style: this.props.axisStyle }));
+        } else if (this.props.xAxisMode == "continuous") {
+          this.axes.push(_react2.default.createElement(XAxisContinuous, { key: "XAxis", x: this.buffer.left, y: this.props.height - this.buffer.bot,
+            width: this.props.width - this.buffer.left - this.buffer.right,
+            xTitle: this.props.xTitle, showXAxisLine: this.props.showXAxisLine,
+            showXLabels: this.props.showXLabels,
+            xScale: this.props.xScale, xSteps: xSteps,
+            minX: this.props.minX, maxX: this.props.maxX,
+            style: this.props.axisStyle }));
+        }
       }
       if (this.props.graphTitle) {
         this.axes.push(_react2.default.createElement(
@@ -1668,7 +1638,7 @@ var Axis = function (_React$Component9) {
         } else if (this.props.legendMode === "stack-inside") {
           this.axes.push(_react2.default.createElement(
             "g",
-            { key: "Legend", transform: "translate(" + (this.props.width - 120) + " " + (this.props.graphTitle ? 30 : 5) + ")" },
+            { key: "Legend", transform: "translate(" + (this.props.width - 120) + " " + this.buffer.top + ")" },
             _react2.default.createElement(_Legend2.default, { values: this.props.legendValues, mode: "stack",
               showLegend: this.props.showLegend,
               fontColor: this.props.legendStyle.fontColor,
@@ -1679,7 +1649,7 @@ var Axis = function (_React$Component9) {
         } else if (this.props.legendMode === "stack-outside") {
           this.axes.push(_react2.default.createElement(
             "g",
-            { key: "Legend", transform: "translate(" + (this.props.width - 120) + " " + (this.props.graphTitle ? 30 : 5) + ")" },
+            { key: "Legend", transform: "translate(" + (this.props.width - 120) + " " + this.buffer.top + ")" },
             _react2.default.createElement(_Legend2.default, { values: this.props.legendValues, mode: "stack",
               showLegend: this.props.showLegend,
               fontColor: this.props.legendStyle.fontColor,
@@ -1690,10 +1660,18 @@ var Axis = function (_React$Component9) {
         }
       }
 
+      var child = _react2.default.cloneElement(this.props.children, { width: this.props.width - this.buffer.left - this.buffer.right,
+        height: this.props.height - this.buffer.top - this.buffer.bot });
+
       return _react2.default.createElement(
         "g",
         null,
-        this.axes
+        this.axes,
+        _react2.default.createElement(
+          "g",
+          { transform: "translate(" + this.buffer.left + " " + this.buffer.top + ")" },
+          child
+        )
       );
     }
   }]);
@@ -1713,6 +1691,8 @@ Axis.defaultProps = {
   maxY: 100,
   minX: 0,
   maxX: 100,
+  showXAxis: true,
+  showYAxis: true,
   showXAxisLine: true,
   showXLabels: true,
   showYAxisLine: true,
@@ -1765,10 +1745,7 @@ Axis.propTypes = {
   legendStyle: _propTypes2.default.object
 };
 
-exports.Axis = Axis;
-exports.YAxis = YAxis;
-exports.XAxisDiscrete = XAxisDiscrete;
-exports.XAxisContinuous = XAxisContinuous;
+exports.default = Axis;
 
 /***/ }),
 /* 18 */
@@ -2121,7 +2098,7 @@ exports.default = Tooltip;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.XAxisContinuous = exports.XAxisDiscrete = exports.YAxis = exports.Axis = exports.Legend = exports.LoadingIcon = exports.Resize = exports.Tooltip = undefined;
+exports.Axis = exports.Legend = exports.LoadingIcon = exports.Resize = exports.Tooltip = undefined;
 
 var _Tooltip = __webpack_require__(19);
 
@@ -2141,16 +2118,15 @@ var _Legend2 = _interopRequireDefault(_Legend);
 
 var _Axis = __webpack_require__(17);
 
+var _Axis2 = _interopRequireDefault(_Axis);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.Tooltip = _Tooltip2.default;
 exports.Resize = _Resize2.default;
 exports.LoadingIcon = _LoadingIcon2.default;
 exports.Legend = _Legend2.default;
-exports.Axis = _Axis.Axis;
-exports.YAxis = _Axis.YAxis;
-exports.XAxisDiscrete = _Axis.XAxisDiscrete;
-exports.XAxisContinuous = _Axis.XAxisContinuous;
+exports.Axis = _Axis2.default;
 
 /***/ }),
 /* 21 */
