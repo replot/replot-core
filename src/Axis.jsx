@@ -400,7 +400,7 @@ class Axis extends React.Component {
     if (this.props.xAxisMode === "continuous"){
       this.buffer.right += 25
     }
-    if (this.props.legendValues){
+    if (this.props.showLegend && this.props.legendValues){
       if (this.props.legendMode == "flat"){
         this.buffer.bot += 80
       } else if (this.props.legendMode == "stack-outside") {
