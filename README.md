@@ -171,6 +171,11 @@ The entirety of customization options/props for the Axis follows:
   * Determines whether the x-axis will utilize word labels or number ticks
   * Defaults to `"discrete"`
   * Accepts `"discrete"` and `"continuous"`
+* `xStart`
+  * For a discrete x-axis, determines if the labels start at the origin, or after
+  an appropriate amount of padding.
+  * No default value (starts with padding)
+  * Accepts "origin", if labels should start at the origin.
 * `xScale` and `yScale`
   * Determines how the numbers on axes will be distributed
   * Defaults to `"lin"`
