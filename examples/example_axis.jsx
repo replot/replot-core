@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import {Axis, YAxis, XAxisDiscrete, XAxisContinuous} from "../src/Axis.jsx"
+import Axis from "../src/Axis.jsx"
 
 
 class ExampleApp extends React.Component {
@@ -29,7 +29,7 @@ class ExampleApp extends React.Component {
           <Axis/>
         </svg>
         <svg width={400} height={400}>
-          <Axis graphTitle="A title!" yTitle="Y Axis!" xTitle="X Title!" labels={["one fish", "two fish", "red fish", "blue fish"]}/>
+          <Axis graphTitle="A title!" yTitle="Y Axis!" xTitle="X Title!" xStart="origin" labels={["one", "two", "red", "blue", "meme"]}/>
         </svg>
         <svg width={400} height={400}>
           <Axis graphTitle="A title!" yTitle="Y Axis!" xTitle="X Title!" labels={["one fish", "two fish", "red fish", "blue fish"]}

@@ -881,8 +881,8 @@ var Legend = function (_React$Component) {
           return _react2.default.createElement(
             "g",
             null,
-            _react2.default.createElement("rect", { x: 0, y: 0, width: this.props.width,
-              height: numRows * size * 1.5, fill: this.props.backgroundColor,
+            _react2.default.createElement("rect", { x: 0, y: 0, width: this.props.width <= 0 ? 0 : this.props.width,
+              height: numRows * size * 1.5 <= 0 ? 0 : numRows * size * 1.5, fill: this.props.backgroundColor,
               stroke: this.props.showBorder ? this.props.borderColor : "none",
               strokeWidth: 2 }),
             items
@@ -917,7 +917,7 @@ var Legend = function (_React$Component) {
           return _react2.default.createElement(
             "g",
             null,
-            _react2.default.createElement("rect", { x: 0, y: 0, width: size * 2 + longest.length * size / 2,
+            _react2.default.createElement("rect", { x: 0, y: 0, width: size * 2 + longest.length * size / 2 <= 0 ? 0 : size * 2 + longest.length * size / 2,
               height: this.props.height ? this.props.height : titles.length * size * 1.5,
               fill: this.props.backgroundColor, strokeWidth: 2,
               stroke: this.props.showBorder ? this.props.borderColor : "none" }),
@@ -1486,13 +1486,23 @@ var XAxisDiscrete = function (_React$Component8) {
         }
 
         var offset = this.props.x + this.props.width / this.props.labels.length / 2;
+        var deltaX = this.props.width / this.props.labels.length;
+        if (this.props.xStart === "origin") {
+          offset = this.props.x;
+          deltaX = this.props.width / (this.props.labels.length - 1);
+        }
+
         for (var _i = 0; _i < this.props.labels.length; _i++) {
           rotation = "rotate(" + tilt + "," + (offset + _i * (this.props.width / this.props.labels.length) - 10) + "," + (this.props.y - 20) + ")";
+          xAxis.push(_react2.default.createElement(Line, { key: "tick" + _i,
+            x1: offset + _i * deltaX, y1: this.props.y,
+            x2: offset + _i * deltaX, y2: this.props.y + 8,
+            stroke: this.props.color }));
           xAxis.push(_react2.default.createElement(
             "text",
             { key: this.props.labels[_i], fill: this.props.style.labelColor,
-              x: offset + _i * (this.props.width / this.props.labels.length),
-              y: this.props.y + 20, textAnchor: anchor, transform: rotation, fontSize: size },
+              x: offset + _i * deltaX,
+              y: this.props.y + 22, textAnchor: anchor, transform: rotation, fontSize: size },
             this.props.labels[_i]
           ));
         }
@@ -1550,7 +1560,7 @@ var Axis = function (_React$Component9) {
       this.buffer = { top: 0, left: 0, bot: 0, right: 0 };
       if (this.props.showYAxis) {
         this.buffer.top += 5;
-        this.buffer.left += 50;
+        this.buffer.left += 60;
         if (this.props.yTitle) {
           this.buffer.left += 25;
         }
@@ -1559,6 +1569,9 @@ var Axis = function (_React$Component9) {
         this.buffer.bot += 25;
         if (this.props.xTitle) {
           this.buffer.bot += 25;
+        }
+        if (this.props.xStart === "origin") {
+          this.buffer.right += 25;
         }
       }
       if (this.props.graphTitle) {
@@ -1569,7 +1582,7 @@ var Axis = function (_React$Component9) {
       }
       if (this.props.legendValues) {
         if (this.props.legendMode == "flat") {
-          this.buffer.bot += 60;
+          this.buffer.bot += 80;
         } else if (this.props.legendMode == "stack-outside") {
           this.buffer.right += 125;
         }
@@ -1602,7 +1615,7 @@ var Axis = function (_React$Component9) {
             width: this.props.width - this.buffer.left - this.buffer.right,
             xTitle: this.props.xTitle, showXAxisLine: this.props.showXAxisLine,
             showXLabels: this.props.showXLabels, labels: this.props.labels,
-            style: this.props.axisStyle }));
+            xStart: this.props.xStart, style: this.props.axisStyle }));
         } else if (this.props.xAxisMode == "continuous") {
           this.axes.push(_react2.default.createElement(XAxisContinuous, { key: "XAxis", x: this.buffer.left, y: this.props.height - this.buffer.bot,
             width: this.props.width - this.buffer.left - this.buffer.right,
@@ -1626,9 +1639,9 @@ var Axis = function (_React$Component9) {
         if (this.props.legendMode === "flat") {
           this.axes.push(_react2.default.createElement(
             "g",
-            { key: "Legend", transform: "translate(" + this.buffer.left + " " + (this.props.height - 50) + ")" },
+            { key: "Legend", transform: "translate(" + this.buffer.left + " " + (this.props.height - 70) + ")" },
             _react2.default.createElement(_Legend2.default, { values: this.props.legendValues,
-              width: this.props.width - this.buffer.left,
+              width: this.props.width - this.buffer.left - this.buffer.right,
               showLegend: this.props.showLegend,
               fontColor: this.props.legendStyle.fontColor,
               backgroundColor: this.props.legendStyle.backgroundColor,
@@ -1660,8 +1673,11 @@ var Axis = function (_React$Component9) {
         }
       }
 
-      var child = _react2.default.cloneElement(this.props.children, { width: this.props.width - this.buffer.left - this.buffer.right,
-        height: this.props.height - this.buffer.top - this.buffer.bot });
+      var child = void 0;
+      if (this.props.children) {
+        child = _react2.default.cloneElement(this.props.children, { width: this.props.width - this.buffer.left - this.buffer.right,
+          height: this.props.height - this.buffer.top - this.buffer.bot });
+      }
 
       return _react2.default.createElement(
         "g",
@@ -1727,6 +1743,7 @@ Axis.propTypes = {
   yTitle: _propTypes2.default.string,
   xScale: _propTypes2.default.string,
   xSteps: _propTypes2.default.number,
+  xStart: _propTypes2.default.string,
   yScale: _propTypes2.default.string,
   ySteps: _propTypes2.default.number,
   minY: _propTypes2.default.number,

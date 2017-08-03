@@ -38,8 +38,8 @@ class Legend extends React.Component {
 
         return(
           <g>
-            <rect x={0} y={0} width={this.props.width}
-              height={numRows*size*1.5} fill={this.props.backgroundColor}
+            <rect x={0} y={0} width={this.props.width <= 0 ? 0 : this.props.width}
+              height={(numRows*size*1.5) <= 0 ? 0 : numRows*size*1.5} fill={this.props.backgroundColor}
               stroke={this.props.showBorder ? this.props.borderColor : "none"}
               strokeWidth={2} />
             {items}
@@ -73,7 +73,7 @@ class Legend extends React.Component {
         }
         return(
           <g>
-            <rect x={0} y={0} width={(size*2) + (longest.length*size/2)}
+            <rect x={0} y={0} width={((size*2) + (longest.length*size/2)) <= 0 ? 0 : (size*2) + (longest.length*size/2)}
               height={this.props.height ? this.props.height : titles.length*size*1.5}
               fill={this.props.backgroundColor} strokeWidth={2}
               stroke={this.props.showBorder ? this.props.borderColor : "none"}/>
