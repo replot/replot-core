@@ -331,7 +331,7 @@ class XAxisDiscrete extends React.Component {
           <Line key={"tick"+i}
             x1={offset + i*(deltaX)} y1={this.props.y}
             x2={offset + i*(deltaX)} y2={this.props.y+8}
-            stroke={this.props.color} />
+            stroke={this.props.style.labelColor} />
         )
         xAxis.push(
           <text key={this.props.labels[i]} fill={this.props.style.labelColor}
