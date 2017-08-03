@@ -319,12 +319,24 @@ class XAxisDiscrete extends React.Component {
       }
 
       let offset = this.props.x + this.props.width/this.props.labels.length/2
+      let deltaX = this.props.width/this.props.labels.length
+      if (this.props.xStart === "origin"){
+        offset = this.props.x
+        deltaX = this.props.width/(this.props.labels.length-1)
+      }
+
       for (let i = 0; i < this.props.labels.length; i ++){
         rotation = "rotate(" + tilt + "," + (offset + i*(this.props.width/this.props.labels.length)-10) + "," + (this.props.y-20) + ")"
         xAxis.push(
+          <Line key={"tick"+i}
+            x1={offset + i*(deltaX)} y1={this.props.y}
+            x2={offset + i*(deltaX)} y2={this.props.y+8}
+            stroke={this.props.color} />
+        )
+        xAxis.push(
           <text key={this.props.labels[i]} fill={this.props.style.labelColor}
-            x={offset + i*(this.props.width/this.props.labels.length)}
-            y={this.props.y+20} textAnchor={anchor} transform={rotation} fontSize={size}>
+            x={offset + i*(deltaX)}
+            y={this.props.y+22} textAnchor={anchor} transform={rotation} fontSize={size}>
             {this.props.labels[i]}
           </text>
         )
@@ -368,7 +380,7 @@ class Axis extends React.Component {
     this.buffer = {top: 0, left: 0, bot: 0, right: 0}
     if (this.props.showYAxis){
       this.buffer.top += 5
-      this.buffer.left += 50
+      this.buffer.left += 60
       if (this.props.yTitle){
         this.buffer.left += 25
       }
@@ -377,6 +389,9 @@ class Axis extends React.Component {
       this.buffer.bot += 25
       if (this.props.xTitle){
         this.buffer.bot += 25
+      }
+      if (this.props.xStart === "origin") {
+        this.buffer.right += 25
       }
     }
     if (this.props.graphTitle){
@@ -387,7 +402,7 @@ class Axis extends React.Component {
     }
     if (this.props.legendValues){
       if (this.props.legendMode == "flat"){
-        this.buffer.bot += 60
+        this.buffer.bot += 80
       } else if (this.props.legendMode == "stack-outside") {
         this.buffer.right += 125
       }
@@ -404,7 +419,7 @@ class Axis extends React.Component {
     } else {
       xSteps = Math.ceil(this.props.width/100) + 1
     }
-    
+
     if (this.props.showYAxis) {
       this.axes.push(
         <YAxis key="YAxis" x={this.buffer.left} y={this.buffer.top} width={this.props.width-(this.buffer.left+this.buffer.right)}
@@ -422,7 +437,7 @@ class Axis extends React.Component {
             width={this.props.width-this.buffer.left-this.buffer.right}
             xTitle={this.props.xTitle} showXAxisLine={this.props.showXAxisLine}
             showXLabels={this.props.showXLabels} labels={this.props.labels}
-            style={this.props.axisStyle}/>
+            xStart={this.props.xStart} style={this.props.axisStyle}/>
         )
       } else if (this.props.xAxisMode == "continuous"){
         this.axes.push(
@@ -448,9 +463,9 @@ class Axis extends React.Component {
     if (this.props.legendValues){
       if (this.props.legendMode === "flat"){
         this.axes.push(
-          <g key="Legend" transform={`translate(${this.buffer.left} ${this.props.height-50})`}>
+          <g key="Legend" transform={`translate(${this.buffer.left} ${this.props.height-70})`}>
             <Legend values={this.props.legendValues}
-              width={this.props.width-this.buffer.left}
+              width={this.props.width-this.buffer.left-this.buffer.right}
               showLegend={this.props.showLegend}
               fontColor={this.props.legendStyle.fontColor}
               backgroundColor={this.props.legendStyle.backgroundColor}
@@ -483,9 +498,12 @@ class Axis extends React.Component {
       }
     }
 
-    let child = React.cloneElement(this.props.children,
-      {width: this.props.width-this.buffer.left-this.buffer.right,
-        height:this.props.height-this.buffer.top-this.buffer.bot})
+    let child
+    if (this.props.children){
+      child = React.cloneElement(this.props.children,
+        {width: this.props.width-this.buffer.left-this.buffer.right,
+          height:this.props.height-this.buffer.top-this.buffer.bot})
+    }
 
     return(
       <g>
@@ -546,6 +564,7 @@ Axis.propTypes = {
   yTitle: PropTypes.string,
   xScale: PropTypes.string,
   xSteps: PropTypes.number,
+  xStart: PropTypes.string,
   yScale: PropTypes.string,
   ySteps: PropTypes.number,
   minY: PropTypes.number,
