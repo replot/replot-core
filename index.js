@@ -1497,7 +1497,7 @@ var XAxisDiscrete = function (_React$Component8) {
           xAxis.push(_react2.default.createElement(Line, { key: "tick" + _i,
             x1: offset + _i * deltaX, y1: this.props.y,
             x2: offset + _i * deltaX, y2: this.props.y + 8,
-            stroke: this.props.color }));
+            stroke: this.props.style.labelColor }));
           xAxis.push(_react2.default.createElement(
             "text",
             { key: this.props.labels[_i], fill: this.props.style.labelColor,
