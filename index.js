@@ -860,7 +860,7 @@ var Legend = function (_React$Component) {
           for (var i = 0; i < titles.length; i++) {
             var title = titles[i];
             if (title) {
-              var x = buffer.x + i % numColumns * ((this.props.width - buffer.x - (size * 2 + longest.length * size / 2)) / (numColumns - 1));
+              var x = buffer.x + i % numColumns * ((this.props.width - buffer.x - (size * 2 + longest.length * size / 2)) / (numColumns - 1 <= 0 ? 1 : numColumns - 1));
               var y = buffer.y + Math.floor(i / numColumns) * 1.5 * size;
               items.push(_react2.default.createElement(
                 "g",
@@ -1159,7 +1159,7 @@ var YTickLabel = function (_React$Component2) {
         null,
         _react2.default.createElement(
           "text",
-          { x: this.props.x, y: this.props.y + 7.5,
+          { x: this.props.x, y: this.props.y + 5,
             fontSize: 15, fill: this.props.color, textAnchor: "end" },
           printVal
         )
@@ -1240,9 +1240,15 @@ var YAxis = function (_React$Component4) {
 
         var yVal = 0;
         if (this.props.yScale == "log") {
-          var valueRatio = (Math.log10(this.props.maxY) - Math.log10(this.props.minY)) / (this.props.ySteps - 1);
-          var pow10 = Math.log10(this.props.minY) + i * valueRatio;
-          yVal = Math.pow(10, pow10);
+          if (this.props.minY === 0) {
+            var valueRatio = Math.log10(this.props.maxY) / (this.props.ySteps - 1);
+            var pow10 = i * valueRatio;
+            yVal = Math.pow(10, pow10);
+          } else {
+            var _valueRatio = (Math.log10(this.props.maxY) - Math.log10(this.props.minY)) / (this.props.ySteps - 1);
+            var _pow = Math.log10(this.props.minY) + i * _valueRatio;
+            yVal = Math.pow(10, _pow);
+          }
         } else {
           yVal = this.props.minY + i * (this.props.maxY - this.props.minY) / (this.props.ySteps - 1);
         }
@@ -1402,9 +1408,15 @@ var XAxisContinuous = function (_React$Component7) {
 
           var xVal = 0;
           if (this.props.xScale == "log") {
-            var valueRatio = (Math.log10(this.props.maxX) - Math.log10(this.props.minX)) / (this.props.xSteps - 1);
-            var pow10 = Math.log10(this.props.minX) + i * valueRatio;
-            xVal = Math.pow(10, pow10);
+            if (this.props.minX === 0) {
+              var valueRatio = Math.log10(this.props.maxX) / (this.props.xSteps - 1);
+              var pow10 = i * valueRatio;
+              xVal = Math.pow(10, pow10);
+            } else {
+              var _valueRatio2 = (Math.log10(this.props.maxX) - Math.log10(this.props.minX)) / (this.props.xSteps - 1);
+              var _pow2 = Math.log10(this.props.minX) + i * _valueRatio2;
+              xVal = Math.pow(10, _pow2);
+            }
           } else {
             xVal = this.props.minX + i * (this.props.maxX - this.props.minX) / (this.props.xSteps - 1);
           }
@@ -1559,7 +1571,7 @@ var Axis = function (_React$Component9) {
       this.axes = [];
       this.buffer = { top: 0, left: 0, bot: 0, right: 0 };
       if (this.props.showYAxis) {
-        this.buffer.top += 5;
+        this.buffer.top += 10;
         this.buffer.left += 60;
         if (this.props.yTitle) {
           this.buffer.left += 25;

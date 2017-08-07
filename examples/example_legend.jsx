@@ -22,8 +22,14 @@ class ExampleApp extends React.Component {
   render(){
     return(
       <div>
-        <svg width={1000} height={1000}>
-          <Legend values={this.state.values} mode="stack" border="on" />
+        <svg width={600} height={200}>
+          <Legend values={this.state.values}/>
+        </svg>
+        <svg width={200} height={200}>
+          <Legend values={this.state.values} mode="stack" />
+        </svg>
+        <svg width={200} height={200}>
+          <Legend values={this.state.values} mode="stack" showBorder={false} backgroundColor="#1b1b1b" fontColor="#ffffff"/>
         </svg>
       </div>
     )

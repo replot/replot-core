@@ -47,7 +47,7 @@ class YTickLabel extends React.Component {
 
     return (
       <g>
-        <text x={this.props.x} y={this.props.y+7.5}
+        <text x={this.props.x} y={this.props.y+5}
           fontSize={15} fill={this.props.color} textAnchor={"end"}>
           {printVal}
         </text>
@@ -111,9 +111,15 @@ class YAxis extends React.Component {
 
       let yVal = 0
       if (this.props.yScale == "log") {
-        let valueRatio = (Math.log10(this.props.maxY) - Math.log10(this.props.minY)) / (this.props.ySteps - 1)
-        let pow10 = Math.log10(this.props.minY) + i * valueRatio
-        yVal = Math.pow(10, pow10)
+        if (this.props.minY === 0) {
+          let valueRatio = Math.log10(this.props.maxY) / (this.props.ySteps - 1)
+          let pow10 = i * valueRatio
+          yVal = Math.pow(10, pow10)
+        } else {
+          let valueRatio = (Math.log10(this.props.maxY) - Math.log10(this.props.minY)) / (this.props.ySteps - 1)
+          let pow10 = Math.log10(this.props.minY) + i * valueRatio
+          yVal = Math.pow(10, pow10)
+        }
       } else {
         yVal = this.props.minY + i*(this.props.maxY-this.props.minY)/(this.props.ySteps-1)
       }
@@ -245,9 +251,15 @@ class XAxisContinuous extends React.Component {
 
         let xVal = 0
         if (this.props.xScale == "log") {
-          let valueRatio = (Math.log10(this.props.maxX) - Math.log10(this.props.minX)) / (this.props.xSteps - 1)
-          let pow10 = Math.log10(this.props.minX) + i * valueRatio
-          xVal = Math.pow(10, pow10)
+          if (this.props.minX === 0) {
+            let valueRatio = Math.log10(this.props.maxX) / (this.props.xSteps - 1)
+            let pow10 = i * valueRatio
+            xVal = Math.pow(10, pow10)
+          } else {
+            let valueRatio = (Math.log10(this.props.maxX) - Math.log10(this.props.minX)) / (this.props.xSteps - 1)
+            let pow10 = Math.log10(this.props.minX) + i * valueRatio
+            xVal = Math.pow(10, pow10)
+          }
         } else {
           xVal = this.props.minX + i*(this.props.maxX-this.props.minX)/(this.props.xSteps-1)
         }
@@ -379,7 +391,7 @@ class Axis extends React.Component {
     this.axes = []
     this.buffer = {top: 0, left: 0, bot: 0, right: 0}
     if (this.props.showYAxis){
-      this.buffer.top += 5
+      this.buffer.top += 10
       this.buffer.left += 60
       if (this.props.yTitle){
         this.buffer.left += 25
