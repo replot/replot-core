@@ -20,7 +20,7 @@ class Legend extends React.Component {
         for (let i = 0; i < titles.length; i++) {
           let title = titles[i]
           if (title) {
-            let x = buffer.x + (i%numColumns)*((this.props.width-buffer.x-(size*2+longest.length*size/2))/(numColumns-1))
+            let x = buffer.x + (i%numColumns)*((this.props.width-buffer.x-(size*2+longest.length*size/2))/(numColumns-1 <= 0 ? 1 : numColumns-1))
             let y = buffer.y + ((Math.floor(i/numColumns))*1.5*size)
             items.push(
               <g key={title}>
