@@ -9,6 +9,8 @@ class ExampleApp extends React.Component {
     return(
       <div>
         <LoadingIcon/>
+        <LoadingIcon width={500}/>
+        <LoadingIcon width={500} color="#f17e33"/>
       </div>
     )
   }
