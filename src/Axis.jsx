@@ -236,7 +236,7 @@ class XAxisContinuous extends React.Component {
     if (this.props.xTitle) {
       xAxis.push(
         <text key="xTitle" textAnchor="middle"
-          x={this.props.x + this.props.width/2} y={this.props.y+45}
+          x={this.props.x + this.props.width/2} y={this.props.y+65}
           fill={this.props.style.titleColor} fontSize={18} >
           {this.props.xTitle}
         </text>
@@ -358,7 +358,7 @@ class XAxisDiscrete extends React.Component {
     if (this.props.xTitle) {
       xAxis.push(
         <text key="xTitle" textAnchor="middle"
-          x={this.props.x + this.props.width/2} y={this.props.y+45}
+          x={this.props.x + this.props.width/2} y={this.props.y+65}
           fill={this.props.style.titleColor} fontSize={size+2} >
           {this.props.xTitle}
         </text>
@@ -400,7 +400,7 @@ class Axis extends React.Component {
     if (this.props.showXAxis){
       this.buffer.bot += 25
       if (this.props.xTitle){
-        this.buffer.bot += 25
+        this.buffer.bot += 45
       }
       if (this.props.xStart === "origin") {
         this.buffer.right += 25
