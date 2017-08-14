@@ -19,7 +19,7 @@ class LoadingIcon extends React.Component {
         defaultStyles={[{r: style.r}, {r: style.r}, {r: style.r}]}
         styles={prevInterpolatedStyles => prevInterpolatedStyles.map((_, i) => {
           return i === 0
-            ? {r: spring(2 * style.r, {stiffness: 25, damping: 0})}
+            ? {r: spring(0, {stiffness: 15, damping: 0, precision: 0.5})}
             : {r: spring(prevInterpolatedStyles[i-1].r)}
         })}>
         {interpolatingStyles =>

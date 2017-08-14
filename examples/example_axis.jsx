@@ -28,25 +28,31 @@ class ExampleApp extends React.Component {
         <svg width={400} height={400}>
           <Axis/>
         </svg>
+        <br></br>
         <svg width={400} height={400}>
           <Axis graphTitle="A title!" yTitle="Y Axis!" xTitle="X Title!" xStart="origin" labels={["one", "two", "red", "blue", "meme"]}/>
         </svg>
+        <br></br>
         <svg width={400} height={400}>
           <Axis graphTitle="A title!" yTitle="Y Axis!" xTitle="X Title!" labels={["one fish", "two fish", "red fish", "blue fish"]}
             minY={10} maxY={100000} yScale="log" xAxisMode="continuous" minX={10} maxX={100000}/>
         </svg>
+        <br></br>
         <svg width={400} height={400}>
           <Axis graphTitle="A title!" yTitle="Y Axis!" xTitle="X Title!" labels={["one fish", "two fish", "red fish", "blue fish"]}
             showXAxisLine={false} showYLabels={false}/>
         </svg>
+        <br></br>
         <svg width={400} height={400}>
           <Axis graphTitle="A title!" yTitle="Y Axis!" xTitle="X Title!" labels={["one fish", "two fish", "red fish", "blue fish"]}
             axisStyle={style}/>
         </svg>
+        <br></br>
         <svg width={600} height={400}>
           <Axis width={600} graphTitle="A title!" yTitle="Y Axis!" xTitle="X Title!" labels={["one fish", "two fish", "red fish", "blue fish"]}
             legendValues={values}/>
         </svg>
+        <br></br>
         <svg width={600} height={400}>
           <Axis width={600} graphTitle="A title!" yTitle="Y Axis!" xTitle="X Title!" labels={["one fish", "two fish", "red fish", "blue fish"]}
             legendValues={values} legendMode="stack-outside"/>
