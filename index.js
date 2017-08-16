@@ -1010,7 +1010,7 @@ var LoadingIcon = function (_React$Component) {
           defaultStyles: [{ r: style.r }, { r: style.r }, { r: style.r }],
           styles: function styles(prevInterpolatedStyles) {
             return prevInterpolatedStyles.map(function (_, i) {
-              return i === 0 ? { r: (0, _reactMotion.spring)(2 * style.r, { stiffness: 25, damping: 0 }) } : { r: (0, _reactMotion.spring)(prevInterpolatedStyles[i - 1].r) };
+              return i === 0 ? { r: (0, _reactMotion.spring)(0, { stiffness: 15, damping: 0, precision: 0.5 }) } : { r: (0, _reactMotion.spring)(prevInterpolatedStyles[i - 1].r) };
             });
           } },
         function (interpolatingStyles) {
@@ -1394,7 +1394,7 @@ var XAxisContinuous = function (_React$Component7) {
         xAxis.push(_react2.default.createElement(
           "text",
           { key: "xTitle", textAnchor: "middle",
-            x: this.props.x + this.props.width / 2, y: this.props.y + 45,
+            x: this.props.x + this.props.width / 2, y: this.props.y + 65,
             fill: this.props.style.titleColor, fontSize: 18 },
           this.props.xTitle
         ));
@@ -1524,7 +1524,7 @@ var XAxisDiscrete = function (_React$Component8) {
         xAxis.push(_react2.default.createElement(
           "text",
           { key: "xTitle", textAnchor: "middle",
-            x: this.props.x + this.props.width / 2, y: this.props.y + 45,
+            x: this.props.x + this.props.width / 2, y: this.props.y + 65,
             fill: this.props.style.titleColor, fontSize: size + 2 },
           this.props.xTitle
         ));
@@ -1580,7 +1580,7 @@ var Axis = function (_React$Component9) {
       if (this.props.showXAxis) {
         this.buffer.bot += 25;
         if (this.props.xTitle) {
-          this.buffer.bot += 25;
+          this.buffer.bot += 45;
         }
         if (this.props.xStart === "origin") {
           this.buffer.right += 25;
