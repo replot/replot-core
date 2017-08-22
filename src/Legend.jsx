@@ -15,6 +15,7 @@ class Legend extends React.Component {
       let buffer = {x: 5, y: 4}
       if (this.props.mode === "flat") {
         let numColumns = Math.min(titles.length, Math.floor((this.props.width-buffer.x)/((size*2) + (longest.length*size/2))))
+        if (!numColumns) {numColumns = 1}
         let numRows = Math.ceil(titles.length/numColumns)
 
         for (let i = 0; i < titles.length; i++) {
