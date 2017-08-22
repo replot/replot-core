@@ -14,8 +14,20 @@ class ExampleApp extends React.Component {
         India: "#8e44ad",
         China: "#9dbd5f",
         Russia: "#005c7a",
-        Antarctica: "#fc6000"
-      }
+        Antarctica: "#fc6000",
+        // test1: "blue",
+        // test2: "red",
+        // test3: "green",
+        // test4: "blue",
+        // test5: "red",
+        // test6: "green",
+        // test7: "blue",
+        // test8: "red",
+        // test9: "green",
+        // test10: "blue",
+        // test11: "red",
+        // test12: "green"
+}
     }
   }
 
