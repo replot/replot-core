@@ -855,6 +855,9 @@ var Legend = function (_React$Component) {
         var buffer = { x: 5, y: 4 };
         if (this.props.mode === "flat") {
           var numColumns = Math.min(titles.length, Math.floor((this.props.width - buffer.x) / (size * 2 + longest.length * size / 2)));
+          if (!numColumns) {
+            numColumns = 1;
+          }
           var numRows = Math.ceil(titles.length / numColumns);
 
           for (var i = 0; i < titles.length; i++) {
