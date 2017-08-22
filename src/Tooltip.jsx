@@ -39,7 +39,6 @@ class Tooltip extends React.Component {
         coloring.backgroundColor = this.props.backgroundColor
         coloring.borderColor = this.props.borderColor
         coloring.fontColor = this.props.fontColor
-        break
     }
 
 
@@ -53,7 +52,7 @@ class Tooltip extends React.Component {
         position: "absolute",
         width: width,
         textAlign: "center",
-        padding: this.props.padding,
+        padding: "10px 0px",
         backgroundColor: coloring.backgroundColor,
         border: "1px solid",
         borderColor: coloring.borderColor,
@@ -148,7 +147,6 @@ class Tooltip extends React.Component {
 
 Tooltip.defaultProps = {
   width: 200,
-  padding: 10,
   backgroundColor: "#181818",
   fontColor: "#ffffff",
   borderColor: "#585858",
