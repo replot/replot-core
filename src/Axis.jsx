@@ -475,7 +475,7 @@ class Axis extends React.Component {
     if (this.props.legendValues){
       if (this.props.legendMode === "flat"){
         this.axes.push(
-          <g key="Legend" transform={`translate(${this.buffer.left} ${this.props.height-70})`}>
+          <g key="Legend" transform={`translate(${this.buffer.left} ${this.props.height-75})`}>
             <Legend values={this.props.legendValues}
               width={this.props.width-this.buffer.left-this.buffer.right}
               showLegend={this.props.showLegend}

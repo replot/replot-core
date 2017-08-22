@@ -1660,7 +1660,7 @@ var Axis = function (_React$Component9) {
         if (this.props.legendMode === "flat") {
           this.axes.push(_react2.default.createElement(
             "g",
-            { key: "Legend", transform: "translate(" + this.buffer.left + " " + (this.props.height - 70) + ")" },
+            { key: "Legend", transform: "translate(" + this.buffer.left + " " + (this.props.height - 75) + ")" },
             _react2.default.createElement(_Legend2.default, { values: this.props.legendValues,
               width: this.props.width - this.buffer.left - this.buffer.right,
               showLegend: this.props.showLegend,
