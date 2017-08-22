@@ -1997,7 +1997,6 @@ var Tooltip = function (_React$Component) {
           coloring.backgroundColor = this.props.backgroundColor;
           coloring.borderColor = this.props.borderColor;
           coloring.fontColor = this.props.fontColor;
-          break;
       }
 
       var style = {
@@ -2010,7 +2009,7 @@ var Tooltip = function (_React$Component) {
           position: "absolute",
           width: width,
           textAlign: "center",
-          padding: this.props.padding,
+          padding: "10px 0px",
           backgroundColor: coloring.backgroundColor,
           border: "1px solid",
           borderColor: coloring.borderColor,
@@ -2116,7 +2115,6 @@ var Tooltip = function (_React$Component) {
 
 Tooltip.defaultProps = {
   width: 200,
-  padding: 10,
   backgroundColor: "#181818",
   fontColor: "#ffffff",
   borderColor: "#585858",
