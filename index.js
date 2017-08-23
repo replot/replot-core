@@ -852,9 +852,18 @@ var Legend = function (_React$Component) {
         })[0];
         var items = [];
         var size = 16;
+        if (titles.length > 12) {
+          size = 12;
+        }
+        if (titles.length > 15) {
+          size = 10;
+        }
         var buffer = { x: 5, y: 4 };
         if (this.props.mode === "flat") {
           var numColumns = Math.min(titles.length, Math.floor((this.props.width - buffer.x) / (size * 2 + longest.length * size / 2)));
+          if (!numColumns) {
+            numColumns = 1;
+          }
           var numRows = Math.ceil(titles.length / numColumns);
 
           for (var i = 0; i < titles.length; i++) {
@@ -882,7 +891,7 @@ var Legend = function (_React$Component) {
             "g",
             null,
             _react2.default.createElement("rect", { x: 0, y: 0, width: this.props.width <= 0 ? 0 : this.props.width,
-              height: numRows * size * 1.5 <= 0 ? 0 : numRows * size * 1.5, fill: this.props.backgroundColor,
+              height: numRows * size * 1.4 + 5 <= 0 ? 0 : numRows * size * 1.4 + 5, fill: this.props.backgroundColor,
               stroke: this.props.showBorder ? this.props.borderColor : "none",
               strokeWidth: 2 }),
             items
@@ -1651,7 +1660,7 @@ var Axis = function (_React$Component9) {
         if (this.props.legendMode === "flat") {
           this.axes.push(_react2.default.createElement(
             "g",
-            { key: "Legend", transform: "translate(" + this.buffer.left + " " + (this.props.height - 70) + ")" },
+            { key: "Legend", transform: "translate(" + this.buffer.left + " " + (this.props.height - 75) + ")" },
             _react2.default.createElement(_Legend2.default, { values: this.props.legendValues,
               width: this.props.width - this.buffer.left - this.buffer.right,
               showLegend: this.props.showLegend,
@@ -1988,7 +1997,6 @@ var Tooltip = function (_React$Component) {
           coloring.backgroundColor = this.props.backgroundColor;
           coloring.borderColor = this.props.borderColor;
           coloring.fontColor = this.props.fontColor;
-          break;
       }
 
       var style = {
@@ -2001,7 +2009,7 @@ var Tooltip = function (_React$Component) {
           position: "absolute",
           width: width,
           textAlign: "center",
-          padding: this.props.padding,
+          padding: "10px 0px",
           backgroundColor: coloring.backgroundColor,
           border: "1px solid",
           borderColor: coloring.borderColor,
@@ -2107,7 +2115,6 @@ var Tooltip = function (_React$Component) {
 
 Tooltip.defaultProps = {
   width: 200,
-  padding: 10,
   backgroundColor: "#181818",
   fontColor: "#ffffff",
   borderColor: "#585858",
