@@ -1810,6 +1810,10 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _LoadingIcon = __webpack_require__(15);
 
 var _LoadingIcon2 = _interopRequireDefault(_LoadingIcon);
@@ -1834,6 +1838,7 @@ var Resize = function (_React$Component) {
       width: parseInt(_this.props.width),
       resizing: false
     };
+    _this.timeouts = [];
     return _this;
   }
 
@@ -1857,9 +1862,10 @@ var Resize = function (_React$Component) {
           resizing: true,
           width: this.elem.parentNode.clientWidth * parseInt(this.props.width) / 100
         });
-        var updateFunction;
-        clearTimeout(updateFunction);
-        updateFunction = setTimeout(this.updateDimensions.bind(this), 1200);
+        for (var i = 0; i < this.timeouts.length; i++) {
+          clearTimeout(this.timeouts[i]);
+        }
+        this.timeouts.push(setTimeout(this.updateDimensions.bind(this), 1200));
       }
     }
   }, {
@@ -1928,6 +1934,10 @@ var Resize = function (_React$Component) {
 
   return Resize;
 }(_react2.default.Component);
+
+Resize.propTypes = {
+  width: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]).isRequired
+};
 
 exports.default = Resize;
 
