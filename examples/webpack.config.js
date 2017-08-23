@@ -6,7 +6,8 @@ module.exports = function () {
       example3: "./example3.jsx",
       example_loading: "./example_loading.jsx",
       example_legend: "./example_legend.jsx",
-      example_axis: "./example_axis.jsx"
+      example_axis: "./example_axis.jsx",
+      example_resize: "./example_resize.jsx"
     },
     output: {
       path: __dirname + "/static",
