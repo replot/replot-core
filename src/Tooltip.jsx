@@ -47,6 +47,7 @@ class Tooltip extends React.Component {
       outer: {
         zIndex: "1",
         position: "absolute",
+        pointerEvents: "none",
       },
       inner: {
         display: "inline-block",
@@ -148,7 +149,7 @@ class Tooltip extends React.Component {
 
 Tooltip.defaultProps = {
   width: 200,
-  padding: 10,
+  padding: "10px 0px",
   backgroundColor: "#181818",
   fontColor: "#ffffff",
   borderColor: "#585858",
