@@ -57,6 +57,11 @@ class ExampleApp extends React.Component {
           <Axis width={600} graphTitle="A title!" yTitle="Y Axis!" xTitle="X Title!" labels={["one fish", "two fish", "red fish", "blue fish"]}
             legendValues={values} legendMode="stack-outside"/>
         </svg>
+        <br></br>
+        <svg width={400} height={400}>
+          <Axis graphTitle="A title!" yTitle="Y Axis!" xTitle="X Title!" labels={["one fish", "two fish", "red fish", "blue fish"]}
+            minY={0.0001} maxY={1.0} yScale="log" xAxisMode="continuous" minX={0.00001} maxX={10}/>
+        </svg>
       </div>
     )
   }

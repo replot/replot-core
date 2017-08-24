@@ -38,7 +38,11 @@ class YTickLabel extends React.Component {
   render() {
     let printVal
     if (this.props.value < 1 && this.props.value > -1){
-      printVal = +this.props.value.toFixed(3)
+      if (this.props.yScale == "lin") {
+        printVal = +this.props.value.toFixed(3)
+      } else if (this.props.yScale == "log") {
+        printVal = +this.props.value.toFixed(5)
+      }
     } else if (this.props.value < 1000 && this.props.value > -1000){
       printVal = +this.props.value.toFixed(1)
     } else {
@@ -177,7 +181,11 @@ class XTickLabel extends React.Component {
   render() {
     let printVal
     if (this.props.value < 1 && this.props.value > -1){
-      printVal = +this.props.value.toFixed(3)
+      if (this.props.xScale == "lin") {
+        printVal = +this.props.value.toFixed(3)
+      } else if (this.props.xScale == "log") {
+        printVal = +this.props.value.toFixed(5)
+      }
     } else if (this.props.value < 1000 && this.props.value > -1000){
       printVal = +this.props.value.toFixed(1)
     } else {

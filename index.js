@@ -1156,7 +1156,11 @@ var YTickLabel = function (_React$Component2) {
     value: function render() {
       var printVal = void 0;
       if (this.props.value < 1 && this.props.value > -1) {
-        printVal = +this.props.value.toFixed(3);
+        if (this.props.yScale == "lin") {
+          printVal = +this.props.value.toFixed(3);
+        } else if (this.props.yScale == "log") {
+          printVal = +this.props.value.toFixed(5);
+        }
       } else if (this.props.value < 1000 && this.props.value > -1000) {
         printVal = +this.props.value.toFixed(1);
       } else {
@@ -1323,7 +1327,11 @@ var XTickLabel = function (_React$Component5) {
     value: function render() {
       var printVal = void 0;
       if (this.props.value < 1 && this.props.value > -1) {
-        printVal = +this.props.value.toFixed(3);
+        if (this.props.xScale == "lin") {
+          printVal = +this.props.value.toFixed(3);
+        } else if (this.props.xScale == "log") {
+          printVal = +this.props.value.toFixed(5);
+        }
       } else if (this.props.value < 1000 && this.props.value > -1000) {
         printVal = +this.props.value.toFixed(1);
       } else {
@@ -2002,7 +2010,8 @@ var Tooltip = function (_React$Component) {
       var style = {
         outer: {
           zIndex: "1",
-          position: "absolute"
+          position: "absolute",
+          pointerEvents: "none"
         },
         inner: {
           display: "inline-block",
@@ -2115,6 +2124,7 @@ var Tooltip = function (_React$Component) {
 
 Tooltip.defaultProps = {
   width: 200,
+  padding: "10px 0px",
   backgroundColor: "#181818",
   fontColor: "#ffffff",
   borderColor: "#585858",
