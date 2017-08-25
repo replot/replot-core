@@ -1202,7 +1202,7 @@ var YStep = function (_React$Component3) {
         x2: this.props.x - this.props.length, y2: this.props.y,
         stroke: this.props.color }));
       step.push(_react2.default.createElement(YTickLabel, { key: "label" + this.props.y, x: this.props.x - 10, y: this.props.y,
-        value: this.props.value, color: this.props.color }));
+        value: this.props.value, yScale: this.props.yScale, color: this.props.color }));
 
       return _react2.default.createElement(
         "g",
@@ -1268,7 +1268,7 @@ var YAxis = function (_React$Component4) {
         if (this.props.showYLabels) {
           yAxis.push(_react2.default.createElement(YStep, { key: "yStep" + i, x: this.props.x, y: tickPos,
             value: yVal, length: 10, color: this.props.style.labelColor,
-            showYLabels: this.props.showYLabels }));
+            showYLabels: this.props.showYLabels, yScale: this.props.yScale }));
         }
 
         if (this.props.showGrid) {
@@ -1373,7 +1373,7 @@ var XStep = function (_React$Component6) {
         x2: this.props.x, y2: this.props.y + this.props.length,
         stroke: this.props.color }));
       step.push(_react2.default.createElement(XTickLabel, { key: "label" + this.props.x, x: this.props.x, y: this.props.y,
-        value: this.props.value, color: this.props.color }));
+        value: this.props.value, xScale: this.props.xScale, color: this.props.color }));
 
       return _react2.default.createElement(
         "g",
@@ -1439,7 +1439,7 @@ var XAxisContinuous = function (_React$Component7) {
           }
           xAxis.push(_react2.default.createElement(XStep, { key: "xStep" + i, x: tickPos, y: this.props.y,
             value: xVal, length: 10, color: this.props.style.labelColor,
-            showXLabels: this.props.showXLabels }));
+            showXLabels: this.props.showXLabels, xScale: this.props.xScale }));
         }
       }
 
