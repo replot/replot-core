@@ -74,7 +74,7 @@ class YStep extends React.Component {
     )
     step.push(
       <YTickLabel key={"label"+this.props.y} x={this.props.x-10} y={this.props.y}
-        value={this.props.value} color={this.props.color} />
+        value={this.props.value} yScale={this.props.yScale} color={this.props.color} />
     )
 
     return(
@@ -131,7 +131,7 @@ class YAxis extends React.Component {
         yAxis.push(
           <YStep key={"yStep"+i} x={this.props.x} y={tickPos}
             value={yVal} length={10} color={this.props.style.labelColor}
-            showYLabels={this.props.showYLabels}/>
+            showYLabels={this.props.showYLabels} yScale={this.props.yScale}/>
         )
       }
 
@@ -217,7 +217,7 @@ class XStep extends React.Component {
     )
     step.push(
       <XTickLabel key={"label"+this.props.x} x={this.props.x} y={this.props.y}
-        value={this.props.value} color={this.props.color} />
+        value={this.props.value} xScale={this.props.xScale} color={this.props.color} />
     )
 
     return(
@@ -274,7 +274,7 @@ class XAxisContinuous extends React.Component {
         xAxis.push(
           <XStep key={"xStep"+i} x={tickPos} y={this.props.y}
             value={xVal} length={10} color={this.props.style.labelColor}
-            showXLabels={this.props.showXLabels}/>
+            showXLabels={this.props.showXLabels} xScale={this.props.xScale}/>
         )
       }
     }

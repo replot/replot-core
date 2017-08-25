@@ -1202,7 +1202,7 @@ var YStep = function (_React$Component3) {
         x2: this.props.x - this.props.length, y2: this.props.y,
         stroke: this.props.color }));
       step.push(_react2.default.createElement(YTickLabel, { key: "label" + this.props.y, x: this.props.x - 10, y: this.props.y,
-        value: this.props.value, color: this.props.color }));
+        value: this.props.value, yScale: this.props.yScale, color: this.props.color }));
 
       return _react2.default.createElement(
         "g",
@@ -1268,7 +1268,7 @@ var YAxis = function (_React$Component4) {
         if (this.props.showYLabels) {
           yAxis.push(_react2.default.createElement(YStep, { key: "yStep" + i, x: this.props.x, y: tickPos,
             value: yVal, length: 10, color: this.props.style.labelColor,
-            showYLabels: this.props.showYLabels }));
+            showYLabels: this.props.showYLabels, yScale: this.props.yScale }));
         }
 
         if (this.props.showGrid) {
@@ -1373,7 +1373,7 @@ var XStep = function (_React$Component6) {
         x2: this.props.x, y2: this.props.y + this.props.length,
         stroke: this.props.color }));
       step.push(_react2.default.createElement(XTickLabel, { key: "label" + this.props.x, x: this.props.x, y: this.props.y,
-        value: this.props.value, color: this.props.color }));
+        value: this.props.value, xScale: this.props.xScale, color: this.props.color }));
 
       return _react2.default.createElement(
         "g",
@@ -1439,7 +1439,7 @@ var XAxisContinuous = function (_React$Component7) {
           }
           xAxis.push(_react2.default.createElement(XStep, { key: "xStep" + i, x: tickPos, y: this.props.y,
             value: xVal, length: 10, color: this.props.style.labelColor,
-            showXLabels: this.props.showXLabels }));
+            showXLabels: this.props.showXLabels, xScale: this.props.xScale }));
         }
       }
 
@@ -1810,6 +1810,10 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _LoadingIcon = __webpack_require__(15);
 
 var _LoadingIcon2 = _interopRequireDefault(_LoadingIcon);
@@ -1834,6 +1838,7 @@ var Resize = function (_React$Component) {
       width: parseInt(_this.props.width),
       resizing: false
     };
+    _this.timeouts = [];
     return _this;
   }
 
@@ -1857,9 +1862,10 @@ var Resize = function (_React$Component) {
           resizing: true,
           width: this.elem.parentNode.clientWidth * parseInt(this.props.width) / 100
         });
-        var updateFunction;
-        clearTimeout(updateFunction);
-        updateFunction = setTimeout(this.updateDimensions.bind(this), 1200);
+        for (var i = 0; i < this.timeouts.length; i++) {
+          clearTimeout(this.timeouts[i]);
+        }
+        this.timeouts.push(setTimeout(this.updateDimensions.bind(this), 1200));
       }
     }
   }, {
@@ -1928,6 +1934,10 @@ var Resize = function (_React$Component) {
 
   return Resize;
 }(_react2.default.Component);
+
+Resize.propTypes = {
+  width: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]).isRequired
+};
 
 exports.default = Resize;
 

@@ -1,4 +1,5 @@
 import React from "react"
+import PropTypes from "prop-types"
 import LoadingIcon from "./LoadingIcon.jsx"
 
 
@@ -10,6 +11,7 @@ class Resize extends React.Component {
       width: parseInt(this.props.width),
       resizing: false
     }
+    this.timeouts = []
   }
 
   parseWidth(width) {
@@ -29,9 +31,10 @@ class Resize extends React.Component {
         resizing: true,
         width: this.elem.parentNode.clientWidth * parseInt(this.props.width) / 100
       })
-      var updateFunction
-      clearTimeout(updateFunction)
-      updateFunction = setTimeout(this.updateDimensions.bind(this), 1200)
+      for (let i = 0; i < this.timeouts.length; i++) {
+        clearTimeout(this.timeouts[i])
+      }
+      this.timeouts.push(setTimeout(this.updateDimensions.bind(this), 1200))
     }
   }
 
@@ -88,6 +91,10 @@ class Resize extends React.Component {
     window.removeEventListener("resize", this.listener)
   }
 
+}
+
+Resize.propTypes = {
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired
 }
 
 export default Resize
