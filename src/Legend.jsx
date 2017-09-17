@@ -2,6 +2,40 @@ import React from "react"
 import PropTypes from "prop-types"
 
 
+class LegendShape extends React.Component {
+
+  render() {
+    if (this.props.shape == "square") {
+      return(
+        <g>
+           <rect x={this.props.x} y={this.props.y} fill={this.props.value}
+             width={this.props.size} height={this.props.size} />
+           <text x={this.props.x+1.5*this.props.size} y={this.props.y+(this.props.size/1.7)}
+            alignmentBaseline="middle" fontSize={this.props.size}
+            fill={this.props.fontColor} fontFamily={this.props.fontFamily}>
+              {this.props.title}
+          </text>
+        </g>
+      )
+    }
+    else if (this.props.shape == "circle") {
+      return(
+        <g>
+           <circle cx={this.props.x+this.props.size/2} cy={this.props.y+this.props.size/2}
+           fill={this.props.value} r={this.props.size/2} stroke={this.props.value} />
+           <text x={this.props.x+1.5*this.props.size} y={this.props.y+(this.props.size/1.7)}
+            alignmentBaseline="middle" fontSize={this.props.size}
+            fill={this.props.fontColor} fontFamily={this.props.fontFamily}>
+              {this.props.title}
+          </text>
+        </g>
+      )
+    }
+  }
+
+}
+
+
 class Legend extends React.Component {
 
   render() {
@@ -19,10 +53,23 @@ class Legend extends React.Component {
         size = 10
       }
       let buffer = {x: 5, y: 4}
+      if (this.props.showTitle) {
+        items.push(
+          <text x={buffer.x+1.5*size} y={buffer.y+(size/1.7)}
+           alignmentBaseline="middle" fontSize={size}
+           fill={this.props.fontColor} fontFamily={this.props.fontFamily}>
+             {this.props.legendTitle}
+         </text>
+        )
+        buffer.y += size + buffer.y
+      }
+
       if (this.props.mode === "flat") {
         let numColumns = Math.min(titles.length, Math.floor((this.props.width-buffer.x)/((size*2) + (longest.length*size/2))))
         if (!numColumns) {numColumns = 1}
         let numRows = Math.ceil(titles.length/numColumns)
+
+        if (this.props.showTitle) { numRows += 1 }
 
         for (let i = 0; i < titles.length; i++) {
           let title = titles[i]
@@ -30,15 +77,9 @@ class Legend extends React.Component {
             let x = buffer.x + (i%numColumns)*((this.props.width-buffer.x-(size*2+longest.length*size/2))/(numColumns-1 <= 0 ? 1 : numColumns-1))
             let y = buffer.y + ((Math.floor(i/numColumns))*1.5*size)
             items.push(
-              <g key={title}>
-                 <rect x={x} y={y} width={size} height={size}
-                   fill={this.props.values[title]} />
-                 <text x={x+1.5*size} y={y+(size/1.7)}
-                  alignmentBaseline="middle" fontSize={size}
-                  fill={this.props.fontColor} fontFamily={this.props.fontFamily}>
-                    {title}
-                </text>
-              </g>
+              <LegendShape shape={this.props.shape} x={x} y={y} size={size}
+                key={this.props.title} title={title} value={this.props.values[title]}
+                fontColor={this.props.fontColor} fontFamily={this.props.fontFamily} />
             )
           }
         }
@@ -55,6 +96,8 @@ class Legend extends React.Component {
 
       } else if (this.props.mode === "stack") {
 
+        if (this.props.showTitle) { titles.length += 1 }
+
         for (let i = 0; i < titles.length; i++) {
           let title = titles[i]
           if (title) {
@@ -66,15 +109,9 @@ class Legend extends React.Component {
               y = buffer.y + (i*size*1.5)
             }
             items.push(
-              <g key={title}>
-                 <rect x={x} y={y} width={size} height={size}
-                   fill={this.props.values[title]} />
-                 <text x={x+1.5*size} y={y+(size/1.7)}
-                  alignmentBaseline="middle" fontSize={size}
-                  fill={this.props.fontColor} fontFamily={this.props.fontFamily}>
-                    {title}
-                </text>
-              </g>
+              <LegendShape shape={this.props.shape} x={x} y={y} size={size}
+                key={this.props.title} title={title} value={this.props.values[title]}
+                fontColor={this.props.fontColor} fontFamily={this.props.fontFamily} />
             )
           }
         }
@@ -95,22 +132,28 @@ class Legend extends React.Component {
 Legend.defaultProps = {
   width: 500,
   mode: "flat",
+  shape: "square",
   showLegend: true,
   fontColor: "#000000",
   backgroundColor: "none",
   showBorder: true,
-  borderColor: "#000000"
+  borderColor: "#000000",
+  showTitle: false,
+  legendTitle: "Legend"
 }
 
 Legend.propTypes = {
   values: PropTypes.object.isRequired,
   width: PropTypes.number,
   mode: PropTypes.string,
+  shape: PropTypes.string,
   showLegend: PropTypes.bool,
   fontColor: PropTypes.string,
   backgroundColor: PropTypes.string,
   showBorder: PropTypes.bool,
-  borderColor: PropTypes.string
+  borderColor: PropTypes.string,
+  showTitle: PropTypes.bool,
+  legendTitle: PropTypes.string
 }
 
 export default Legend

@@ -105,6 +105,8 @@ value of `false` is passed
 * `borderColor` defaults to `"#000000"`, and will change the color of the border.
 * `backgroundColor` defaults to `none`, and will change the background color
 or the Legend.
+* `shape` defaults to `square`, but can be changed to `circle`
+* `showTitle` defaults to `false`, but can be changed to `true` and customized with `legendTitle`
 
 ## Axis
 Users can import an axis parent component, for any visualization that may require

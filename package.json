@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "description": "Replot core components",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {"watch": "cd examples && webpack --watch"},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MacroConnections/replot-core.git"
