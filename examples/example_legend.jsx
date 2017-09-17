@@ -27,7 +27,7 @@ class ExampleApp extends React.Component {
         // test10: "blue",
         // test11: "red",
         // test12: "green"
-}
+      }
     }
   }
 
@@ -35,13 +35,22 @@ class ExampleApp extends React.Component {
     return(
       <div>
         <svg width={600} height={200}>
-          <Legend values={this.state.values}/>
+          <Legend values={this.state.values} />
         </svg>
         <svg width={200} height={200}>
           <Legend values={this.state.values} mode="stack" />
         </svg>
         <svg width={200} height={200}>
           <Legend values={this.state.values} mode="stack" showBorder={false} backgroundColor="#1b1b1b" fontColor="#ffffff"/>
+        </svg>
+        <svg width={600} height={200}>
+          <Legend values={this.state.values} shape="circle" showTitle={true} legendTitle="Countries" />
+        </svg>
+        <svg width={200} height={200}>
+          <Legend values={this.state.values} mode="stack" shape="circle" showTitle={true} legendTitle="Countries" />
+        </svg>
+        <svg width={200} height={200}>
+          <Legend values={this.state.values} mode="stack" shape="circle" showBorder={false} backgroundColor="#1b1b1b" fontColor="#ffffff"/>
         </svg>
       </div>
     )
