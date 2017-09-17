@@ -10,7 +10,9 @@ class ExampleApp extends React.Component {
       axisColor: "#f17e33",
       labelColor: "blue",
       titleColor: "rgb(0,255,0)",
-      gridColor: "#123456",
+      gridColor: "rgb(0,255,0)",
+      gridWidth: 3,
+      gridOpacity: 1,
       lineWidth: 5,
       lineOpacity: .5
     }

@@ -140,7 +140,9 @@ class YAxis extends React.Component {
           yAxis.push(
             <Line key={"grid"+i} x1={this.props.x} y1={tickPos}
               x2={this.props.x+this.props.width} y2={tickPos}
-              stroke={this.props.style.gridColor} strokeWidth={1} opacity={0.5} />
+              stroke={this.props.style.gridColor}
+              strokeWidth={this.props.style.gridWidth}
+              opacity={this.props.style.gridOpacity} />
           )
         }
       }
@@ -171,6 +173,8 @@ YAxis.defaultProps = {
     labelColor: "#000000",
     titleColor: "#000000",
     gridColor: "#DDDDDD",
+    gridWidth: 1,
+    gridOpacity: 0.5,
     lineWidth: 2,
     lineOpacity: 1
   }
@@ -301,6 +305,8 @@ XAxisContinuous.defaultProps = {
     labelColor: "#000000",
     titleColor: "#000000",
     gridColor: "#DDDDDD",
+    gridWidth: 1,
+    gridOpacity: 0.5,
     lineWidth: 2,
     lineOpacity: 1
   }
@@ -560,6 +566,8 @@ Axis.defaultProps = {
     labelColor: "#000000",
     titleColor: "#000000",
     gridColor: "#DDDDDD",
+    gridWidth: 1,
+    gridOpacity: 0.5,
     lineWidth: 2,
     lineOpacity: 1
   },
