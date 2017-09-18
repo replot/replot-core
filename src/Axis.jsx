@@ -49,10 +49,12 @@ class YTickLabel extends React.Component {
       printVal = Humanize.compactInteger(this.props.value, 1)
     }
 
+    let fontSize = 15
+
     return (
       <g>
-        <text x={this.props.x} y={this.props.y+5}
-          fontSize={15} fill={this.props.color} textAnchor={"end"}>
+        <text x={this.props.x} y={this.props.y}
+          fontSize={fontSize} fill={this.props.color} textAnchor={"end"}>
           {printVal}
         </text>
       </g>
@@ -76,7 +78,7 @@ class YStep extends React.Component {
     )
     step.push(
       <YTickLabel key={"label"+this.props.y}
-        x={this.props.x-10} y={this.props.y}
+        x={this.props.x-this.props.length-5} y={this.props.y+5} length={this.props.length}
         value={this.props.value} color={this.props.labelColor} />
     )
 
@@ -207,10 +209,12 @@ class XTickLabel extends React.Component {
       printVal = Humanize.compactInteger(this.props.value,1)
     }
 
+    let fontSize = 15
+
     return (
       <g>
-        <text x={this.props.x} y={this.props.y+22}
-          fontSize={15} fill={this.props.color} textAnchor="middle">
+        <text x={this.props.x} y={this.props.y+fontSize+5}
+          fontSize={fontSize} fill={this.props.color} textAnchor="middle">
           {printVal}
         </text>
       </g>
@@ -234,7 +238,7 @@ class XStep extends React.Component {
     )
     step.push(
       <XTickLabel key={"label"+this.props.x}
-        x={this.props.x} y={this.props.y}
+        x={this.props.x} y={this.props.y+this.props.length}
         value={this.props.value} color={this.props.labelColor} />
     )
 
@@ -262,7 +266,8 @@ class XAxisContinuous extends React.Component {
     if (this.props.xTitle) {
       xAxis.push(
         <text key="xTitle" textAnchor="middle"
-          x={this.props.x + this.props.width/2} y={this.props.y+65}
+          x={this.props.x + this.props.width/2}
+          y={this.props.y + 65}
           fill={this.props.style.titleColor} fontSize={18} >
           {this.props.xTitle}
         </text>
@@ -386,7 +391,7 @@ class XAxisDiscrete extends React.Component {
         xAxis.push(
           <text key={this.props.labels[i]} fill={this.props.style.labelColor}
             x={offset + i*(deltaX)}
-            y={this.props.y+22} textAnchor={anchor} transform={rotation} fontSize={size}>
+            y={this.props.y+27} textAnchor={anchor} transform={rotation} fontSize={size}>
             {this.props.labels[i]}
           </text>
         )
