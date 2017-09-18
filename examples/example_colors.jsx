@@ -22,7 +22,8 @@ class ExampleApp extends React.Component {
     p.randomize()
     let randomPalette = p.copy()
     let custom = new ColorPalette()
-    custom.createPalette(new Color(255,255,255), new Color(255,0,255), 6)
+    custom.createPalette(new Color(255,255,255), new Color(255,0,0), 6)
+    custom.randomize()
     this.state = {
       setValues: {
         Global: setPalette.get(0).rgb(),
