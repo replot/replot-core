@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 20);
+/******/ 	return __webpack_require__(__webpack_require__.s = 21);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -300,11 +300,11 @@ if (process.env.NODE_ENV !== 'production') {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(27)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(28)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(26)();
+  module.exports = __webpack_require__(27)();
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
@@ -416,7 +416,7 @@ module.exports = exports['default'];
 
 
 var React = __webpack_require__(1);
-var factory = __webpack_require__(21);
+var factory = __webpack_require__(22);
 
 if (typeof React === 'undefined') {
   throw Error(
@@ -614,7 +614,7 @@ module.exports = ReactPropTypesSecret;
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {var now = __webpack_require__(28)
+/* WEBPACK VAR INJECTION */(function(global) {var now = __webpack_require__(29)
   , root = typeof window === 'undefined' ? global : window
   , vendors = ['moz', 'webkit']
   , suffix = 'AnimationFrame'
@@ -687,7 +687,7 @@ module.exports.polyfill = function() {
   root.cancelAnimationFrame = caf
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(36)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(37)))
 
 /***/ }),
 /* 11 */
@@ -978,7 +978,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactMotion = __webpack_require__(33);
+var _reactMotion = __webpack_require__(34);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1084,7 +1084,7 @@ var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _humanizePlus = __webpack_require__(23);
+var _humanizePlus = __webpack_require__(24);
 
 var _humanizePlus2 = _interopRequireDefault(_humanizePlus);
 
@@ -2134,6 +2134,82 @@ exports.default = Tooltip;
 
 /***/ }),
 /* 20 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Color_js__ = __webpack_require__(38);
+
+
+class ColorPalette {
+
+  constructor() {
+    this.palette = []
+    this.numcolors = 0
+  }
+
+  get(i) {
+    return this.palette[i]
+  }
+
+  copy() {
+    let cp = new ColorPalette()
+    cp.palette = [].concat(this.palette)
+    cp.numcolors = this.numcolors
+    return cp
+  }
+
+  addColors(listColors) {
+    this.palette = this.palette.concat(listColors)
+    this.numcolors += listColors.length
+  }
+
+  randomize() {
+    let curIndex = this.numcolors
+    let temp
+    let randomIndex
+
+    while (0 !== curIndex) {
+      randomIndex = Math.floor(Math.random() * curIndex)
+      curIndex -= 1
+
+      temp = this.palette[curIndex]
+      this.palette[curIndex] = this.palette[randomIndex]
+      this.palette[randomIndex] = temp
+    }
+  }
+
+  createPalette(color1, color2, numcolors) {
+    let dred = color2.red - color1.red
+    let dgreen = color2.green - color1.green
+    let dblue = color2.blue - color1.blue
+
+    let slopeRed = Math.abs(dred / 255)
+    let slopeGreen = Math.abs(dgreen / 255)
+    let slopeBlue = Math.abs(dblue / 255)
+
+    let end1 = color1.endpoint(slopeRed, slopeGreen, slopeBlue)
+    let end2 = color2.endpoint(slopeRed, slopeGreen, slopeBlue)
+
+    let palette = []
+    for (var i=0; i < numcolors; i++) {
+      let r = end1.red + i*(end2.red - end1.red)/numcolors
+      let g = end1.green + i*(end2.green - end1.green)/numcolors
+      let b = end1.blue + i*(end2.blue - end1.blue)/numcolors
+      let c = new __WEBPACK_IMPORTED_MODULE_0__Color_js__["a" /* default */](r,g,b)
+      palette.push(c)
+    }
+    this.numcolors = numcolors
+    this.palette = palette
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (ColorPalette);
+
+
+/***/ }),
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2142,7 +2218,7 @@ exports.default = Tooltip;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Axis = exports.Legend = exports.LoadingIcon = exports.Resize = exports.Tooltip = undefined;
+exports.ColorPalette = exports.Axis = exports.Legend = exports.LoadingIcon = exports.Resize = exports.Tooltip = undefined;
 
 var _Tooltip = __webpack_require__(19);
 
@@ -2164,6 +2240,10 @@ var _Axis = __webpack_require__(17);
 
 var _Axis2 = _interopRequireDefault(_Axis);
 
+var _ColorPalette = __webpack_require__(20);
+
+var _ColorPalette2 = _interopRequireDefault(_ColorPalette);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.Tooltip = _Tooltip2.default;
@@ -2171,9 +2251,10 @@ exports.Resize = _Resize2.default;
 exports.LoadingIcon = _LoadingIcon2.default;
 exports.Legend = _Legend2.default;
 exports.Axis = _Axis2.default;
+exports.ColorPalette = _ColorPalette2.default;
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2189,9 +2270,9 @@ exports.Axis = _Axis2.default;
 
 
 
-var _assign = __webpack_require__(24);
+var _assign = __webpack_require__(25);
 
-var emptyObject = __webpack_require__(22);
+var emptyObject = __webpack_require__(23);
 var _invariant = __webpack_require__(3);
 
 if (process.env.NODE_ENV !== 'production') {
@@ -3053,7 +3134,7 @@ module.exports = factory;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3079,7 +3160,7 @@ module.exports = emptyObject;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3619,7 +3700,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3716,7 +3797,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3785,7 +3866,7 @@ module.exports = checkPropTypes;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3851,7 +3932,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3871,7 +3952,7 @@ var invariant = __webpack_require__(3);
 var warning = __webpack_require__(7);
 
 var ReactPropTypesSecret = __webpack_require__(9);
-var checkPropTypes = __webpack_require__(25);
+var checkPropTypes = __webpack_require__(26);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -4371,7 +4452,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {// Generated by CoffeeScript 1.12.2
@@ -4414,7 +4495,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4667,7 +4748,7 @@ exports['default'] = Motion;
 module.exports = exports['default'];
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4941,7 +5022,7 @@ exports['default'] = StaggeredMotion;
 module.exports = exports['default'];
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4965,7 +5046,7 @@ var _stepper3 = __webpack_require__(13);
 
 var _stepper4 = _interopRequireDefault(_stepper3);
 
-var _mergeDiff = __webpack_require__(32);
+var _mergeDiff = __webpack_require__(33);
 
 var _mergeDiff2 = _interopRequireDefault(_mergeDiff);
 
@@ -5449,7 +5530,7 @@ module.exports = exports['default'];
 // that you've unmounted but that's still animating. This is where it lives
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5563,7 +5644,7 @@ module.exports = exports['default'];
 // to loop through and find a key's index each time), but I no longer care
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5573,19 +5654,19 @@ exports.__esModule = true;
 
 function _interopRequire(obj) { return obj && obj.__esModule ? obj['default'] : obj; }
 
-var _Motion = __webpack_require__(29);
+var _Motion = __webpack_require__(30);
 
 exports.Motion = _interopRequire(_Motion);
 
-var _StaggeredMotion = __webpack_require__(30);
+var _StaggeredMotion = __webpack_require__(31);
 
 exports.StaggeredMotion = _interopRequire(_StaggeredMotion);
 
-var _TransitionMotion = __webpack_require__(31);
+var _TransitionMotion = __webpack_require__(32);
 
 exports.TransitionMotion = _interopRequire(_TransitionMotion);
 
-var _spring = __webpack_require__(35);
+var _spring = __webpack_require__(36);
 
 exports.spring = _interopRequire(_spring);
 
@@ -5599,12 +5680,12 @@ exports.stripStyle = _interopRequire(_stripStyle);
 
 // deprecated, dummy warning function
 
-var _reorderKeys = __webpack_require__(34);
+var _reorderKeys = __webpack_require__(35);
 
 exports.reorderKeys = _interopRequire(_reorderKeys);
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5628,7 +5709,7 @@ module.exports = exports['default'];
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5657,7 +5738,7 @@ function spring(val, config) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports) {
 
 var g;
@@ -5681,6 +5762,98 @@ try {
 // easier to handle this case. if(!global) { ...}
 
 module.exports = g;
+
+
+/***/ }),
+/* 38 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+function hexToR(h) {return parseInt((cutHex(h)).substring(0,2),16)}
+function hexToG(h) {return parseInt((cutHex(h)).substring(2,4),16)}
+function hexToB(h) {return parseInt((cutHex(h)).substring(4,6),16)}
+function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h}
+
+class Color {
+
+  constructor(red, green, blue) {
+    this.red = red
+    this.green = green
+    this.blue = blue
+  }
+
+  rgb() {
+    let str = "rgb("
+    str += String(Math.round(this.red)) + ","
+    str += String(Math.round(this.green)) + ","
+    str += String(Math.round(this.blue)) + ")"
+    return str
+  }
+
+  fromHex(hex) {
+    this.red = hexToR(hex)
+    this.green = hexToG(hex)
+    this.blue = hexToB(hex)
+  }
+
+  endpoint(slopeRed, slopeGreen, slopeBlue) {
+    let tredNeg = this.red / slopeRed
+    let tredPos = (255 - this.red) / slopeRed
+    if (slopeRed == 0) {
+      tredNeg = -1
+      tredPos = -1
+    }
+
+    let tgreenNeg = this.green / slopeGreen
+    let tgreenPos = (255 - this.green) / slopeGreen
+    if (slopeGreen == 0) {
+      tgreenNeg = -1
+      tgreenPos = -1
+    }
+
+    let tblueNeg = this.blue / slopeBlue
+    let tbluePos = (255 - this.blue) / slopeBlue
+    if (slopeBlue == 0) {
+      tblueNeg = -1
+      tbluePos = -1
+    }
+
+    let t = [tredNeg, tredPos, tgreenNeg, tgreenPos, tblueNeg, tbluePos]
+
+    let keys = []
+    for (var k=0; k < 6; k++) {
+      if (t[k] >= 0) {
+        keys.push(k)
+      }
+    }
+
+    if (keys.length == 0) {
+      return this
+    }
+
+    let tmin = t[keys[0]]
+    let tind = keys[0]
+    for (var ki=0; ki < keys.length; ki++) {
+      if (t[keys[ki]] < tmin) {
+        tind = keys[ki]
+        tmin = t[tind]
+      }
+    }
+
+    let sign = 1
+    if (tind % 2 == 0) {
+      sign = -1
+    }
+    let red = this.red + tmin * sign * slopeRed
+    let green = this.green + tmin * sign * slopeGreen
+    let blue = this.blue + tmin * sign * slopeBlue
+    let end = new Color(red, green, blue)
+    return end
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Color);
 
 
 /***/ })
