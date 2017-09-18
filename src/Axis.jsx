@@ -70,11 +70,14 @@ class YStep extends React.Component {
       <Line key={"tick"+this.props.y}
         x1={this.props.x} y1={this.props.y}
         x2={this.props.x-this.props.length} y2={this.props.y}
-        stroke={this.props.color} />
+        stroke={this.props.tickColor}
+        strokeWidth={this.props.tickWidth}
+        opacity={this.props.tickOpacity} />
     )
     step.push(
-      <YTickLabel key={"label"+this.props.y} x={this.props.x-10} y={this.props.y}
-        value={this.props.value} color={this.props.color} />
+      <YTickLabel key={"label"+this.props.y}
+        x={this.props.x-10} y={this.props.y}
+        value={this.props.value} color={this.props.labelColor} />
     )
 
     return(
@@ -128,9 +131,14 @@ class YAxis extends React.Component {
         yVal = this.props.minY + i*(this.props.maxY-this.props.minY)/(this.props.ySteps-1)
       }
       if (this.props.showYLabels){
+        console.log("y")
+        console.log(this.props.style.tickColor)
         yAxis.push(
           <YStep key={"yStep"+i} x={this.props.x} y={tickPos}
-            value={yVal} length={10} color={this.props.style.labelColor}
+            value={yVal} length={10} labelColor={this.props.style.labelColor}
+            tickColor={this.props.style.tickColor}
+            tickWidth={this.props.style.tickWidth}
+            tickOpacity={this.props.style.tickOpacity}
             showYLabels={this.props.showYLabels}/>
         )
       }
@@ -176,7 +184,10 @@ YAxis.defaultProps = {
     gridWidth: 1,
     gridOpacity: 0.5,
     lineWidth: 2,
-    lineOpacity: 1
+    lineOpacity: 1,
+    tickColor: "#000000",
+    tickWidth: 2,
+    tickOpacity: 1
   }
 }
 
@@ -217,11 +228,14 @@ class XStep extends React.Component {
       <Line key={"tick"+this.props.x}
         x1={this.props.x} y1={this.props.y}
         x2={this.props.x} y2={this.props.y+this.props.length}
-        stroke={this.props.color} />
+        stroke={this.props.tickColor}
+        strokeWidth={this.props.tickWidth}
+        opacity={this.props.tickOpacity} />
     )
     step.push(
-      <XTickLabel key={"label"+this.props.x} x={this.props.x} y={this.props.y}
-        value={this.props.value} color={this.props.color} />
+      <XTickLabel key={"label"+this.props.x}
+        x={this.props.x} y={this.props.y}
+        value={this.props.value} color={this.props.labelColor} />
     )
 
     return(
@@ -275,9 +289,14 @@ class XAxisContinuous extends React.Component {
         } else {
           xVal = this.props.minX + i*(this.props.maxX-this.props.minX)/(this.props.xSteps-1)
         }
+        console.log("x")
+        console.log(this.props.style.tickColor)
         xAxis.push(
           <XStep key={"xStep"+i} x={tickPos} y={this.props.y}
-            value={xVal} length={10} color={this.props.style.labelColor}
+            value={xVal} length={10} labelColor={this.props.style.labelColor}
+            tickColor={this.props.style.tickColor}
+            tickWidth={this.props.style.tickWidth}
+            tickOpacity={this.props.style.tickOpacity}
             showXLabels={this.props.showXLabels}/>
         )
       }
@@ -308,7 +327,10 @@ XAxisContinuous.defaultProps = {
     gridWidth: 1,
     gridOpacity: 0.5,
     lineWidth: 2,
-    lineOpacity: 1
+    lineOpacity: 1,
+    tickColor: "#000000",
+    tickWidth: 2,
+    tickOpacity: 1
   }
 }
 
@@ -357,7 +379,9 @@ class XAxisDiscrete extends React.Component {
           <Line key={"tick"+i}
             x1={offset + i*(deltaX)} y1={this.props.y}
             x2={offset + i*(deltaX)} y2={this.props.y+8}
-            stroke={this.props.style.labelColor} />
+            stroke={this.props.style.tickColor}
+            strokeWidth={this.props.style.tickWidth}
+            opacity={this.props.style.tickOpacity} />
         )
         xAxis.push(
           <text key={this.props.labels[i]} fill={this.props.style.labelColor}
@@ -395,7 +419,10 @@ XAxisDiscrete.defaultProps = {
     labelColor: "#000000",
     titleColor: "#000000",
     lineWidth: 2,
-    lineOpacity: 1
+    lineOpacity: 1,
+    tickColor: "#000000",
+    tickWidth: 2,
+    tickOpacity: 1
   }
 }
 
@@ -569,7 +596,10 @@ Axis.defaultProps = {
     gridWidth: 1,
     gridOpacity: 0.5,
     lineWidth: 2,
-    lineOpacity: 1
+    lineOpacity: 1,
+    tickColor: "#000000",
+    tickWidth: 2,
+    tickOpacity: 1
   },
   showLegend: true,
   legendMode: "flat",

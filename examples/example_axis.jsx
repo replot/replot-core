@@ -14,7 +14,10 @@ class ExampleApp extends React.Component {
       gridWidth: 3,
       gridOpacity: 1,
       lineWidth: 5,
-      lineOpacity: .5
+      lineOpacity: .5,
+      tickColor: "rgb(255,0,255)",
+      tickWidth: 3,
+      tickOpacity: .5
     }
     const values = {
       Global: "#4cab92",
