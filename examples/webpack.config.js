@@ -6,6 +6,7 @@ module.exports = function () {
       example3: "./example3.jsx",
       example_loading: "./example_loading.jsx",
       example_legend: "./example_legend.jsx",
+      example_colors: "./example_colors.jsx",
       example_axis: "./example_axis.jsx"
     },
     output: {
