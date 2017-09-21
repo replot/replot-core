@@ -53,10 +53,17 @@ class Legend extends React.Component {
         size = 10
       }
       let buffer = {x: 5, y: 4}
+      let xTitle
       if (this.props.showTitle) {
+        if (this.props.mode === "flat") {
+          xTitle = this.props.width/2
+        } else if (this.props.mode === "stack") {
+          xTitle = (size*2 + longest.length*size/2)/2
+        }
         items.push(
-          <text x={buffer.x+1.5*size} y={buffer.y+(size/1.7)}
-           alignmentBaseline="middle" fontSize={size}
+          <text x={xTitle} y={buffer.y+(size/1.7)}
+           alignmentBaseline="middle" textAnchor="middle"
+           fontSize={size} textDecoration="underline"
            fill={this.props.fontColor} fontFamily={this.props.fontFamily}>
              {this.props.legendTitle}
          </text>
