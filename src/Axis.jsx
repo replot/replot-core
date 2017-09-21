@@ -133,8 +133,6 @@ class YAxis extends React.Component {
         yVal = this.props.minY + i*(this.props.maxY-this.props.minY)/(this.props.ySteps-1)
       }
       if (this.props.showYLabels){
-        console.log("y")
-        console.log(this.props.style.tickColor)
         yAxis.push(
           <YStep key={"yStep"+i} x={this.props.x} y={tickPos}
             value={yVal} length={10} labelColor={this.props.style.labelColor}
@@ -294,8 +292,6 @@ class XAxisContinuous extends React.Component {
         } else {
           xVal = this.props.minX + i*(this.props.maxX-this.props.minX)/(this.props.xSteps-1)
         }
-        console.log("x")
-        console.log(this.props.style.tickColor)
         xAxis.push(
           <XStep key={"xStep"+i} x={tickPos} y={this.props.y}
             value={xVal} length={10} labelColor={this.props.style.labelColor}
