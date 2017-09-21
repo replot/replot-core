@@ -829,8 +829,55 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Legend = function (_React$Component) {
-  _inherits(Legend, _React$Component);
+var LegendShape = function (_React$Component) {
+  _inherits(LegendShape, _React$Component);
+
+  function LegendShape() {
+    _classCallCheck(this, LegendShape);
+
+    return _possibleConstructorReturn(this, (LegendShape.__proto__ || Object.getPrototypeOf(LegendShape)).apply(this, arguments));
+  }
+
+  _createClass(LegendShape, [{
+    key: "render",
+    value: function render() {
+      if (this.props.shape == "square") {
+        return _react2.default.createElement(
+          "g",
+          null,
+          _react2.default.createElement("rect", { x: this.props.x, y: this.props.y, fill: this.props.value,
+            width: this.props.size, height: this.props.size }),
+          _react2.default.createElement(
+            "text",
+            { x: this.props.x + 1.5 * this.props.size, y: this.props.y + this.props.size / 1.7,
+              alignmentBaseline: "middle", fontSize: this.props.size,
+              fill: this.props.fontColor, fontFamily: this.props.fontFamily },
+            this.props.title
+          )
+        );
+      } else if (this.props.shape == "circle") {
+        return _react2.default.createElement(
+          "g",
+          null,
+          _react2.default.createElement("circle", { cx: this.props.x + this.props.size / 2, cy: this.props.y + this.props.size / 2,
+            fill: this.props.value, r: this.props.size / 2, stroke: this.props.value }),
+          _react2.default.createElement(
+            "text",
+            { x: this.props.x + 1.5 * this.props.size, y: this.props.y + this.props.size / 1.7,
+              alignmentBaseline: "middle", fontSize: this.props.size,
+              fill: this.props.fontColor, fontFamily: this.props.fontFamily },
+            this.props.title
+          )
+        );
+      }
+    }
+  }]);
+
+  return LegendShape;
+}(_react2.default.Component);
+
+var Legend = function (_React$Component2) {
+  _inherits(Legend, _React$Component2);
 
   function Legend() {
     _classCallCheck(this, Legend);
@@ -857,6 +904,24 @@ var Legend = function (_React$Component) {
           size = 10;
         }
         var buffer = { x: 5, y: 4 };
+        var xTitle = void 0;
+        if (this.props.showTitle) {
+          if (this.props.mode === "flat") {
+            xTitle = this.props.width / 2;
+          } else if (this.props.mode === "stack") {
+            xTitle = (size * 2 + longest.length * size / 2) / 2;
+          }
+          items.push(_react2.default.createElement(
+            "text",
+            { x: xTitle, y: buffer.y + size / 1.7,
+              alignmentBaseline: "middle", textAnchor: "middle",
+              fontSize: size, textDecoration: "underline",
+              fill: this.props.fontColor, fontFamily: this.props.fontFamily },
+            this.props.legendTitle
+          ));
+          buffer.y += size + buffer.y;
+        }
+
         if (this.props.mode === "flat") {
           var numColumns = Math.min(titles.length, Math.floor((this.props.width - buffer.x) / (size * 2 + longest.length * size / 2)));
           if (!numColumns) {
@@ -864,24 +929,18 @@ var Legend = function (_React$Component) {
           }
           var numRows = Math.ceil(titles.length / numColumns);
 
+          if (this.props.showTitle) {
+            numRows += 1;
+          }
+
           for (var i = 0; i < titles.length; i++) {
             var title = titles[i];
             if (title) {
               var x = buffer.x + i % numColumns * ((this.props.width - buffer.x - (size * 2 + longest.length * size / 2)) / (numColumns - 1 <= 0 ? 1 : numColumns - 1));
               var y = buffer.y + Math.floor(i / numColumns) * 1.5 * size;
-              items.push(_react2.default.createElement(
-                "g",
-                { key: title },
-                _react2.default.createElement("rect", { x: x, y: y, width: size, height: size,
-                  fill: this.props.values[title] }),
-                _react2.default.createElement(
-                  "text",
-                  { x: x + 1.5 * size, y: y + size / 1.7,
-                    alignmentBaseline: "middle", fontSize: size,
-                    fill: this.props.fontColor, fontFamily: this.props.fontFamily },
-                  title
-                )
-              ));
+              items.push(_react2.default.createElement(LegendShape, { shape: this.props.shape, x: x, y: y, size: size,
+                key: this.props.title, title: title, value: this.props.values[title],
+                fontColor: this.props.fontColor, fontFamily: this.props.fontFamily }));
             }
           }
 
@@ -896,6 +955,10 @@ var Legend = function (_React$Component) {
           );
         } else if (this.props.mode === "stack") {
 
+          if (this.props.showTitle) {
+            titles.length += 1;
+          }
+
           for (var _i = 0; _i < titles.length; _i++) {
             var _title = titles[_i];
             if (_title) {
@@ -906,19 +969,9 @@ var Legend = function (_React$Component) {
               } else {
                 _y = buffer.y + _i * size * 1.5;
               }
-              items.push(_react2.default.createElement(
-                "g",
-                { key: _title },
-                _react2.default.createElement("rect", { x: _x, y: _y, width: size, height: size,
-                  fill: this.props.values[_title] }),
-                _react2.default.createElement(
-                  "text",
-                  { x: _x + 1.5 * size, y: _y + size / 1.7,
-                    alignmentBaseline: "middle", fontSize: size,
-                    fill: this.props.fontColor, fontFamily: this.props.fontFamily },
-                  _title
-                )
-              ));
+              items.push(_react2.default.createElement(LegendShape, { shape: this.props.shape, x: _x, y: _y, size: size,
+                key: this.props.title, title: _title, value: this.props.values[_title],
+                fontColor: this.props.fontColor, fontFamily: this.props.fontFamily }));
             }
           }
           return _react2.default.createElement(
@@ -941,22 +994,28 @@ var Legend = function (_React$Component) {
 Legend.defaultProps = {
   width: 500,
   mode: "flat",
+  shape: "square",
   showLegend: true,
   fontColor: "#000000",
   backgroundColor: "none",
   showBorder: true,
-  borderColor: "#000000"
+  borderColor: "#000000",
+  showTitle: false,
+  legendTitle: "Legend"
 };
 
 Legend.propTypes = {
   values: _propTypes2.default.object.isRequired,
   width: _propTypes2.default.number,
   mode: _propTypes2.default.string,
+  shape: _propTypes2.default.string,
   showLegend: _propTypes2.default.bool,
   fontColor: _propTypes2.default.string,
   backgroundColor: _propTypes2.default.string,
   showBorder: _propTypes2.default.bool,
-  borderColor: _propTypes2.default.string
+  borderColor: _propTypes2.default.string,
+  showTitle: _propTypes2.default.bool,
+  legendTitle: _propTypes2.default.string
 };
 
 exports.default = Legend;
@@ -1165,13 +1224,15 @@ var YTickLabel = function (_React$Component2) {
         printVal = _humanizePlus2.default.compactInteger(this.props.value, 1);
       }
 
+      var fontSize = 15;
+
       return _react2.default.createElement(
         "g",
         null,
         _react2.default.createElement(
           "text",
-          { x: this.props.x, y: this.props.y + 5,
-            fontSize: 15, fill: this.props.color, textAnchor: "end" },
+          { x: this.props.x, y: this.props.y,
+            fontSize: fontSize, fill: this.props.color, textAnchor: "end" },
           printVal
         )
       );
@@ -1198,9 +1259,12 @@ var YStep = function (_React$Component3) {
       step.push(_react2.default.createElement(Line, { key: "tick" + this.props.y,
         x1: this.props.x, y1: this.props.y,
         x2: this.props.x - this.props.length, y2: this.props.y,
-        stroke: this.props.color }));
-      step.push(_react2.default.createElement(YTickLabel, { key: "label" + this.props.y, x: this.props.x - 10, y: this.props.y,
-        value: this.props.value, color: this.props.color }));
+        stroke: this.props.tickColor,
+        strokeWidth: this.props.tickWidth,
+        opacity: this.props.tickOpacity }));
+      step.push(_react2.default.createElement(YTickLabel, { key: "label" + this.props.y,
+        x: this.props.x - this.props.length - 5, y: this.props.y + 5, length: this.props.length,
+        value: this.props.value, color: this.props.labelColor }));
 
       return _react2.default.createElement(
         "g",
@@ -1265,7 +1329,10 @@ var YAxis = function (_React$Component4) {
         }
         if (this.props.showYLabels) {
           yAxis.push(_react2.default.createElement(YStep, { key: "yStep" + i, x: this.props.x, y: tickPos,
-            value: yVal, length: 10, color: this.props.style.labelColor,
+            value: yVal, length: 10, labelColor: this.props.style.labelColor,
+            tickColor: this.props.style.tickColor,
+            tickWidth: this.props.style.tickWidth,
+            tickOpacity: this.props.style.tickOpacity,
             showYLabels: this.props.showYLabels }));
         }
 
@@ -1273,7 +1340,9 @@ var YAxis = function (_React$Component4) {
           if (i != 0) {
             yAxis.push(_react2.default.createElement(Line, { key: "grid" + i, x1: this.props.x, y1: tickPos,
               x2: this.props.x + this.props.width, y2: tickPos,
-              stroke: this.props.style.gridColor, strokeWidth: 1, opacity: 0.5 }));
+              stroke: this.props.style.gridColor,
+              strokeWidth: this.props.style.gridWidth,
+              opacity: this.props.style.gridOpacity }));
           }
         }
       }
@@ -1306,8 +1375,13 @@ YAxis.defaultProps = {
     labelColor: "#000000",
     titleColor: "#000000",
     gridColor: "#DDDDDD",
+    gridWidth: 1,
+    gridOpacity: 0.5,
     lineWidth: 2,
-    lineOpacity: 1
+    lineOpacity: 1,
+    tickColor: "#000000",
+    tickWidth: 2,
+    tickOpacity: 1
   }
 };
 
@@ -1336,13 +1410,15 @@ var XTickLabel = function (_React$Component5) {
         printVal = _humanizePlus2.default.compactInteger(this.props.value, 1);
       }
 
+      var fontSize = 15;
+
       return _react2.default.createElement(
         "g",
         null,
         _react2.default.createElement(
           "text",
-          { x: this.props.x, y: this.props.y + 22,
-            fontSize: 15, fill: this.props.color, textAnchor: "middle" },
+          { x: this.props.x, y: this.props.y + fontSize + 5,
+            fontSize: fontSize, fill: this.props.color, textAnchor: "middle" },
           printVal
         )
       );
@@ -1369,9 +1445,12 @@ var XStep = function (_React$Component6) {
       step.push(_react2.default.createElement(Line, { key: "tick" + this.props.x,
         x1: this.props.x, y1: this.props.y,
         x2: this.props.x, y2: this.props.y + this.props.length,
-        stroke: this.props.color }));
-      step.push(_react2.default.createElement(XTickLabel, { key: "label" + this.props.x, x: this.props.x, y: this.props.y,
-        value: this.props.value, color: this.props.color }));
+        stroke: this.props.tickColor,
+        strokeWidth: this.props.tickWidth,
+        opacity: this.props.tickOpacity }));
+      step.push(_react2.default.createElement(XTickLabel, { key: "label" + this.props.x,
+        x: this.props.x, y: this.props.y + this.props.length,
+        value: this.props.value, color: this.props.labelColor }));
 
       return _react2.default.createElement(
         "g",
@@ -1409,7 +1488,8 @@ var XAxisContinuous = function (_React$Component7) {
         xAxis.push(_react2.default.createElement(
           "text",
           { key: "xTitle", textAnchor: "middle",
-            x: this.props.x + this.props.width / 2, y: this.props.y + 65,
+            x: this.props.x + this.props.width / 2,
+            y: this.props.y + 65,
             fill: this.props.style.titleColor, fontSize: 18 },
           this.props.xTitle
         ));
@@ -1436,7 +1516,10 @@ var XAxisContinuous = function (_React$Component7) {
             xVal = this.props.minX + i * (this.props.maxX - this.props.minX) / (this.props.xSteps - 1);
           }
           xAxis.push(_react2.default.createElement(XStep, { key: "xStep" + i, x: tickPos, y: this.props.y,
-            value: xVal, length: 10, color: this.props.style.labelColor,
+            value: xVal, length: 10, labelColor: this.props.style.labelColor,
+            tickColor: this.props.style.tickColor,
+            tickWidth: this.props.style.tickWidth,
+            tickOpacity: this.props.style.tickOpacity,
             showXLabels: this.props.showXLabels }));
         }
       }
@@ -1467,8 +1550,13 @@ XAxisContinuous.defaultProps = {
     labelColor: "#000000",
     titleColor: "#000000",
     gridColor: "#DDDDDD",
+    gridWidth: 1,
+    gridOpacity: 0.5,
     lineWidth: 2,
-    lineOpacity: 1
+    lineOpacity: 1,
+    tickColor: "#000000",
+    tickWidth: 2,
+    tickOpacity: 1
   }
 };
 
@@ -1524,12 +1612,14 @@ var XAxisDiscrete = function (_React$Component8) {
           xAxis.push(_react2.default.createElement(Line, { key: "tick" + _i,
             x1: offset + _i * deltaX, y1: this.props.y,
             x2: offset + _i * deltaX, y2: this.props.y + 8,
-            stroke: this.props.style.labelColor }));
+            stroke: this.props.style.tickColor,
+            strokeWidth: this.props.style.tickWidth,
+            opacity: this.props.style.tickOpacity }));
           xAxis.push(_react2.default.createElement(
             "text",
             { key: this.props.labels[_i], fill: this.props.style.labelColor,
               x: offset + _i * deltaX,
-              y: this.props.y + 22, textAnchor: anchor, transform: rotation, fontSize: size },
+              y: this.props.y + 27, textAnchor: anchor, transform: rotation, fontSize: size },
             this.props.labels[_i]
           ));
         }
@@ -1567,7 +1657,10 @@ XAxisDiscrete.defaultProps = {
     labelColor: "#000000",
     titleColor: "#000000",
     lineWidth: 2,
-    lineOpacity: 1
+    lineOpacity: 1,
+    tickColor: "#000000",
+    tickWidth: 2,
+    tickOpacity: 1
   }
 };
 
@@ -1746,8 +1839,13 @@ Axis.defaultProps = {
     labelColor: "#000000",
     titleColor: "#000000",
     gridColor: "#DDDDDD",
+    gridWidth: 1,
+    gridOpacity: 0.5,
     lineWidth: 2,
-    lineOpacity: 1
+    lineOpacity: 1,
+    tickColor: "#000000",
+    tickWidth: 2,
+    tickOpacity: 1
   },
   showLegend: true,
   legendMode: "flat",
