@@ -47,6 +47,7 @@ class Tooltip extends React.Component {
         zIndex: "1",
         position: "absolute",
         pointerEvents: "none",
+        textAlign: "left"
       },
       inner: {
         display: "inline-block",
