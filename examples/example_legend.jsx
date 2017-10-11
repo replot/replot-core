@@ -15,18 +15,14 @@ class ExampleApp extends React.Component {
         China: "#9dbd5f",
         Russia: "#005c7a",
         Antarctica: "#fc6000",
-        // test1: "blue",
-        // test2: "red",
-        // test3: "green",
-        // test4: "blue",
-        // test5: "red",
-        // test6: "green",
-        // test7: "blue",
-        // test8: "red",
-        // test9: "green",
-        // test10: "blue",
-        // test11: "red",
-        // test12: "green"
+      },
+      gradientValues: {
+        Global: ["#4cab92", "#ffffff"],
+        US: ["#ca0004", "#ffffff"],
+        India: ["#8e44ad", "#ffffff"],
+        China: ["#9dbd5f", "#ffffff"],
+        Russia: ["#005c7a", "#ffffff"],
+        Antarctica: ["#fc6000", "#ffffff"]
       }
     }
   }
@@ -42,6 +38,9 @@ class ExampleApp extends React.Component {
         </svg>
         <svg width={200} height={200}>
           <Legend values={this.state.values} mode="stack" showBorder={false} backgroundColor="#1b1b1b" fontColor="#ffffff"/>
+        </svg>
+        <svg width={200} height={200}>
+          <Legend values={this.state.gradientValues} mode="stack" showBorder={false} backgroundColor="#1b1b1b" fontColor="#ffffff" gradient={true}/>
         </svg>
         <svg width={600} height={200}>
           <Legend values={this.state.values} shape="circle" showTitle={true} legendTitle="Countries" />
