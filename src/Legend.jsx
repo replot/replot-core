@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import GradientsContainer from "./GradientsContainer.jsx"
 
 
 class LegendShape extends React.Component {
@@ -71,6 +72,12 @@ class Legend extends React.Component {
         buffer.y += size + buffer.y
       }
 
+      if (this.props.gradient) {
+        items.push(
+          <GradientsContainer colors={this.props.values} />
+        )
+      }
+
       if (this.props.mode === "flat") {
         let numColumns = Math.min(titles.length, Math.floor((this.props.width-buffer.x)/((size*2) + (longest.length*size/2))))
         if (!numColumns) {numColumns = 1}
@@ -83,9 +90,13 @@ class Legend extends React.Component {
           if (title) {
             let x = buffer.x + (i%numColumns)*((this.props.width-buffer.x-(size*2+longest.length*size/2))/(numColumns-1 <= 0 ? 1 : numColumns-1))
             let y = buffer.y + ((Math.floor(i/numColumns))*1.5*size)
+            let color = this.props.values[title]
+            if (this.props.gradient) {
+              color = "url(#gradient-" + title
+            }
             items.push(
               <LegendShape shape={this.props.shape} x={x} y={y} size={size}
-                key={this.props.title} title={title} value={this.props.values[title]}
+                key={this.props.title} title={title} value={color}
                 fontColor={this.props.fontColor} fontFamily={this.props.fontFamily} />
             )
           }
@@ -115,9 +126,13 @@ class Legend extends React.Component {
             } else {
               y = buffer.y + (i*size*1.5)
             }
+            let color = this.props.values[title]
+            if (this.props.gradient) {
+              color = "url(#gradient-" + title
+            }
             items.push(
               <LegendShape shape={this.props.shape} x={x} y={y} size={size}
-                key={this.props.title} title={title} value={this.props.values[title]}
+                key={this.props.title} title={title} value={color}
                 fontColor={this.props.fontColor} fontFamily={this.props.fontFamily} />
             )
           }
@@ -137,6 +152,7 @@ class Legend extends React.Component {
 }
 
 Legend.defaultProps = {
+  gradient: false,
   width: 500,
   mode: "flat",
   shape: "square",
@@ -151,6 +167,7 @@ Legend.defaultProps = {
 
 Legend.propTypes = {
   values: PropTypes.object.isRequired,
+  gradient: PropTypes.bool,
   width: PropTypes.number,
   mode: PropTypes.string,
   shape: PropTypes.string,
