@@ -817,9 +817,84 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var GradientsContainer = function (_React$Component) {
+  _inherits(GradientsContainer, _React$Component);
+
+  function GradientsContainer() {
+    _classCallCheck(this, GradientsContainer);
+
+    return _possibleConstructorReturn(this, (GradientsContainer.__proto__ || Object.getPrototypeOf(GradientsContainer)).apply(this, arguments));
+  }
+
+  _createClass(GradientsContainer, [{
+    key: "render",
+    value: function render() {
+      var gradients = [];
+      var titles = Object.keys(this.props.colors).sort();
+      for (var i = 0; i < titles.length; i++) {
+        gradients.push(_react2.default.createElement(
+          "linearGradient",
+          { id: "gradient-" + titles[i],
+            x1: "0%", y1: "0%", x2: "0%", y2: "100%" },
+          _react2.default.createElement("stop", { offset: "0%", stopColor: this.props.colors[titles[i]][0] }),
+          _react2.default.createElement("stop", { offset: "100%", stopColor: this.props.colors[titles[i]][1] })
+        ));
+      }
+
+      return _react2.default.createElement(
+        "g",
+        null,
+        gradients
+      );
+    }
+  }]);
+
+  return GradientsContainer;
+}(_react2.default.Component);
+
+GradientsContainer.defaultProps = {
+  colors: {
+    Category1: ["#4cab92", "#ca0004"],
+    Category2: ["#8e44ad", "#eccc00"],
+    Category3: ["#9dbd5f", "#0097bf"],
+    Category4: ["#005c7a", "#fc6000"]
+  }
+};
+
+exports.default = GradientsContainer;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
 var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _GradientsContainer = __webpack_require__(14);
+
+var _GradientsContainer2 = _interopRequireDefault(_GradientsContainer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -922,6 +997,10 @@ var Legend = function (_React$Component2) {
           buffer.y += size + buffer.y;
         }
 
+        if (this.props.gradient) {
+          items.push(_react2.default.createElement(_GradientsContainer2.default, { colors: this.props.values }));
+        }
+
         if (this.props.mode === "flat") {
           var numColumns = Math.min(titles.length, Math.floor((this.props.width - buffer.x) / (size * 2 + longest.length * size / 2)));
           if (!numColumns) {
@@ -938,8 +1017,12 @@ var Legend = function (_React$Component2) {
             if (title) {
               var x = buffer.x + i % numColumns * ((this.props.width - buffer.x - (size * 2 + longest.length * size / 2)) / (numColumns - 1 <= 0 ? 1 : numColumns - 1));
               var y = buffer.y + Math.floor(i / numColumns) * 1.5 * size;
+              var color = this.props.values[title];
+              if (this.props.gradient) {
+                color = "url(#gradient-" + title;
+              }
               items.push(_react2.default.createElement(LegendShape, { shape: this.props.shape, x: x, y: y, size: size,
-                key: this.props.title, title: title, value: this.props.values[title],
+                key: this.props.title, title: title, value: color,
                 fontColor: this.props.fontColor, fontFamily: this.props.fontFamily }));
             }
           }
@@ -969,8 +1052,12 @@ var Legend = function (_React$Component2) {
               } else {
                 _y = buffer.y + _i * size * 1.5;
               }
+              var _color = this.props.values[_title];
+              if (this.props.gradient) {
+                _color = "url(#gradient-" + _title;
+              }
               items.push(_react2.default.createElement(LegendShape, { shape: this.props.shape, x: _x, y: _y, size: size,
-                key: this.props.title, title: _title, value: this.props.values[_title],
+                key: this.props.title, title: _title, value: _color,
                 fontColor: this.props.fontColor, fontFamily: this.props.fontFamily }));
             }
           }
@@ -992,6 +1079,7 @@ var Legend = function (_React$Component2) {
 }(_react2.default.Component);
 
 Legend.defaultProps = {
+  gradient: false,
   width: 500,
   mode: "flat",
   shape: "square",
@@ -1006,6 +1094,7 @@ Legend.defaultProps = {
 
 Legend.propTypes = {
   values: _propTypes2.default.object.isRequired,
+  gradient: _propTypes2.default.bool,
   width: _propTypes2.default.number,
   mode: _propTypes2.default.string,
   shape: _propTypes2.default.string,
@@ -1021,7 +1110,7 @@ Legend.propTypes = {
 exports.default = Legend;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1107,7 +1196,7 @@ LoadingIcon.defaultProps = {
 exports.default = LoadingIcon;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1123,7 +1212,7 @@ exports["default"] = {
 module.exports = exports["default"];
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1147,7 +1236,7 @@ var _humanizePlus = __webpack_require__(25);
 
 var _humanizePlus2 = _interopRequireDefault(_humanizePlus);
 
-var _Legend = __webpack_require__(14);
+var _Legend = __webpack_require__(15);
 
 var _Legend2 = _interopRequireDefault(_Legend);
 
@@ -1890,70 +1979,6 @@ Axis.propTypes = {
 exports.default = Axis;
 
 /***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var GradientsContainer = function (_React$Component) {
-  _inherits(GradientsContainer, _React$Component);
-
-  function GradientsContainer() {
-    _classCallCheck(this, GradientsContainer);
-
-    return _possibleConstructorReturn(this, (GradientsContainer.__proto__ || Object.getPrototypeOf(GradientsContainer)).apply(this, arguments));
-  }
-
-  _createClass(GradientsContainer, [{
-    key: "render",
-    value: function render() {
-      var gradients = [];
-      for (var i = 0; i < length(this.props.colors); i++) {
-        gradients.push(_react2.default.createElement(
-          "linearGradient",
-          { id: "gradient" + String(i) },
-          _react2.default.createElement("stop", { offset: "0%", "stop-color": this.props.colors[i][0] }),
-          _react2.default.createElement("stop", { offset: "100%", "stop-color": this.props.colors[i][1] })
-        ));
-      }
-
-      return _react2.default.createElement(
-        "g",
-        null,
-        "gradients"
-      );
-    }
-  }]);
-
-  return GradientsContainer;
-}(_react2.default.Component);
-
-GradientsContainer.defaultProps = {
-  colors: [["#4cab92", "#ca0004"], ["#8e44ad", "#eccc00"], ["#9dbd5f", "#0097bf"], ["#005c7a", "#fc6000"]]
-};
-
-exports.default = GradientsContainer;
-
-/***/ }),
 /* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1970,7 +1995,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _LoadingIcon = __webpack_require__(15);
+var _LoadingIcon = __webpack_require__(16);
 
 var _LoadingIcon2 = _interopRequireDefault(_LoadingIcon);
 
@@ -2390,15 +2415,15 @@ var _Resize = __webpack_require__(19);
 
 var _Resize2 = _interopRequireDefault(_Resize);
 
-var _LoadingIcon = __webpack_require__(15);
+var _LoadingIcon = __webpack_require__(16);
 
 var _LoadingIcon2 = _interopRequireDefault(_LoadingIcon);
 
-var _Legend = __webpack_require__(14);
+var _Legend = __webpack_require__(15);
 
 var _Legend2 = _interopRequireDefault(_Legend);
 
-var _Axis = __webpack_require__(17);
+var _Axis = __webpack_require__(18);
 
 var _Axis2 = _interopRequireDefault(_Axis);
 
@@ -2406,7 +2431,7 @@ var _ColorPalette = __webpack_require__(21);
 
 var _ColorPalette2 = _interopRequireDefault(_ColorPalette);
 
-var _GradientsContainer = __webpack_require__(18);
+var _GradientsContainer = __webpack_require__(14);
 
 var _GradientsContainer2 = _interopRequireDefault(_GradientsContainer);
 
@@ -5837,7 +5862,7 @@ var _spring = __webpack_require__(37);
 
 exports.spring = _interopRequire(_spring);
 
-var _presets = __webpack_require__(16);
+var _presets = __webpack_require__(17);
 
 exports.presets = _interopRequire(_presets);
 
@@ -5890,7 +5915,7 @@ exports['default'] = spring;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _presets = __webpack_require__(16);
+var _presets = __webpack_require__(17);
 
 var _presets2 = _interopRequireDefault(_presets);
 
