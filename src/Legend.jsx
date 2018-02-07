@@ -63,6 +63,7 @@ class Legend extends React.Component {
         }
         items.push(
           <text x={xTitle} y={buffer.y+(size/1.7)}
+           key={xTitle + '.' + buffer.y}
            alignmentBaseline="middle" textAnchor="middle"
            fontSize={size} textDecoration="underline"
            fill={this.props.fontColor} fontFamily={this.props.fontFamily}>
@@ -74,7 +75,7 @@ class Legend extends React.Component {
 
       if (this.props.gradient) {
         items.push(
-          <GradientsContainer colors={this.props.values} />
+          <GradientsContainer key="gradient-container" colors={this.props.values} />
         )
       }
 
@@ -96,7 +97,7 @@ class Legend extends React.Component {
             }
             items.push(
               <LegendShape shape={this.props.shape} x={x} y={y} size={size}
-                key={this.props.title} title={title} value={color}
+                key={title + '.' + x + '.' + y} title={title} value={color}
                 fontColor={this.props.fontColor} fontFamily={this.props.fontFamily} />
             )
           }
@@ -132,7 +133,7 @@ class Legend extends React.Component {
             }
             items.push(
               <LegendShape shape={this.props.shape} x={x} y={y} size={size}
-                key={this.props.title} title={title} value={color}
+                key={title + '.' + x + '.' + y} title={title} value={color}
                 fontColor={this.props.fontColor} fontFamily={this.props.fontFamily} />
             )
           }
