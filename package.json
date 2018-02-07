@@ -4,8 +4,8 @@
   "description": "Replot core components",
   "main": "index.js",
   "scripts": {
-  	  "watch": "cd examples && webpack --watch",
-  	  "compile": "webpack --output-filename index.js"
+    "watch": "cd examples && webpack --watch",
+    "compile": "webpack --output-filename index.js"
   },
   "repository": {
     "type": "git",
@@ -23,17 +23,19 @@
   },
   "homepage": "https://github.com/MacroConnections/replot-core#readme",
   "dependencies": {
-    "babel-core": "^6.23.1",
-    "babel-loader": "^6.3.2",
-    "babel-preset-es2015": "^6.22.0",
-    "babel-preset-react": "^6.23.0",
-    "concat-map": "0.0.1",
-    "eslint": "^3.16.1",
-    "eslint-plugin-react": "^6.10.0",
     "humanize-plus": "^1.8.2",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "react-motion": "^0.4.7",
-    "webpack": "^2.2.1"
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-motion": "^0.5.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "concat-map": "0.0.1",
+    "eslint": "^4.17.0",
+    "eslint-plugin-react": "^7.6.1",
+    "webpack": "^3.10.0"
   }
 }
