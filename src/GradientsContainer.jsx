@@ -9,6 +9,7 @@ class GradientsContainer extends React.Component {
     for (let i=0; i < titles.length; i++) {
       gradients.push(
         <linearGradient id={"gradient-" + titles[i]}
+          key={"gradient-" + titles[i]}
           x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stopColor={this.props.colors[titles[i]][0]} />
           <stop offset="100%" stopColor={this.props.colors[titles[i]][1]} />
