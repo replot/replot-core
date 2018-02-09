@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import {Legend} from "../src/index.jsx"
+import {Legend} from "../index.js"
 
 
 class ExampleApp extends React.Component {

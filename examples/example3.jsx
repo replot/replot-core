@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import {Tooltip} from "../src/index.jsx"
+import {Tooltip} from "../index.js"
 
 class AlignSwitch extends React.Component {
   constructor(props) {
