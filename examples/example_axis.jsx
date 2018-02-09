@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import Axis from "../src/Axis.jsx"
+import {Axis} from "../index.js"
 
 
 class ExampleApp extends React.Component {

@@ -1,8 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import {Legend} from "../src/index.jsx"
-import Color from "../src/Color.js"
-import ColorPalette from "../src/ColorPalette.js"
+import {Legend, Color, ColorPalette} from "../index.js"
 
 
 class ExampleApp extends React.Component {

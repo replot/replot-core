@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import {LoadingIcon} from "../src/index.jsx"
+import {LoadingIcon} from "../index.js"
 
 
 class ExampleApp extends React.Component {
