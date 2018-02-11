@@ -104,10 +104,11 @@ class YAxis extends React.Component {
     }
 
     if (this.props.yTitle) {
-      let rotation = "rotate(-90,10,"+String(this.props.y+this.props.height/2)+")"
+      let rotation = "rotate(-90,30,"+String(this.props.y+this.props.height/2)+")"
       yAxis.push(
-        <text key="yTitle" x={0} y={this.props.y+this.props.height/2+10}
-          fontSize={18} transform={rotation} fill={this.props.style.titleColor}>
+        <text key="yTitle" x={30} y={this.props.y+this.props.height/2}
+          textAnchor="middle" transform={rotation}
+          fontSize={18} fill={this.props.style.titleColor}>
           {this.props.yTitle}
         </text>
       )
