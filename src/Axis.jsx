@@ -441,9 +441,9 @@ class Axis extends React.Component {
       }
     }
     if (this.props.showXAxis){
-      this.buffer.bot += 25
+      this.buffer.bot += 45
       if (this.props.xTitle){
-        this.buffer.bot += 45
+        this.buffer.bot += 25
       }
       if (this.props.xStart === "origin") {
         this.buffer.right += 25
