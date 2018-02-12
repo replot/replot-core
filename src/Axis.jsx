@@ -104,9 +104,9 @@ class YAxis extends React.Component {
     }
 
     if (this.props.yTitle) {
-      let rotation = "rotate(-90,30,"+String(this.props.y+this.props.height/2)+")"
+      let rotation = "rotate(-90,15,"+String(this.props.y+this.props.height/2)+")"
       yAxis.push(
-        <text key="yTitle" x={30} y={this.props.y+this.props.height/2}
+        <text key="yTitle" x={15} y={this.props.y+this.props.height/2}
           textAnchor="middle" transform={rotation}
           fontSize={18} fill={this.props.style.titleColor}>
           {this.props.yTitle}
@@ -116,7 +116,7 @@ class YAxis extends React.Component {
 
     let ySpace = this.props.height / (this.props.ySteps - 1)
 
-    for (var i=0; i < this.props.ySteps; i++) {
+    for (var i=0; i < this.props.ySteps - 1; i++) {
       let tickPos = this.props.height+this.props.y-i*ySpace
 
       let yVal = 0
