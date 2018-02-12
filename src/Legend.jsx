@@ -53,6 +53,9 @@ class Legend extends React.Component {
       if (titles.length > 15) {
         size = 10
       }
+      if (this.props.fontSize) {
+        size = this.props.fontSize
+      }
       let buffer = {x: 5, y: 4}
       let xTitle
       if (this.props.showTitle) {
@@ -174,6 +177,8 @@ Legend.propTypes = {
   shape: PropTypes.string,
   showLegend: PropTypes.bool,
   fontColor: PropTypes.string,
+  fontSize: PropTypes.number,
+  fontFamily: PropTypes.string,
   backgroundColor: PropTypes.string,
   showBorder: PropTypes.bool,
   borderColor: PropTypes.string,
