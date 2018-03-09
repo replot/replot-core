@@ -161,10 +161,10 @@ Legend.defaultProps = {
   mode: "flat",
   shape: "square",
   showLegend: true,
-  fontColor: "#000000",
+  fontColor: "#AAA",
   backgroundColor: "none",
   showBorder: true,
-  borderColor: "#000000",
+  borderColor: "#AAA",
   showTitle: false,
   legendTitle: "Legend"
 }

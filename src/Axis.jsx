@@ -178,16 +178,16 @@ YAxis.defaultProps = {
   minY: 0,
   maxY: 100,
   style: {
-    axisColor: "#000000",
-    labelColor: "#000000",
-    titleColor: "#000000",
-    gridColor: "#DDDDDD",
+    axisColor: "#AAA",
+    labelColor: "#AAA",
+    titleColor: "#AAA",
+    gridColor: "#AAA",
     gridWidth: 1,
     gridOpacity: 0.5,
-    lineWidth: 2,
+    lineWidth: 1.5,
     lineOpacity: 1,
-    tickColor: "#000000",
-    tickWidth: 2,
+    tickColor: "#AAA",
+    tickWidth: 1.5,
     tickOpacity: 1
   }
 }
