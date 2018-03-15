@@ -25,9 +25,13 @@ class Resize extends React.Component {
 
   resize() {
     if (this.parseWidth(this.props.width).dynamic) {
+      let newWidth = this.elem.parentNode.clientWidth * parseInt(this.props.width) / 100
+      if (this.state.width === newWidth) {
+        return
+      }
       this.setState({
         resizing: true,
-        width: this.elem.parentNode.clientWidth * parseInt(this.props.width) / 100
+        width: newWidth
       })
       var updateFunction
       clearTimeout(updateFunction)
