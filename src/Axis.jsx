@@ -322,16 +322,16 @@ XAxisContinuous.defaultProps = {
   minX: 0,
   maxX: 100,
   style: {
-    axisColor: "#000000",
-    labelColor: "#000000",
-    titleColor: "#000000",
-    gridColor: "#DDDDDD",
+    axisColor: "#AAA",
+    labelColor: "#AAA",
+    titleColor: "#AAA",
+    gridColor: "#AAA",
     gridWidth: 1,
     gridOpacity: 0.5,
-    lineWidth: 2,
+    lineWidth: 1.5,
     lineOpacity: 1,
-    tickColor: "#000000",
-    tickWidth: 2,
+    tickColor: "#AAA",
+    tickWidth: 1.5,
     tickOpacity: 1
   }
 }
@@ -417,13 +417,13 @@ XAxisDiscrete.defaultProps = {
   showXAxisLine: true,
   showXLabels: true,
   style: {
-    axisColor: "#000000",
-    labelColor: "#000000",
-    titleColor: "#000000",
-    lineWidth: 2,
+    axisColor: "#AAA",
+    labelColor: "#AAA",
+    titleColor: "#AAA",
+    lineWidth: 1.5,
     lineOpacity: 1,
-    tickColor: "#000000",
-    tickWidth: 2,
+    tickColor: "#AAA",
+    tickWidth: 1.5,
     tickOpacity: 1
   }
 }
@@ -591,25 +591,25 @@ Axis.defaultProps = {
   showYLabels: true,
   showGrid: true,
   axisStyle: {
-    axisColor: "#000000",
-    labelColor: "#000000",
-    titleColor: "#000000",
-    gridColor: "#DDDDDD",
+    axisColor: "#AAA",
+    labelColor: "#AAA",
+    titleColor: "#AAA",
+    gridColor: "#AAA",
     gridWidth: 1,
     gridOpacity: 0.5,
-    lineWidth: 2,
+    lineWidth: 1.5,
     lineOpacity: 1,
-    tickColor: "#000000",
-    tickWidth: 2,
+    tickColor: "#AAA",
+    tickWidth: 1.5,
     tickOpacity: 1
   },
   showLegend: true,
   legendMode: "flat",
   legendStyle: {
-    fontColor: "#000000",
+    fontColor: "#AAA",
     backgroundColor: "none",
     showBorder: true,
-    borderColor: "#000000"
+    borderColor: "#AAA"
   }
 }
 
