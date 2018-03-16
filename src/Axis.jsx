@@ -135,10 +135,11 @@ class YAxis extends React.Component {
         yVal = this.props.minY + i*(this.props.maxY-this.props.minY)/(this.props.ySteps-1)
       }
       if (this.props.showYLabels){
+        let labelFontSize = this.props.style.labelFontSize ? this.props.style.labelFontSize : 15
         yAxis.push(
           <YStep key={"yStep"+i} x={this.props.x} y={tickPos}
             value={yVal} length={10} labelColor={this.props.style.labelColor}
-            labelFontSize={this.props.style.labelFontSize} labelFontFamily={this.props.style.labelFontFamily}
+            labelFontSize={labelFontSize} labelFontFamily={this.props.style.labelFontFamily}
             tickColor={this.props.style.tickColor}
             tickWidth={this.props.style.tickWidth}
             tickOpacity={this.props.style.tickOpacity}
@@ -296,10 +297,11 @@ class XAxisContinuous extends React.Component {
         } else {
           xVal = this.props.minX + i*(this.props.maxX-this.props.minX)/(this.props.xSteps-1)
         }
+        let labelFontSize = this.props.style.labelFontSize ? this.props.style.labelFontSize : 15
         xAxis.push(
           <XStep key={"xStep"+i} x={tickPos} y={this.props.y}
             value={xVal} length={10} labelColor={this.props.style.labelColor}
-            labelFontSize={this.props.style.labelFontSize} labelFontFamily={this.props.style.labelFontFamily}
+            labelFontSize={labelFontSize} labelFontFamily={this.props.style.labelFontFamily}
             tickColor={this.props.style.tickColor}
             tickWidth={this.props.style.tickWidth}
             tickOpacity={this.props.style.tickOpacity}
@@ -389,12 +391,12 @@ class XAxisDiscrete extends React.Component {
             strokeWidth={this.props.style.tickWidth}
             opacity={this.props.style.tickOpacity} />
         )
-        size = this.props.style.labelFontSize ? this.props.style.labelFontSize : size
+        let labelFontSize = this.props.style.labelFontSize ? this.props.style.labelFontSize : size
         xAxis.push(
           <text key={this.props.labels[i]} fill={this.props.style.labelColor}
             fontFamily={this.props.style.labelFontFamily}
             x={offset + i*(deltaX)}
-            y={this.props.y+27} textAnchor={anchor} transform={rotation} fontSize={size}>
+            y={this.props.y+27} textAnchor={anchor} transform={rotation} fontSize={labelFontSize}>
             {this.props.labels[i]}
           </text>
         )
@@ -602,7 +604,6 @@ Axis.defaultProps = {
   axisStyle: {
     axisColor: "#AAA",
     labelColor: "#AAA",
-    labelFontSize: 15,
     titleColor: "#AAA",
     gridColor: "#AAA",
     gridWidth: 1,
