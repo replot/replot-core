@@ -49,12 +49,10 @@ class YTickLabel extends React.Component {
       printVal = Humanize.compactInteger(this.props.value, 1)
     }
 
-    let fontSize = 15
-
     return (
       <g>
-        <text x={this.props.x} y={this.props.y}
-          fontSize={fontSize} fill={this.props.color} textAnchor={"end"}>
+        <text x={this.props.x} y={this.props.y} fontFamily={this.props.fontFamily}
+          fontSize={this.props.fontSize} fill={this.props.color} textAnchor={"end"}>
           {printVal}
         </text>
       </g>
@@ -79,6 +77,7 @@ class YStep extends React.Component {
     step.push(
       <YTickLabel key={"label"+this.props.y}
         x={this.props.x-this.props.length-5} y={this.props.y+5} length={this.props.length}
+        fontSize={this.props.labelFontSize} fontFamily={this.props.labelFontFamily}
         value={this.props.value} color={this.props.labelColor} />
     )
 
@@ -103,12 +102,14 @@ class YAxis extends React.Component {
       )
     }
 
+    let titleFontSize = this.props.style.titleFontSize ? this.props.style.titleFontSize : 18
     if (this.props.yTitle) {
-      let rotation = "rotate(-90,15,"+String(this.props.y+this.props.height/2)+")"
+      let rotation = "rotate(-90,"+String(titleFontSize)+","+String(this.props.y+this.props.height/2)+")"
       yAxis.push(
         <text key="yTitle" x={15} y={this.props.y+this.props.height/2}
           textAnchor="middle" transform={rotation}
-          fontSize={18} fill={this.props.style.titleColor}>
+          fontFamily={this.props.style.titleFontFamily}
+          fontSize={titleFontSize} fill={this.props.style.titleColor}>
           {this.props.yTitle}
         </text>
       )
@@ -137,6 +138,7 @@ class YAxis extends React.Component {
         yAxis.push(
           <YStep key={"yStep"+i} x={this.props.x} y={tickPos}
             value={yVal} length={10} labelColor={this.props.style.labelColor}
+            labelFontSize={this.props.style.labelFontSize} labelFontFamily={this.props.style.labelFontFamily}
             tickColor={this.props.style.tickColor}
             tickWidth={this.props.style.tickWidth}
             tickOpacity={this.props.style.tickOpacity}
@@ -208,12 +210,10 @@ class XTickLabel extends React.Component {
       printVal = Humanize.compactInteger(this.props.value,1)
     }
 
-    let fontSize = 15
-
     return (
       <g>
-        <text x={this.props.x} y={this.props.y+fontSize+5}
-          fontSize={fontSize} fill={this.props.color} textAnchor="middle">
+        <text x={this.props.x} y={this.props.y+this.props.fontSize+5} fontFamily={this.props.fontFamily}
+          fontSize={this.props.fontSize} fill={this.props.color} textAnchor="middle">
           {printVal}
         </text>
       </g>
@@ -238,6 +238,7 @@ class XStep extends React.Component {
     step.push(
       <XTickLabel key={"label"+this.props.x}
         x={this.props.x} y={this.props.y+this.props.length}
+        fontSize={this.props.labelFontSize} fontFamily={this.props.labelFontFamily}
         value={this.props.value} color={this.props.labelColor} />
     )
 
@@ -267,7 +268,9 @@ class XAxisContinuous extends React.Component {
         <text key="xTitle" textAnchor="middle"
           x={this.props.x + this.props.width/2}
           y={this.props.y + 65}
-          fill={this.props.style.titleColor} fontSize={18} >
+          fontFamily={this.props.style.titleFontFamily}
+          fontSize={this.props.style.titleFontSize ? this.props.style.titleFontSize : 18}
+          fill={this.props.style.titleColor}>
           {this.props.xTitle}
         </text>
       )
@@ -296,6 +299,7 @@ class XAxisContinuous extends React.Component {
         xAxis.push(
           <XStep key={"xStep"+i} x={tickPos} y={this.props.y}
             value={xVal} length={10} labelColor={this.props.style.labelColor}
+            labelFontSize={this.props.style.labelFontSize} labelFontFamily={this.props.style.labelFontFamily}
             tickColor={this.props.style.tickColor}
             tickWidth={this.props.style.tickWidth}
             tickOpacity={this.props.style.tickOpacity}
@@ -385,8 +389,10 @@ class XAxisDiscrete extends React.Component {
             strokeWidth={this.props.style.tickWidth}
             opacity={this.props.style.tickOpacity} />
         )
+        size = this.props.style.labelFontSize ? this.props.style.labelFontSize : size
         xAxis.push(
           <text key={this.props.labels[i]} fill={this.props.style.labelColor}
+            fontFamily={this.props.style.labelFontFamily}
             x={offset + i*(deltaX)}
             y={this.props.y+27} textAnchor={anchor} transform={rotation} fontSize={size}>
             {this.props.labels[i]}
@@ -395,11 +401,13 @@ class XAxisDiscrete extends React.Component {
       }
     }
 
+    size = this.props.style.titleFontSize ? this.props.style.titleFontSize : size + 2
     if (this.props.xTitle) {
       xAxis.push(
         <text key="xTitle" textAnchor="middle"
           x={this.props.x + this.props.width/2} y={this.props.y+65}
-          fill={this.props.style.titleColor} fontSize={size+2} >
+          fontFamily={this.props.style.titleFontFamily}
+          fill={this.props.style.titleColor} fontSize={size}>
           {this.props.xTitle}
         </text>
       )
@@ -507,9 +515,10 @@ class Axis extends React.Component {
       }
     }
     if (this.props.graphTitle){
+      let titleFontSize = this.props.axisStyle.titleFontSize ? this.props.axisStyle.titleFontSize : 18
       this.axes.push(
         <text key="graphTitle" textAnchor="middle"
-          fontSize={18} fill={this.props.axisStyle.titleColor}
+          fontSize={titleFontSize} fill={this.props.axisStyle.titleColor}
           x={this.buffer.left + (this.props.width-this.buffer.left-this.buffer.right) / 2} y={20}>
           {this.props.graphTitle}
         </text>
@@ -593,6 +602,7 @@ Axis.defaultProps = {
   axisStyle: {
     axisColor: "#AAA",
     labelColor: "#AAA",
+    labelFontSize: 15,
     titleColor: "#AAA",
     gridColor: "#AAA",
     gridWidth: 1,
