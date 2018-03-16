@@ -6,6 +6,7 @@ import Axis from "./src/Axis.jsx"
 import ColorPalette from "./src/ColorPalette.js"
 import GradientsContainer from "./src/GradientsContainer.jsx"
 import normalize from "./src/normalize.js"
+import GradientLegend from "./src/GradientLegend.jsx"
 
 export {
   Tooltip,
@@ -15,5 +16,6 @@ export {
   Axis,
   ColorPalette,
   GradientsContainer,
-  normalize
+  normalize,
+  GradientLegend
 }
