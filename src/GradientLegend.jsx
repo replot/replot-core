@@ -55,7 +55,6 @@ const GradientLegend = (gradient, scale, title, isBackgroundDark) => {
       fontSize={FONT_SIZE} fill={text_color} textAnchor="middle">{printValue}</text>
   )
 
-  console.log("helo")
   return legend
 }
 
