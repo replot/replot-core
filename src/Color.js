@@ -12,10 +12,7 @@ class Color {
   }
 
   rgb() {
-    let str = "rgb("
-    str += String(Math.round(this.red)) + ","
-    str += String(Math.round(this.green)) + ","
-    str += String(Math.round(this.blue)) + ")"
+    let str = `rgb(${Math.round(this.red)}, ${Math.round(this.green)}, ${Math.round(this.blue)})`
     return str
   }
 

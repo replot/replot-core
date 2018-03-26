@@ -96,7 +96,7 @@ class Legend extends React.Component {
             let y = buffer.y + ((Math.floor(i/numColumns))*1.5*size)
             let color = this.props.values[title]
             if (this.props.gradient) {
-              color = "url(#gradient-" + title
+              color = `url(#gradient-${title})`
             }
             items.push(
               <LegendShape shape={this.props.shape} x={x} y={y} size={size}
@@ -132,7 +132,7 @@ class Legend extends React.Component {
             }
             let color = this.props.values[title]
             if (this.props.gradient) {
-              color = "url(#gradient-" + title
+              color = `url(#gradient-${title})`
             }
             items.push(
               <LegendShape shape={this.props.shape} x={x} y={y} size={size}

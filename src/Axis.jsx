@@ -104,7 +104,7 @@ class YAxis extends React.Component {
 
     let titleFontSize = this.props.style.titleFontSize ? this.props.style.titleFontSize : 18
     if (this.props.yTitle) {
-      let rotation = "rotate(-90,"+String(titleFontSize)+","+String(this.props.y+this.props.height/2)+")"
+      let rotation = `rotate(-90, ${titleFontSize}, ${this.props.y+this.props.height/2})`
       yAxis.push(
         <text key="yTitle" x={15} y={this.props.y+this.props.height/2}
           textAnchor="middle" transform={rotation}
@@ -382,7 +382,7 @@ class XAxisDiscrete extends React.Component {
       }
 
       for (let i = 0; i < this.props.labels.length; i ++){
-        rotation = "rotate(" + tilt + "," + (offset + i*(this.props.width/this.props.labels.length)-10) + "," + (this.props.y-20) + ")"
+        rotation = `rotate(${tilt}, ${offset + i*(this.props.width/this.props.labels.length)-10}, ${this.props.y-20})`
         xAxis.push(
           <Line key={"tick"+i}
             x1={offset + i*(deltaX)} y1={this.props.y}
