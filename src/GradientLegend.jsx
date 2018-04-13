@@ -28,7 +28,7 @@ const GradientLegend = (gradient, scale, title, isBackgroundDark) => {
   }
 
   legend.push(
-    <linearGradient id={`gradient-${gradient[0]}-{gradient[99]}`} key="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+    <linearGradient id={`gradient-${gradient[0]}-${gradient[99]}`} key="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" stopColor={gradient[0].color} />
       <stop offset="100%" stopColor={gradient[99].color} />
     </linearGradient>
