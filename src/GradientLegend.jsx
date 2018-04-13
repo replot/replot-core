@@ -28,14 +28,14 @@ const GradientLegend = (gradient, scale, title, isBackgroundDark) => {
   }
 
   legend.push(
-    <linearGradient id="gradient" key="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+    <linearGradient id={`gradient-${gradient[0]}-{gradient[99]}`} key="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" stopColor={gradient[0].color} />
       <stop offset="100%" stopColor={gradient[99].color} />
     </linearGradient>
   )
   legend.push(
     <rect key="rect" x={0} y={-HEIGHT/2 + titleHeight}
-      height={HEIGHT} width={WIDTH * 10} fill={"url(#gradient)"}/>
+      height={HEIGHT} width={WIDTH * 10} fill={`url(#gradient-${gradient[0]}-${gradient[99]})`}/>
   )
 
   for (let i = 0; i < 10; i++) {
