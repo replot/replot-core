@@ -551,6 +551,8 @@ class Axis extends React.Component {
               width={this.props.width-this.buffer.left-this.buffer.right}
               showLegend={this.props.showLegend}
               fontColor={this.props.legendFontColor}
+              fontSize={this.props.legendFontSize}
+              fontFamily={this.props.legendFontFamily}
               backgroundColor={this.props.legendBackgroundColor}
               showBorder={this.props.legendShowBorder}
               borderColor={this.props.legendBorderColor}/>
@@ -562,6 +564,8 @@ class Axis extends React.Component {
             <Legend values={this.props.legendValues} mode="stack"
               showLegend={this.props.showLegend}
               fontColor={this.props.legendFontColor}
+              fontSize={this.props.legendFontSize}
+              fontFamily={this.props.legendFontFamily}
               backgroundColor={this.props.legendBackgroundColor}
               showBorder={this.props.legendShowBorder}
               borderColor={this.props.legendBorderColor}/>
@@ -573,6 +577,8 @@ class Axis extends React.Component {
             <Legend values={this.props.legendValues} mode="stack"
               showLegend={this.props.showLegend}
               fontColor={this.props.legendFontColor}
+              fontSize={this.props.legendFontSize}
+              fontFamily={this.props.legendFontFamily}
               backgroundColor={this.props.legendBackgroundColor}
               showBorder={this.props.legendShowBorder}
               borderColor={this.props.legendBorderColor}/>
@@ -662,10 +668,8 @@ Axis.propTypes = {
   showYAxisLine: PropTypes.bool,
   showYLabels: PropTypes.bool,
   showGrid: PropTypes.bool,
-  axisStyle: PropTypes.object,
   showLegend: PropTypes.bool,
   legendMode: PropTypes.string,
-  legendStyle: PropTypes.object
 }
 
 
