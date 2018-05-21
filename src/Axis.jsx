@@ -485,6 +485,24 @@ class Axis extends React.Component {
       xSteps = Math.ceil(this.props.width/100) + 1
     }
 
+    let axisStyle = {
+      axisColor: this.props.axisColor,
+      labelColor: this.props.labelColor,
+      titleColor: this.props.titleColor,
+      gridColor: this.props.gridColor,
+      gridWidth: this.props.gridWidth,
+      gridOpacity: this.props.gridOpacity,
+      lineWidth: this.props.lineWidth,
+      lineOpacity: this.props.lineOpacity,
+      tickColor: this.props.tickColor,
+      tickWidth: this.props.tickWidth,
+      tickOpacity: this.props.tickOpacity,
+      labelFontSize: this.props.labelFontSize,
+      titleFontSize: this.props.titleFontSize,
+      labelFontFamily: this.props.labelFontFamily,
+      titleFontFamily: this.props.titleFontFamily,
+    }
+
     if (this.props.showYAxis) {
       this.axes.push(
         <YAxis key="YAxis" x={this.buffer.left} y={this.buffer.top} width={this.props.width-(this.buffer.left+this.buffer.right)}
@@ -492,7 +510,7 @@ class Axis extends React.Component {
           minY={this.props.minY} maxY={this.props.maxY} yScale={this.props.yScale}
           ySteps={ySteps} yTitle={this.props.yTitle}
           showYAxisLine={this.props.showYAxisLine} showYLabels={this.props.showYLabels}
-          showGrid={this.props.showGrid} style={this.props.axisStyle} />
+          showGrid={this.props.showGrid} style={axisStyle} />
       )
     }
     if (this.props.showXAxis) {
@@ -502,7 +520,7 @@ class Axis extends React.Component {
             width={this.props.width-this.buffer.left-this.buffer.right}
             xTitle={this.props.xTitle} showXAxisLine={this.props.showXAxisLine}
             showXLabels={this.props.showXLabels} labels={this.props.labels}
-            xStart={this.props.xStart} style={this.props.axisStyle}/>
+            xStart={this.props.xStart} style={axisStyle}/>
         )
       } else if (this.props.xAxisMode == "continuous"){
         this.axes.push(
@@ -512,15 +530,14 @@ class Axis extends React.Component {
             showXLabels={this.props.showXLabels}
             xScale={this.props.xScale} xSteps={xSteps}
             minX={this.props.minX} maxX={this.props.maxX}
-            style={this.props.axisStyle}/>
+            style={axisStyle}/>
         )
       }
     }
     if (this.props.graphTitle){
-      let titleFontSize = this.props.axisStyle.titleFontSize ? this.props.axisStyle.titleFontSize : 18
       this.axes.push(
-        <text key="graphTitle" textAnchor="middle" fontFamily={this.props.axisStyle.titleFontFamily}
-          fontSize={titleFontSize} fill={this.props.axisStyle.titleColor}
+        <text key="graphTitle" textAnchor="middle" fontFamily={this.props.titleFontFamily}
+          fontSize={this.props.titleFontSize} fill={this.props.titleColor}
           x={this.buffer.left + (this.props.width-this.buffer.left-this.buffer.right) / 2} y={20}>
           {this.props.graphTitle}
         </text>
@@ -533,10 +550,10 @@ class Axis extends React.Component {
             <Legend values={this.props.legendValues}
               width={this.props.width-this.buffer.left-this.buffer.right}
               showLegend={this.props.showLegend}
-              fontColor={this.props.legendStyle.fontColor}
-              backgroundColor={this.props.legendStyle.backgroundColor}
-              showBorder={this.props.legendStyle.showBorder}
-              borderColor={this.props.legendStyle.borderColor}/>
+              fontColor={this.props.legendFontColor}
+              backgroundColor={this.props.legendBackgroundColor}
+              showBorder={this.props.legendShowBorder}
+              borderColor={this.props.legendBorderColor}/>
           </g>
         )
       } else if (this.props.legendMode === "stack-inside"){
@@ -544,10 +561,10 @@ class Axis extends React.Component {
           <g key="Legend" transform={`translate(${this.props.width-120} ${this.buffer.top})`}>
             <Legend values={this.props.legendValues} mode="stack"
               showLegend={this.props.showLegend}
-              fontColor={this.props.legendStyle.fontColor}
-              backgroundColor={this.props.legendStyle.backgroundColor}
-              showBorder={this.props.legendStyle.showBorder}
-              borderColor={this.props.legendStyle.borderColor}/>
+              fontColor={this.props.legendFontColor}
+              backgroundColor={this.props.legendBackgroundColor}
+              showBorder={this.props.legendShowBorder}
+              borderColor={this.props.legendBorderColor}/>
           </g>
         )
       } else if (this.props.legendMode === "stack-outside"){
@@ -555,10 +572,10 @@ class Axis extends React.Component {
           <g key="Legend" transform={`translate(${this.props.width-120} ${this.buffer.top})`}>
             <Legend values={this.props.legendValues} mode="stack"
               showLegend={this.props.showLegend}
-              fontColor={this.props.legendStyle.fontColor}
-              backgroundColor={this.props.legendStyle.backgroundColor}
-              showBorder={this.props.legendStyle.showBorder}
-              borderColor={this.props.legendStyle.borderColor}/>
+              fontColor={this.props.legendFontColor}
+              backgroundColor={this.props.legendBackgroundColor}
+              showBorder={this.props.legendShowBorder}
+              borderColor={this.props.legendBorderColor}/>
           </g>
         )
       }
@@ -601,27 +618,24 @@ Axis.defaultProps = {
   showYAxisLine: true,
   showYLabels: true,
   showGrid: true,
-  axisStyle: {
-    axisColor: "#AAA",
-    labelColor: "#AAA",
-    titleColor: "#AAA",
-    gridColor: "#AAA",
-    gridWidth: 1,
-    gridOpacity: 0.5,
-    lineWidth: 1.5,
-    lineOpacity: 1,
-    tickColor: "#AAA",
-    tickWidth: 1.5,
-    tickOpacity: 1
-  },
+  axisColor: "#AAA",
+  labelColor: "#AAA",
+  titleColor: "#AAA",
+  gridColor: "#AAA",
+  gridWidth: 1,
+  gridOpacity: 0.5,
+  lineWidth: 1.5,
+  lineOpacity: 1,
+  tickColor: "#AAA",
+  tickWidth: 1.5,
+  tickOpacity: 1,
+  titleFontSize: 18,
   showLegend: true,
   legendMode: "flat",
-  legendStyle: {
-    fontColor: "#AAA",
-    backgroundColor: "none",
-    showBorder: true,
-    borderColor: "#AAA"
-  }
+  legendFontColor: "#AAA",
+  legendBackgroundColor: "none",
+  legendShowBorder: false,
+  legendBorderColor: "#AAA",
 }
 
 Axis.propTypes = {
