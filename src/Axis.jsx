@@ -519,7 +519,7 @@ class Axis extends React.Component {
     if (this.props.graphTitle){
       let titleFontSize = this.props.axisStyle.titleFontSize ? this.props.axisStyle.titleFontSize : 18
       this.axes.push(
-        <text key="graphTitle" textAnchor="middle"
+        <text key="graphTitle" textAnchor="middle" fontFamily={this.props.axisStyle.titleFontFamily}
           fontSize={titleFontSize} fill={this.props.axisStyle.titleColor}
           x={this.buffer.left + (this.props.width-this.buffer.left-this.buffer.right) / 2} y={20}>
           {this.props.graphTitle}
